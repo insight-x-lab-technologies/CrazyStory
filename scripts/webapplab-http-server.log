@@ -1,0 +1,121 @@
+
+[2026-05-10 11:31:02] Iniciando CrazyStory na porta 8080
+Diretório servido: /mnt/userdata/Projetos/Pessoal/CrazyStory/src
+100.76.11.120 - - [10/May/2026 11:36:41] "GET / HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /js/themes.js HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /js/storage.js HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /css/themes.css HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /js/i18n.js HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /css/style.css HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /js/progression.js HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /js/achievements.js HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /js/missions.js HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /js/audio.js HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_gameplay_jet.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_HomeJet.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_logo.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /js/gameplay.js HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /js/application.js HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_game_icon_pilot.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_game_icon_points.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_game_icon_coin_gold.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_game_icon_settings.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_game_icon_trophy.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_game_bg.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_game_icon_level_2-3.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_game_obstacle_11.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_game_icon_powerup_shield.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_game_icon_powerup_slowmotion.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:41] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:41] "GET /assets/images/v1_default_game_icon_powerup_magnet.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:42] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:42] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:42] "GET /src/index.html HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 11:36:42] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:42] "GET /favicon.ico HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:42] code 404, message File not found
+100.76.11.120 - - [10/May/2026 11:36:42] "GET /apple-touch-icon.png HTTP/1.1" 404 -
+100.76.11.120 - - [10/May/2026 11:36:42] "GET /src/manifest.webmanifest HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 11:36:42] "GET /src/themes.css HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 11:36:42] "GET /src/style.css HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 11:36:42] "GET /src/script.js HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 11:36:43] "GET /src/assets/background/cosmic_mobile_bg_home.png HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 11:36:43] "GET /src/assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 11:36:47] "GET /src/favicon.ico HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 11:36:50] "GET /src/assets/background/cosmic_desktop_bg_app.png HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 11:36:51] "GET /src/assets/icons/icon-192.png HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 12:07:38] "GET /src/assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 12:07:45] "GET /src/assets/icons/icon-192.png HTTP/1.1" 304 -
+100.76.11.120 - - [10/May/2026 12:07:45] "GET /src/assets/background/cosmic_desktop_bg_app.png HTTP/1.1" 304 -
+100.76.11.120 - - [10/May/2026 12:07:45] "GET /src/favicon.ico HTTP/1.1" 304 -
+100.76.11.120 - - [10/May/2026 12:08:39] "GET /src/assets/songs/cosmic_gameplay.mp3 HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 12:09:32] "GET /src/assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 12:10:53] "GET /src/assets/songs/cosmic_gameplay.mp3 HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 12:14:07] "GET /src/assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+100.76.11.120 - - [10/May/2026 12:16:27] "GET /src/assets/songs/cosmic_gameplay.mp3 HTTP/1.1" 200 -
+
+[2026-06-06 22:51:40] Iniciando CrazyStory na porta 8080
+Diretório servido: /mnt/userdata/Projetos/Pessoal/CrazyStory/src
+100.76.11.120 - - [06/Jun/2026 22:51:51] "GET / HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:51:51] code 404, message File not found
+100.76.11.120 - - [06/Jun/2026 22:51:51] code 404, message File not found
+100.76.11.120 - - [06/Jun/2026 22:51:51] "GET /node_modules/vite/dist/client/env.mjs HTTP/1.1" 404 -
+100.76.11.120 - - [06/Jun/2026 22:51:51] "GET /@vite/client HTTP/1.1" 404 -
+100.76.11.120 - - [06/Jun/2026 22:51:51] "GET /src/index.html HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:51:52] "GET /src/manifest.webmanifest HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:51:52] "GET /src/script.js HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:51:52] "GET /src/style.css HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:51:52] "GET /src/themes.css HTTP/1.1" 304 -
+100.76.11.120 - - [06/Jun/2026 22:51:52] "GET /src/assets/background/cosmic_mobile_bg_home.png HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:51:52] "GET /src/assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:51:53] "GET /src/favicon.ico HTTP/1.1" 304 -
+100.76.11.120 - - [06/Jun/2026 22:51:56] "GET /src/assets/icons/icon-192.png HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:51:56] "GET /src/assets/background/cosmic_desktop_bg_app.png HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:52:40] "GET /src/assets/songs/cosmic_gameplay.mp3 HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:54:43] "GET /src/assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:55:21] "GET /src/assets/songs/cosmic_gameplay.mp3 HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:56:40] "GET /src/assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:57:33] "GET /src/assets/songs/cosmic_gameplay.mp3 HTTP/1.1" 200 -
+100.76.11.120 - - [06/Jun/2026 22:58:44] "GET /src/assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:09] "GET / HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:09] "GET /src/index.html HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:09] "GET /src/themes.css HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:09] "GET /src/style.css HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:09] "GET /src/script.js HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:09] "GET /src/assets/background/cosmic_desktop_bg_home.png HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:09] "GET /src/assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:13] "GET /src/favicon.ico HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:13] "GET /src/assets/icons/icon-192.png HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:23] "GET /src/assets/background/cosmic_desktop_bg_app.png HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:35] "GET /src/assets/background/light_desktop_bg_app.png HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:37] "GET /src/assets/background/light_desktop_bg_home.png HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:45] "GET /src/assets/background/spring_desktop_bg_app.png HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:45] "GET /src/assets/songs/spring_gameroom.mp3 HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 22:59:51] "GET /src/assets/background/spring_desktop_bg_home.png HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 23:00:32] "GET /src/assets/songs/autumn_gameroom.mp3 HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 23:00:32] "GET /src/assets/background/autumn_desktop_bg_app.png HTTP/1.1" 200 -
+100.68.120.124 - - [06/Jun/2026 23:00:35] "GET /src/assets/background/autumn_desktop_bg_home.png HTTP/1.1" 200 -

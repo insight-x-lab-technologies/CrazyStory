@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7c3aed">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="CrazyStory">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="application-name" content="CrazyStory">
+  <title>CrazyStory</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <!--<link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">-->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="themes.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="theme-cosmic" data-active-screen="home">
+
+  <div class="stars" id="stars"></div>
+  <div class="notif" id="notif" role="status" aria-live="polite">✅</div>
+
+  <!-- ========== HOME ========== -->
+  <div class="screen active" id="screen-home">
+    <div class="page-shell">
+      <button class="home-fullscreen-btn" id="fullscreen-toggle" type="button" data-action="toggle-fullscreen"
+        aria-label="Tela cheia" title="Tela cheia" hidden>
+        <span aria-hidden="true">⛶</span>
+      </button>
+      <h1 class="logo" data-i18n="home.title">CrazyStory</h1>
+      <p class="logo-sub" data-i18n="home.subtitle">Conte uma história, esconda o impostor e vote no final</p>
+      <div class="home-grid">
+        <div class="card home-card home-actions-card">
+          <div class="flex-col home-actions">
+            <button class="btn btn-primary btn-lg btn-block" data-nav="setup" data-i18n="home.newGame">🎮 Nova Partida</button>
+            <button class="btn btn-secondary btn-lg btn-block btn-quick-game" data-action="quick-game">
+              <span data-i18n="home.quickGame">⚡ Jogo Rápido</span>
+              <span class="btn-quick-game-summary" id="quick-game-summary">👥 5 | 🔁 3 | 🎭 1 impostor</span>
+            </button>
+            <button class="btn btn-ghost btn-lg btn-block btn-quick-game" data-nav="multidevice">
+              <span data-i18n="home.multiDeviceGame">📡 Modo Multi-device</span>
+              <span class="btn-quick-game-summary" id="multi-device-summary">Base preservada | primeira versão local</span>
+            </button>
+            <button class="btn btn-ghost btn-lg btn-block" data-nav="wordbank" data-i18n="home.wordBank">📖 Regras e Temas</button>
+            <button class="btn btn-ghost btn-lg btn-block" data-nav="donate" data-i18n="home.donate">❤️ Doar</button>
+            <button class="btn btn-ghost btn-lg btn-block" data-nav="leaderboard" data-i18n="home.leaderboard">🏅 Placar Histórico</button>
+            <button class="btn btn-ghost btn-lg btn-block" data-nav="settings" data-i18n="home.settings">⚙️ Configurações</button>
+            <button class="btn btn-ghost btn-lg btn-block hidden" id="pwa-install-button" data-action="install-pwa" data-i18n="home.installOnDevice">📲 Instalar no dispositivo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ALL TIME LEADERBOARD ========== -->
+  <div class="screen" id="screen-leaderboard">
+    <div class="page-shell leaderboard-shell">
+      <header class="page-header page-header-tight leaderboard-page-header">
+        <button class="btn btn-ghost btn-sm" data-nav="home" data-i18n="common.back">← Voltar</button>
+        <div class="leaderboard-title-block">
+          <h1 class="page-title" data-i18n="leaderboard.title">Placar Histórico</h1>
+          <p class="leaderboard-subtitle" data-i18n="leaderboard.subtitle">Quem mais enganou o grupo ou encontrou impostores.</p>
+        </div>
+      </header>
+      <div class="leaderboard-layout">
+        <aside class="card leaderboard-controls-card">
+          <div class="leaderboard-summary-box">
+            <span class="leaderboard-summary-icon">⏱️</span>
+            <span>
+              <span class="leaderboard-summary-label" data-i18n="leaderboard.summaryLabel">Resultados salvos</span>
+              <strong id="leaderboard-summary"></strong>
+            </span>
+          </div>
+
+          <button class="btn btn-danger btn-block" data-action="reset-leaderboard" data-i18n="leaderboard.resetButton">Apagar resultados</button>
+        </aside>
+        <div class="card leaderboard-list-card">
+          <div class="leaderboard-list" id="leaderboard-list"></div>
+          <div class="leaderboard-list-footer" id="leaderboard-footer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== MULTI DEVICE ========== -->
+  <div class="screen" id="screen-multidevice">
+    <div class="page-shell">
+      <header class="page-header">
+        <button class="btn btn-ghost btn-sm" data-nav="home" data-i18n="common.back">← Voltar</button>
+        <h1 class="page-title" data-i18n="multiDevice.title">Partida Multi Device</h1>
+      </header>
+      <div class="card multidevice-choice-card" id="multidevice-choice-card">
+        <h2 class="card-title" data-i18n="multiDevice.chooseTitle">O que você quer fazer?</h2>
+          <p class="text-sm mb" data-i18n="multiDevice.chooseDesc">Abra uma sessão para controlar a partida ou conecte outro celular ao jogador.</p>
+        <div class="multidevice-choice-actions">
+          <button class="btn btn-primary btn-lg btn-block" data-action="select-multidevice-host" data-i18n="multiDevice.chooseHost">📡 Abrir uma sessão</button>
+          <button class="btn btn-secondary btn-lg btn-block" data-action="select-multidevice-join" data-i18n="multiDevice.chooseJoin">🔗 Conectar em uma sessão</button>
+        </div>
+      </div>
+      <div class="multidevice-grid">
+        <div class="card multidevice-card hidden" id="multidevice-host-card">
+          <button class="btn btn-ghost btn-sm btn-nowrap multidevice-change-btn" data-action="reset-multidevice-choice" data-i18n="multiDevice.changeChoice">Trocar opção</button>
+          <h2 class="card-title" data-i18n="multiDevice.hostTitle">📡 Abrir sessão</h2>
+          <p class="text-sm mb" data-i18n="multiDevice.hostDesc">Este dispositivo controla a partida. Celulares conectados recebem apenas o que cada jogador pode ver.</p>
+          <button class="btn btn-primary btn-lg btn-block" data-action="create-multidevice-host" data-i18n="multiDevice.openSession">Abrir sessão</button>
+        </div>
+        <div class="card multidevice-card multidevice-session hidden" id="multidevice-host-panel">
+          <div class="text-strong text-sm-title" id="multidevice-host-status" data-i18n="multiDevice.hostCreating">Criando sessão...</div>
+          <div class="qr-frame" id="multidevice-qr"></div>
+          <div class="copy-row">
+            <input class="inp mono-input" id="multidevice-link" readonly value="">
+            <button class="btn btn-ghost btn-sm btn-nowrap" data-action="copy-multidevice-link" data-i18n="common.copy">Copiar</button>
+          </div>
+          <div class="helper-box">
+            <span data-i18n="multiDevice.sessionCode">Código da sessão:</span>
+            <strong id="multidevice-session-code">---</strong>
+          </div>
+          <div class="text-meta" id="multidevice-guest-count">0 devices conectados</div>
+          <button class="btn btn-secondary btn-block" data-action="continue-multidevice-setup" data-i18n="multiDevice.continueSetup">Continuar configuração</button>
+        </div>
+
+        <div class="card multidevice-card hidden" id="multidevice-join-card">
+          <div class="multidevice-join-main">
+            <button class="btn btn-ghost btn-sm btn-nowrap multidevice-change-btn" data-action="reset-multidevice-choice" data-i18n="multiDevice.changeChoice">Trocar opção</button>
+            <h2 class="card-title" data-i18n="multiDevice.joinTitle">🔗 Conectar</h2>
+            <p class="text-sm mb" data-i18n="multiDevice.joinDesc">Conecte este celular para receber papel, turno e voto de um jogador.</p>
+          </div>
+          <div class="multidevice-join-form">
+            <label class="toggle-label" for="multidevice-join-code" data-i18n="multiDevice.joinCodeLabel">Código ou link da sessão</label>
+            <input class="inp mt-xs mb-sm" id="multidevice-join-code" placeholder="Cole o código ou link" data-i18n-placeholder="multiDevice.joinCodePlaceholder">
+            <button class="btn btn-primary btn-lg btn-block" data-action="join-multidevice-session" data-i18n="multiDevice.joinSession">Conectar na sessão</button>
+            <div class="helper-box mt" id="multidevice-join-status" data-i18n="multiDevice.joinHelp">Você também pode escanear o QR Code exibido no host.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== GUEST WATCH ========== -->
+  <div class="screen" id="screen-guest">
+    <div class="page-shell page-shell-game guest-shell">
+      <div class="guest-header">
+        <div>
+          <div class="eyebrow eyebrow-accent" data-i18n="multiDevice.guestLabel">Tela auxiliar</div>
+          <h1 class="page-title" id="guest-round-title" data-i18n="multiDevice.waitingTitle">Aguardando dados da partida</h1>
+        </div>
+        <div class="guest-header-actions">
+          <div class="guest-connection-pill" id="guest-connection-status" data-i18n="multiDevice.connecting">Conectando...</div>
+          <button class="btn btn-secondary btn-sm btn-nowrap hidden" id="guest-reconnect-button" data-action="reconnect-multidevice-guest" data-i18n="multiDevice.reconnect">Reconectar</button>
+          <button class="btn btn-ghost btn-sm btn-nowrap" data-action="disconnect-multidevice-guest" data-i18n="multiDevice.disconnect">Desconectar</button>
+        </div>
+      </div>
+      <div class="guest-watch-layout">
+        <div class="card guest-timer-card center" id="guest-timer-card">
+          <div class="current-player mb-sm">
+            <div class="cp-label" id="guest-current-player-label" data-i18n="multiDevice.guestWaiting">Aguardando o host iniciar a partida.</div>
+            <div class="cp-name" id="guest-current-player-name">--</div>
+          </div>
+          <div class="timer-wrap guest-timer-wrap">
+            <svg class="timer-svg" viewBox="0 0 160 160">
+              <circle class="timer-track" cx="80" cy="80" r="68" />
+              <circle class="timer-prog" id="guest-timer-circle" cx="80" cy="80" r="68" stroke="#ffd93d" stroke-dasharray="427.3"
+                stroke-dashoffset="0" />
+            </svg>
+            <div class="timer-num" id="guest-timer-num">--</div>
+            <div class="timer-label" data-i18n="game.secondsLabel">SEGUNDOS</div>
+          </div>
+        </div>
+        <div class="card guest-joke-card hidden" id="guest-joke-card">
+          <h2 class="card-title card-title-sm" data-i18n="multiDevice.liveDrawing">📜 História no celular</h2>
+          <div class="word-card word-card-memorize">
+            <div class="word-text word-text-memorize" id="guest-word-display">---</div>
+            <div id="guest-challenge-display" class="challenge-text hidden">
+              <span data-i18n="game.challengePrefix">🎯 Desafio:</span> <span id="guest-challenge-text">---</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SETUP ========== -->
+  <div class="screen" id="screen-setup">
+    <div class="page-shell">
+      <header class="page-header">
+        <button class="btn btn-ghost btn-sm" data-nav="home" data-i18n="common.back">← Voltar</button>
+        <h1 class="page-title" data-i18n="setup.title">Nova Partida</h1>
+      </header>
+      <div class="setup-grid"></div>
+    </div>
+  </div>
+
+  <!-- ========== GAME ========== -->
+  <div class="screen" id="screen-game">
+    <div class="page-shell page-shell-game">
+      <div class="action-row action-row-between mb-sm">
+        <div class="round-info" id="round-display">Rodada 1 de 3</div>
+        <div class="action-row action-row-compact">
+          <button class="btn btn-ghost btn-sm" data-action="confirm-restart" data-i18n="common.restart">🔄 Reiniciar</button>
+        </div>
+      </div>
+      <div id="score-mini" class="score-mini-row"></div>
+      <div class="game-status-row">
+        <div class="current-player">
+          <div class="cp-label" data-i18n="game.currentPlayerLabel">Turno de história:</div>
+          <div class="cp-name" id="current-player-name">--</div>
+        </div>
+        <div class="drawing-timer-dock" aria-hidden="true">
+          <div class="timer-wrap timer-wrap-compact">
+            <svg class="timer-svg" viewBox="0 0 160 160">
+              <circle class="timer-track" cx="80" cy="80" r="68" />
+              <circle class="timer-prog" data-timer-circle cx="80" cy="80" r="68" stroke="#ffd93d" stroke-dasharray="427.3"
+                stroke-dashoffset="0" />
+            </svg>
+            <div class="timer-num" data-timer-num>60</div>
+            <div class="timer-label" data-i18n="game.secondsLabel">SEGUNDOS</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PREPARING -->
+      <div id="preparing-state" class="card center">
+        <div class="emoji-hero mb-sm" id="game-ready-emoji">🎭</div>
+        <h2 class="section-title section-title-light mb-xs" id="game-ready-title" data-i18n="game.readyTitle">Prontos para ver o papel?</h2>
+        <div class="text-sm mb-lg" id="game-ready-sub" data-i18n="game.readySub">Só o jogador da vez deve olhar. Depois passe o dispositivo.</div>
+        <button class="btn btn-primary btn-lg btn-block" data-action="show-role" data-i18n="game.revealWord">🎭 Revelar papel</button>
+      </div>
+
+      <!-- MEMORIZE -->
+      <div id="memorize-state" class="hidden">
+        <div class="center mb-sm">
+          <div class="eyebrow eyebrow-accent mb-xs" data-i18n="game.memorizeTitle">
+            ⚡ Prepare-se!
+          </div>
+          <div class="text-meta" data-i18n="game.startsIn">O papel aparece em...</div>
+        </div>
+        <div class="action-row action-row-center mb">
+          <div class="countdown-wrap">
+            <svg class="countdown-svg" viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="6" />
+              <circle id="memCircle" cx="40" cy="40" r="34" fill="none" stroke="#c77dff" stroke-width="6"
+                stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="0" class="countdown-progress" />
+            </svg>
+            <div id="mem-num" class="countdown-number">3</div>
+          </div>
+        </div>
+        <div class="text-sm center text-muted" data-i18n="game.readySub">
+          Só quem vai ler deve olhar! Os outros fechem os olhos! 👀
+        </div>
+      </div>
+
+      <!-- PLAYING -->
+      <div id="playing-state" class="hidden">
+        <div class="game-play-layout">
+          <div class="game-play-side">
+            <div class="timer-wrap">
+              <svg class="timer-svg" viewBox="0 0 160 160">
+                <circle class="timer-track" cx="80" cy="80" r="68" />
+                <circle class="timer-prog" id="timerCircle" data-timer-circle cx="80" cy="80" r="68" stroke="#ffd93d" stroke-dasharray="427.3"
+                  stroke-dashoffset="0" />
+              </svg>
+              <div class="timer-num" id="timer-num" data-timer-num>60</div>
+              <div class="timer-label" data-i18n="game.secondsLabel">SEGUNDOS</div>
+            </div>
+          </div>
+          <div class="game-play-main">
+            <div class="word-card">
+              <div class="word-text" id="word-display">---</div>
+              <div id="game-challenge-display" class="challenge-text hidden">
+                <span data-i18n="game.challengePrefix">🎯 Dica:</span> <span id="game-challenge-text">---</span>
+              </div>
+            </div>
+            <div class="game-actions-grid">
+              <button class="btn btn-success btn-lg" data-action="save-story-beat" data-i18n="game.correct">Salvar frase</button>
+              <button class="btn btn-danger btn-lg" data-action="skip-timer" data-i18n="game.wrong">Pular registro</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SCOREBOARD ========== -->
+  <div class="screen" id="screen-score">
+    <div class="page-shell">
+      <h1 class="hero-title hero-title-score" data-i18n="score.title">🏆 Placar</h1>
+      <div class="text-sm center mb" id="score-subtitle"></div>
+      <div id="scoreboard-list" class="mb"></div>
+      <div class="card mb">
+        <h2 class="card-title card-title-sm" data-i18n="score.nextRoundTitle">🎊 Próxima Rodada</h2>
+        <div id="next-round-info" class="text-sm mb"></div>
+        <div class="action-row">
+          <button class="btn btn-primary btn-block" data-action="continue-game" data-i18n="common.continue">▶️ Continuar</button>
+          <button class="btn btn-ghost btn-block" data-action="confirm-restart" data-i18n="common.restart">🔄 Reiniciar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== FINAL ========== -->
+  <div class="screen" id="screen-final">
+    <div class="page-shell center">
+      <div class="emoji-trophy mb-sm" id="final-trophy">🏆</div>
+      <h1 class="logo logo-final" id="final-winner">--</h1>
+      <p class="logo-sub" data-i18n="final.winnerLabel">VENCEDOR!</p>
+      <div class="card my-lg text-left">
+        <h2 class="card-title" data-i18n="final.resultTitle">📊 Resultado Final</h2>
+        <div id="final-scoreboard"></div>
+      </div>
+      <div class="action-row action-row-wrap">
+        <button class="btn btn-primary btn-lg btn-block" data-action="confirm-restart" data-i18n="final.playAgain">🎮 Jogar de Novo</button>
+        <button class="btn btn-ghost btn-block" data-nav="home" data-i18n="common.home">🏠 Início</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== WORD BANK ========== -->
+  <div class="screen" id="screen-wordbank">
+    <div class="page-shell"></div>
+  </div>
+
+  <!-- ========== SETTINGS ========== -->
+  <div class="screen" id="screen-settings">
+    <div class="page-shell">
+      <header class="page-header">
+        <button class="btn btn-ghost btn-sm" data-nav="home" data-i18n="common.back">← Voltar</button>
+        <h1 class="page-title" data-i18n="settings.title">Configurações</h1>
+      </header>
+      <div class="settings-grid">
+        <div class="card">
+          <h2 class="card-title" data-i18n="settings.timerTitle">⏱️ Timer</h2>
+          <div class="toggle-wrap">
+            <div>
+              <div class="toggle-label" data-i18n="settings.roundTimeLabel">Tempo por turno</div>
+              <div class="toggle-sub" data-i18n="settings.roundTimeSub">Segundos para cada jogador continuar a história</div>
+            </div>
+            <div class="range-wrap range-wrap-fixed">
+              <input type="range" class="range-inp" id="timer-slider" min="20" max="120" step="10" value="60">
+              <div class="range-val" id="timer-val">60s</div>
+            </div>
+          </div>
+          <div class="toggle-wrap">
+            <div>
+              <div class="toggle-label" data-i18n="settings.prepareTimeLabel">Tempo de revelação</div>
+              <div class="toggle-sub" data-i18n="settings.prepareTimeSub">Segundos antes de mostrar cada papel secreto</div>
+            </div>
+            <div class="range-wrap range-wrap-fixed">
+              <input type="range" class="range-inp" id="prepare-timer-slider" min="1" max="10" step="1" value="3">
+              <div class="range-val" id="prepare-timer-val">3s</div>
+            </div>
+          </div>
+          <div class="toggle-wrap">
+            <div>
+              <label class="toggle-label" for="correct-points-input" data-i18n="settings.correctPointsLabel">Pontos por voto correto</label>
+              <div class="toggle-sub" data-i18n="settings.correctPointsSub">Pontos para cada jogador que votar no impostor, se ele não adivinhar o tema</div>
+            </div>
+            <input class="inp points-input" id="correct-points-input" type="number" min="0" max="999" step="1" value="10">
+          </div>
+          <div class="toggle-wrap">
+            <div>
+              <label class="toggle-label" for="wrong-points-input" data-i18n="settings.wrongPenaltyPointsLabel">Bônus do impostor</label>
+              <div class="toggle-sub" data-i18n="settings.wrongPenaltyPointsSub">Pontos quando o impostor escapa, empata a votação ou acerta o tema</div>
+            </div>
+            <input class="inp points-input" id="wrong-points-input" type="number" min="0" max="999" step="1" value="0">
+          </div>
+          <div class="toggle-wrap toggle-wrap-last">
+            <div>
+              <div class="toggle-label" data-i18n="settings.roundFlowLabel">Fluxo da rodada</div>
+              <div class="toggle-sub" data-i18n="settings.roundFlowSub">Papel secreto, história coletiva, voto individual e defesa do impostor</div>
+            </div>
+            <div class="text-strong">🎤 → 😂</div>
+          </div>
+        </div>
+        <div class="card">
+          <h2 class="card-title" data-i18n="settings.generalTitle">⚙️ Configurações Gerais</h2>
+          <div class="flex-col mb">
+            <div>
+              <label class="toggle-label" for="language-select" data-i18n="settings.languageLabel">Idioma</label>
+              <div class="toggle-sub mt-xs" data-i18n="settings.languageSub">Altera a interface e o conteúdo disponível no jogo</div>
+            </div>
+            <select class="inp" id="language-select">
+              <option value="pt" data-i18n="language.pt">Português</option>
+              <option value="en" data-i18n="language.en">English</option>
+              <option value="es" data-i18n="language.es">Español</option>
+            </select>
+          </div>
+          <div class="toggle-wrap">
+            <div>
+              <div class="toggle-label" data-i18n="settings.alertSoundLabel">Som de Alerta</div>
+              <div class="toggle-sub" data-i18n="settings.alertSoundSub">Beep nos últimos 10 segundos</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-sound" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="toggle-wrap">
+            <div>
+              <div class="toggle-label" data-i18n="settings.navigationSoundLabel">Som de Navegação</div>
+              <div class="toggle-sub" data-i18n="settings.navigationSoundSub">Som ao clicar nos botões da interface</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-navigation-sound" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="toggle-wrap">
+            <div>
+              <div class="toggle-label" data-i18n="settings.gameroomMusicLabel">Música dos menus</div>
+              <div class="toggle-sub" data-i18n="settings.gameroomMusicSub">Toca na página inicial, setup e configurações</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-gameroom-music" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="toggle-wrap toggle-wrap-last">
+            <div>
+              <div class="toggle-label" data-i18n="settings.gameplayMusicLabel">Música do gameplay</div>
+              <div class="toggle-sub" data-i18n="settings.gameplayMusicSub">Toca durante preparação, timer e placares</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-gameplay-music" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="toggle-wrap toggle-wrap-last">
+            <div>
+              <label class="toggle-label" for="music-volume-slider">Volume da música</label>
+              <div class="toggle-sub">Controla trilhas de menu e gameplay neste dispositivo host.</div>
+            </div>
+            <div class="range-wrap range-wrap-fixed">
+              <input type="range" class="range-inp" id="music-volume-slider" min="0" max="100" step="5" value="32">
+              <div class="range-val" id="music-volume-val">32%</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h2 class="card-title" data-i18n="settings.wordsTitle">🎲 Conteúdo</h2>
+          <div class="toggle-wrap toggle-wrap-last">
+            <div>
+              <div class="toggle-label" data-i18n="settings.shuffleWordsLabel">Embaralhar jogadores</div>
+              <div class="toggle-sub" data-i18n="settings.shuffleWordsSub">Altera a ordem de fala em cada rodada</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-shuffle" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="card">
+          <h2 class="card-title" data-i18n="settings.appearanceTitle">🎨 Aparência</h2>
+          <div class="flex-col">
+            <div>
+              <label class="toggle-label" for="theme-select" data-i18n="settings.themeLabel">Tema visual</label>
+              <div class="toggle-sub mt-xs" data-i18n="settings.themeSub">Troque cores, transparências e tipografia da interface</div>
+            </div>
+            <select class="inp" id="theme-select">
+              <option value="cosmic" data-i18n="theme.cosmic">Cósmico</option>
+              <option value="liquid-glass" data-i18n="theme.liquid-glass">Outono</option>
+              <option value="material3" data-i18n="theme.material3">Primavera</option>
+              <option value="light-mode" data-i18n="theme.light-mode">Modo Claro</option>
+              <option value="dark-mode" data-i18n="theme.dark-mode">Modo Escuro</option>
+              <option value="high-contrast" data-i18n="theme.high-contrast">Alto Contraste</option>
+            </select>
+          </div>
+        </div>
+        <div class="card settings-reset-card">
+          <h2 class="card-title" data-i18n="settings.resetAllTitle">🧹 Restaurar aplicação</h2>
+          <div class="flex-col">
+            <p class="text-sm text-muted" data-i18n="settings.resetAllSub">Remove configurações, jogadores salvos e packs instalados neste dispositivo.</p>
+            <button class="btn btn-danger btn-block" data-action="reset-app-defaults" data-i18n="settings.resetAllButton">Restaurar tudo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== DONATE ========== -->
+  <div class="screen" id="screen-donate">
+    <div class="page-shell">
+      <header class="page-header page-header-tight">
+        <button class="btn btn-ghost btn-sm" data-nav="home" data-i18n="common.back">← Voltar</button>
+        <h1 class="page-title" data-i18n="donate.title">Apoie CrazyStory</h1>
+      </header>
+      <div class="donate-layout">
+        <div class="card">
+          <h2 class="card-title" data-i18n="donate.chooseTitle">❤️ Escolha como apoiar</h2>
+          <p class="text-sm mb" data-i18n="donate.subtitle">Ajude a financiar novos temas, idiomas e modos de jogo.</p>
+          <div class="donate-grid">
+            <button class="donate-option" data-action="donate-bmc">
+              <span class="donate-option-badge">☕</span>
+              <span class="donate-option-copy">
+                <span class="donate-option-title" data-i18n="donate.buyMeCoffee">Buy Me a Coffee</span>
+                <span class="donate-option-sub" data-i18n="donate.buyMeCoffeeSub">Fast one-time support through Buy Me a Coffee.</span>
+              </span>
+              <span class="donate-option-arrow">↗</span>
+            </button>
+            <button class="donate-option" data-action="donate-kofi">
+              <span class="donate-option-badge">🎁</span>
+              <span class="donate-option-copy">
+                <span class="donate-option-title" data-i18n="donate.koFi">Ko-fi</span>
+                <span class="donate-option-sub" data-i18n="donate.koFiSub">Doe com Ko-fi e mantenha o projeto evoluindo.</span>
+              </span>
+              <span class="donate-option-arrow">↗</span>
+            </button>
+          </div>
+        </div>
+        <div class="card">
+          <h2 class="card-title card-title-sm" data-i18n="donate.whyTitle">✨ Por que doar?</h2>
+          <div class="how-to-list">
+            <div class="media-row media-row-start">
+              <div class="emoji-lg emoji-fixed">🌍</div>
+              <div class="text-sm" data-i18n="donate.whyLanguages">Seu apoio ajuda a criar novos baralhos de histórias e traduções.</div>
+            </div>
+            <div class="media-row media-row-start">
+              <div class="emoji-lg emoji-fixed">🛠️</div>
+              <div class="text-sm" data-i18n="donate.whyUpdates">Também ajuda a manter CrazyStory polido, offline e divertido em grupo.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-footer-panel">
+    <div class="footer-share" aria-label="Compartilhar CrazyStory" data-i18n-aria-label="share.footerAriaLabel">
+      <div class="share-grid">
+        <button class="share-platform share-whatsapp" type="button" data-action="share-platform" data-platform="whatsapp" aria-label="WhatsApp" title="WhatsApp">
+          <svg class="share-platform-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12.1 2a9.8 9.8 0 0 0-8.5 14.7L2.2 22l5.5-1.4A9.9 9.9 0 1 0 12.1 2zm0 17.8c-1.5 0-2.9-.4-4.1-1.1l-.3-.2-3.2.8.9-3.1-.2-.3a7.8 7.8 0 1 1 6.9 3.9zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.7 1-.3.2-.5.1a6.4 6.4 0 0 1-3.2-2.8c-.2-.3 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.5-1.2-.7-1.7c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.5.1-.8.4s-1 1-1 2.3 1 2.7 1.1 2.8c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.5.6.2 1.2.2 1.7.1.5-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z" />
+          </svg>
+        </button>
+        <button class="share-platform share-instagram" type="button" data-action="share-platform" data-platform="instagram" aria-label="Instagram" title="Instagram">
+          <svg class="share-platform-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.2-2.7a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z" />
+          </svg>
+        </button>
+        <button class="share-platform share-tiktok" type="button" data-action="share-platform" data-platform="tiktok" aria-label="TikTok" title="TikTok">
+          <svg class="share-platform-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15.2 2c.4 3 2.1 4.8 4.8 5v3.2a7.5 7.5 0 0 1-4.7-1.7v6.8A6.7 6.7 0 1 1 9.1 8.6c.4 0 .8 0 1.2.1v3.4a3.3 3.3 0 1 0 1.7 2.9V2h3.2z" />
+          </svg>
+        </button>
+        <button class="share-platform share-facebook" type="button" data-action="share-platform" data-platform="facebook" aria-label="Facebook" title="Facebook">
+          <svg class="share-platform-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14 8.4V6.8c0-.8.2-1.3 1.3-1.3H17V2.2c-.3 0-1.4-.2-2.7-.2-2.7 0-4.5 1.6-4.5 4.6v1.8h-3v3.7h3V22H14v-9.9h3.1l.5-3.7H14z" />
+          </svg>
+        </button>
+        <button class="share-platform share-x" type="button" data-action="share-platform" data-platform="x" aria-label="X" title="X">
+          <svg class="share-platform-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14.2 10.4 22 2h-2.4l-6.5 7-5-7H2l8 11.2L2 22h2.4l6.8-7.3 5.2 7.3H22l-7.8-11.6zm-2 2.1-1.1-1.6L6.5 4h1.2l4 5.7 1.1 1.6L17.6 20h-1.2l-4.2-7.5z" />
+          </svg>
+        </button>
+        <button class="share-platform share-copy" type="button" data-action="share-platform" data-platform="copy" aria-label="Copiar link" title="Copiar link">
+          <svg class="share-platform-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8 7a5 5 0 0 1 5-5h4a5 5 0 0 1 0 10h-2V9h2a2 2 0 0 0 0-4h-4a2 2 0 0 0-2 2v2H8V7zm1 5H7a2 2 0 0 0 0 4h4a2 2 0 0 0 2-2v-2h3v2a5 5 0 0 1-5 5H7A5 5 0 0 1 7 9h2v3zm-1.5-1.5h9v3h-9v-3z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <span data-i18n="footer.copyPrefix">© 2026 CrazyStory v0.1 · Insight X Lab Technologies</span>
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js').catch(() => { });
+      });
+    }
+  </script>
+</body>
+
+</html>
