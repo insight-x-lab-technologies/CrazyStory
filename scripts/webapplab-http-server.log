@@ -119,3 +119,121 @@ Diretório servido: /mnt/userdata/Projetos/Pessoal/CrazyStory/src
 100.68.120.124 - - [06/Jun/2026 23:00:32] "GET /src/assets/songs/autumn_gameroom.mp3 HTTP/1.1" 200 -
 100.68.120.124 - - [06/Jun/2026 23:00:32] "GET /src/assets/background/autumn_desktop_bg_app.png HTTP/1.1" 200 -
 100.68.120.124 - - [06/Jun/2026 23:00:35] "GET /src/assets/background/autumn_desktop_bg_home.png HTTP/1.1" 200 -
+
+[2026-06-07 23:20:49] Iniciando CrazyStory na porta 8080
+Diretório servido: /home/codexbot/Projetos/Pessoal/AppProjects/CrazyStory/src
+192.168.68.110 - - [07/Jun/2026 23:20:58] "GET / HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:20:58] "GET /style.css HTTP/1.1" 304 -
+192.168.68.110 - - [07/Jun/2026 23:20:58] "GET /script.js HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:21:00] "GET / HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:21:00] "GET /themes.css HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:21:00] "GET /style.css HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:21:00] "GET /manifest.webmanifest HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:21:00] "GET /script.js HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:21:00] "GET /assets/background/cosmic_desktop_bg_home.png HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:21:00] "GET /assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:21:01] "GET /favicon.ico HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET /themes.css HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET /style.css HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET /script.js HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET /manifest.webmanifest HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET /assets/background/cosmic_desktop_bg_home.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET /themes.css HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET /style.css HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET /script.js HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET /manifest.webmanifest HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET /assets/background/cosmic_desktop_bg_home.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET /assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:26] "GET /assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:27] "GET /favicon.ico HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:27] "GET /assets/icons/icon.svg HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:27] "GET /assets/icons/icon.svg HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:27] "GET /favicon.ico HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:27] "GET /service-worker.js HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:27] "GET /service-worker.js HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:27] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:27] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/icons/icon-192.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/icons/icon-512.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/icons/maskable-512.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/player-default.svg HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/background/autumn_desktop_bg_app.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/background/autumn_desktop_bg_home.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/background/autumn_mobile_bg_home.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/background/contrast_desktop_bg_app.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/icons/icon-192.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/icons/icon-512.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/icons/maskable-512.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/player-default.svg HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/background/autumn_desktop_bg_app.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/background/autumn_desktop_bg_home.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/background/autumn_mobile_bg_home.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/background/contrast_desktop_bg_home.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:28] "GET /assets/background/contrast_mobile_bg_home.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:29] "GET /assets/background/contrast_desktop_bg_app.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:29] "GET /assets/background/contrast_desktop_bg_home.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:29] "GET /assets/background/cosmic_mobile_bg_home.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:29] "GET /assets/background/contrast_mobile_bg_home.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:29] "GET /assets/background/cosmic_mobile_bg_home.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:21:29] "GET /assets/background/cosmic_desktop_bg_app.png HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 40526)
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.10/http/server.py", line 1304, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.10/http/server.py", line 668, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.10/socketserver.py", line 747, in __init__
+    self.handle()
+  File "/usr/lib/python3.10/http/server.py", line 433, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.10/http/server.py", line 421, in handle_one_request
+    method()
+  File "/usr/lib/python3.10/http/server.py", line 675, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.10/http/server.py", line 875, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.10/shutil.py", line 198, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.10/socketserver.py", line 826, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+192.168.68.110 - - [07/Jun/2026 23:22:37] "GET / HTTP/1.1" 304 -
+192.168.68.110 - - [07/Jun/2026 23:22:37] "GET /script.js HTTP/1.1" 304 -
+192.168.68.110 - - [07/Jun/2026 23:22:37] "GET /assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:22:39] "GET / HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:22:39] "GET /themes.css HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:22:39] "GET /script.js HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:22:39] "GET /style.css HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:22:39] "GET /manifest.webmanifest HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:22:39] "GET /assets/background/cosmic_desktop_bg_home.png HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:22:39] "GET /assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+192.168.68.110 - - [07/Jun/2026 23:22:40] "GET /favicon.ico HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:23:02] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:23:02] code 404, message File not found
+127.0.0.1 - - [07/Jun/2026 23:23:02] "GET /src/main.ts HTTP/1.1" 404 -
+127.0.0.1 - - [07/Jun/2026 23:23:22] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [07/Jun/2026 23:23:22] code 404, message File not found
+127.0.0.1 - - [07/Jun/2026 23:23:22] "GET /src/main.ts HTTP/1.1" 404 -
+127.0.0.1 - - [07/Jun/2026 23:23:23] code 404, message File not found
+127.0.0.1 - - [07/Jun/2026 23:23:23] "GET /src/main.ts HTTP/1.1" 404 -
+127.0.0.1 - - [07/Jun/2026 23:23:23] code 404, message File not found
+127.0.0.1 - - [07/Jun/2026 23:23:23] "GET /src/main.ts HTTP/1.1" 404 -
+192.168.68.100 - - [07/Jun/2026 23:23:36] "GET /?room=RHJ2TE HTTP/1.1" 200 -
+192.168.68.100 - - [07/Jun/2026 23:23:36] "GET /manifest.webmanifest HTTP/1.1" 200 -
+192.168.68.100 - - [07/Jun/2026 23:23:36] "GET /themes.css HTTP/1.1" 200 -
+192.168.68.100 - - [07/Jun/2026 23:23:36] "GET /style.css HTTP/1.1" 200 -
+192.168.68.100 - - [07/Jun/2026 23:23:36] "GET /script.js HTTP/1.1" 200 -
+192.168.68.100 - - [07/Jun/2026 23:23:36] "GET /assets/background/cosmic_mobile_bg_home.png HTTP/1.1" 200 -
+192.168.68.100 - - [07/Jun/2026 23:23:36] "GET /assets/background/cosmic_desktop_bg_app.png HTTP/1.1" 200 -
+192.168.68.100 - - [07/Jun/2026 23:23:36] "GET /assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -
+192.168.68.100 - - [07/Jun/2026 23:23:37] "GET /favicon.ico HTTP/1.1" 200 -
+192.168.68.100 - - [07/Jun/2026 23:23:40] "GET /assets/icons/icon-192.png HTTP/1.1" 200 -
+192.168.68.100 - - [07/Jun/2026 23:25:45] "GET /?room=RHJ2TE HTTP/1.1" 200 -
+192.168.68.100 - - [07/Jun/2026 23:25:45] "GET /script.js HTTP/1.1" 304 -
+192.168.68.100 - - [07/Jun/2026 23:25:46] "GET /assets/songs/cosmic_gameroom.mp3 HTTP/1.1" 200 -

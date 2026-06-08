@@ -36,6 +36,9 @@ const I18N = {
     'home.leaderboard': '🏅 Placar Histórico',
     'home.settings': '⚙️ Configurações',
     'home.installOnDevice': '📲 Instalar no dispositivo',
+    'home.multiDeviceOnline': 'On-line',
+    'home.multiDeviceOffline': 'Off-line',
+    'home.multiDeviceSummary': '{status} | {count} devices connected',
     'leaderboard.title': 'Placar Histórico',
     'leaderboard.subtitle': 'Quem mais enganou o grupo ou encontrou impostores.',
     'leaderboard.summaryLabel': 'Resultados salvos',
@@ -155,7 +158,7 @@ const I18N = {
     'setup.familyMode': 'Família',
     'setup.partyMode': 'Festa adulta',
     'setup.themesTitle': '3️⃣ Temas',
-    'setup.howTitle': '4️⃣ Como funciona',
+    'setup.howTitle': 'Como funciona',
     'setup.howRole': 'Cada jogador vê seu papel em segredo.',
     'setup.howStory': 'Todos continuam a mesma história, uma frase por vez.',
     'setup.howVote': 'No final, o grupo vota em quem parece não saber o tema.',
@@ -529,7 +532,7 @@ Object.assign(I18N.en, {
   'setup.familyMode': 'Family',
   'setup.partyMode': 'Party night',
   'setup.themesTitle': '3️⃣ Themes',
-  'setup.howTitle': '4️⃣ How it works',
+  'setup.howTitle': 'How it works',
   'setup.howRole': 'Each player sees their role in secret.',
   'setup.howStory': 'Everyone continues the same story, one sentence at a time.',
   'setup.howVote': 'At the end, the group votes for whoever seems not to know the theme.',
@@ -596,7 +599,7 @@ Object.assign(I18N.es, {
   'setup.familyMode': 'Familia',
   'setup.partyMode': 'Noche de fiesta',
   'setup.themesTitle': '3️⃣ Temas',
-  'setup.howTitle': '4️⃣ Cómo funciona',
+  'setup.howTitle': 'Cómo funciona',
   'setup.howRole': 'Cada jugador ve su rol en secreto.',
   'setup.howStory': 'Todos continúan la misma historia, una frase por vez.',
   'setup.howVote': 'Al final, el grupo vota por quien parece no saber el tema.',
@@ -1441,6 +1444,7 @@ function applyLanguage(language = getCurrentLanguageSetting()) {
     if (value) el.setAttribute('aria-label', value);
   });
   $('#fullscreen-toggle')?.setAttribute('title', lang === 'pt' ? 'Tela cheia' : lang === 'es' ? 'Pantalla completa' : 'Fullscreen');
+  renderMultiDeviceHomeSummary();
 }
 
 function getCurrentTheme() {
@@ -1585,10 +1589,8 @@ function renderSetupScreen() {
   text('#screen-setup .page-title', translate('setup.title'));
   const setup = $('#screen-setup .setup-grid');
   if (!setup) return;
-  const showRulesNudge = localStorage.getItem(SEEN_RULES_KEY) !== '1';
   setup.innerHTML = `
     <div class="setup-column setup-column-left">
-      ${showRulesNudge ? `
       <div class="card mb rules-nudge">
         <h2 class="card-title card-title-sm">${translate('setup.beforeTitle')}</h2>
         <div class="how-to-list">
@@ -1596,8 +1598,18 @@ function renderSetupScreen() {
           <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">🕶️</div><div class="text-sm">${translate('setup.beforeImpostor')}</div></div>
           <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">📖</div><div class="text-sm">${translate('setup.beforeStory')}</div></div>
         </div>
-        <button class="btn btn-ghost btn-block mt" data-action="dismiss-rules-nudge">${translate('setup.dismissRules')}</button>
-      </div>` : ''}
+      </div>
+      <div class="card mb">
+        <h2 class="card-title">${translate('setup.howTitle')}</h2>
+        <div class="how-to-list">
+          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">🙈</div><div class="text-sm">${translate('setup.howRole')}</div></div>
+          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">📖</div><div class="text-sm">${translate('setup.howStory')}</div></div>
+          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">🗳️</div><div class="text-sm">${translate('setup.howVote')}</div></div>
+          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">⚡</div><div class="text-sm">${translate('setup.howVariant')}</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="setup-column setup-column-right">
       <div class="card mb">
         <h2 class="card-title">${translate('setup.playersTitle')}</h2>
         <div id="ffa-players" class="flex-col mb"></div>
@@ -1652,21 +1664,10 @@ function renderSetupScreen() {
           </select>
         </div>
       </div>
-    </div>
-    <div class="setup-column setup-column-right">
       <div class="card mb">
         <h2 class="card-title">${translate('setup.themesTitle')}</h2>
         <div class="category-grid" id="category-selection"></div>
         <div id="diff-word-count" class="text-meta center mt"></div>
-      </div>
-      <div class="card mb">
-        <h2 class="card-title">${translate('setup.howTitle')}</h2>
-        <div class="how-to-list">
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">🙈</div><div class="text-sm">${translate('setup.howRole')}</div></div>
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">📖</div><div class="text-sm">${translate('setup.howStory')}</div></div>
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">🗳️</div><div class="text-sm">${translate('setup.howVote')}</div></div>
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">⚡</div><div class="text-sm">${translate('setup.howVariant')}</div></div>
-        </div>
       </div>
     </div>
     <button class="btn btn-primary btn-lg btn-block mb-lg setup-cta" data-action="start-game">${translate('setup.startStory')}</button>
@@ -1804,6 +1805,38 @@ function getMultideviceLink(code) {
   return url.href;
 }
 
+function isMultideviceHostOnline() {
+  return Boolean(state.multidevice.isHost && state.multidevice.sessionCode && state.multidevice.peer?.open);
+}
+
+function isMultideviceGuestOnline() {
+  return Boolean(state.multidevice.isGuest && state.multidevice.guestConnection?.open);
+}
+
+function getMultideviceHomeConnectionCount() {
+  if (isMultideviceHostOnline()) {
+    return state.multidevice.connections.filter(conn => conn.open).length;
+  }
+  return isMultideviceGuestOnline() ? 1 : 0;
+}
+
+function renderMultiDeviceHomeSummary() {
+  const summary = $('#multi-device-summary');
+  if (!summary) return;
+  const isOnline = isMultideviceHostOnline() || isMultideviceGuestOnline();
+  const count = getMultideviceHomeConnectionCount();
+  const status = translate(isOnline ? 'home.multiDeviceOnline' : 'home.multiDeviceOffline');
+  const value = formatMessage('home.multiDeviceSummary', { status, count });
+  const dot = document.createElement('span');
+  dot.className = `connection-status-dot ${isOnline ? 'is-online' : 'is-offline'}`;
+  dot.setAttribute('aria-hidden', 'true');
+  summary.replaceChildren(dot, document.createTextNode(value));
+  summary.title = value;
+  summary.setAttribute('aria-label', value);
+  const button = summary.closest('button');
+  if (button) button.title = `${translate('home.multiDeviceGame')} | ${value}`;
+}
+
 function parseMultideviceCode(value = '') {
   const raw = String(value).trim();
   try {
@@ -1906,6 +1939,7 @@ function updateMultideviceHostPanel() {
   const link = $('#multidevice-link');
   if (link) link.value = getMultideviceLink(state.multidevice.sessionCode);
   renderMultideviceQr();
+  renderMultiDeviceHomeSummary();
 }
 
 function createMultideviceHost() {
@@ -1947,7 +1981,10 @@ function createMultideviceHost() {
     conn.on('close', updateMultideviceHostPanel);
     conn.on('error', updateMultideviceHostPanel);
   });
-  state.multidevice.peer.on('error', () => showNotif(translate('admin.peerOpenFailed'), 'var(--accent2)', 'var(--text)'));
+  state.multidevice.peer.on('error', () => {
+    renderMultiDeviceHomeSummary();
+    showNotif(translate('admin.peerOpenFailed'), 'var(--accent2)', 'var(--text)');
+  });
 }
 
 function showMultideviceJoin() {
@@ -1970,14 +2007,21 @@ function joinMultideviceSession() {
     state.multidevice.guestConnection = conn;
     conn.on('open', () => {
       text('#multidevice-join-status', translate('guest.joinConnected'));
+      renderMultiDeviceHomeSummary();
       goTo('guest');
     });
     conn.on('data', data => {
       if (data?.type === 'crazystory-role') return renderGuestRolePayload(data);
       renderGuestPayload(data);
     });
-    conn.on('close', () => text('#guest-connection-status', translate('guest.disconnected')));
-    conn.on('error', () => text('#multidevice-join-status', translate('admin.connectionFailed')));
+    conn.on('close', () => {
+      text('#guest-connection-status', translate('guest.disconnected'));
+      renderMultiDeviceHomeSummary();
+    });
+    conn.on('error', () => {
+      text('#multidevice-join-status', translate('admin.connectionFailed'));
+      renderMultiDeviceHomeSummary();
+    });
   });
 }
 
