@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'crazystory-pwa-v3';
+const CACHE_VERSION = 'crazystory-pwa-v4';
 const APP_SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -10,7 +10,9 @@ const APP_SHELL = [
   './script.js',
   './manifest.webmanifest',
   './favicon.ico',
-  './assets/icons/icon.svg',
+  './apple-touch-icon.png',
+  './apple-touch-icon-precomposed.png',
+  './assets/icons/apple-touch-icon.png',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
   './assets/icons/maskable-512.png',
