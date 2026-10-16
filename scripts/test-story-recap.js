@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const assert = require('node:assert/strict');
-const { formatStoryRecap } = require('../src/src/script.js');
+const { formatStoryRecap } = require('../src/script.js');
 
 const recap = formatStoryRecap([
   { round: 1, player: 'Ana', text: 'Achou uma chave falante.' },

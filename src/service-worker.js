@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'crazystory-pwa-v4';
+const CACHE_VERSION = 'crazystory-pwa-v5';
 const APP_SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -17,32 +17,29 @@ const APP_SHELL = [
   './assets/icons/icon-512.png',
   './assets/icons/maskable-512.png',
   './assets/player-default.svg',
-  './assets/background/autumn_desktop_bg_app.png',
-  './assets/background/autumn_desktop_bg_home.png',
-  './assets/background/autumn_mobile_bg_home.png',
-  './assets/background/contrast_desktop_bg_app.png',
-  './assets/background/contrast_desktop_bg_home.png',
-  './assets/background/contrast_mobile_bg_home.png',
-  './assets/background/cosmic_desktop_bg_home.png',
-  './assets/background/cosmic_mobile_bg_home.png',
-  './assets/background/cosmic_desktop_bg_app.png',
-  './assets/background/dark_desktop_bg_app.png',
-  './assets/background/dark_desktop_bg_home.png',
-  './assets/background/dark_mobile_bg_home.png',
-  './assets/background/flowers_desktop_bg_app.png',
-  './assets/background/light_desktop_bg_app.png',
-  './assets/background/light_desktop_bg_home.png',
-  './assets/background/light_mobile_bg_home.png',
-  './assets/background/spring_desktop_bg_app.png',
-  './assets/background/spring_desktop_bg_home.png',
-  './assets/background/spring_mobile_bg_home.png',
-  './assets/songs/autumn_gameplay.mp3',
-  './assets/songs/autumn_gameroom.mp3',
-  './assets/songs/cosmic_gameplay.mp3',
-  './assets/songs/cosmic_gameroom.mp3',
-  './assets/songs/spring_gameplay.mp3',
-  './assets/songs/spring_gameroom.mp3'
+  './assets/background/autumn_desktop_bg_app.webp',
+  './assets/background/autumn_desktop_bg_home.webp',
+  './assets/background/autumn_mobile_bg_home.webp',
+  './assets/background/contrast_desktop_bg_app.webp',
+  './assets/background/contrast_desktop_bg_home.webp',
+  './assets/background/contrast_mobile_bg_home.webp',
+  './assets/background/cosmic_desktop_bg_app.webp',
+  './assets/background/cosmic_desktop_bg_home.webp',
+  './assets/background/cosmic_mobile_bg_home.webp',
+  './assets/background/dark_desktop_bg_app.webp',
+  './assets/background/dark_desktop_bg_home.webp',
+  './assets/background/dark_mobile_bg_home.webp',
+  './assets/background/light_desktop_bg_app.webp',
+  './assets/background/light_desktop_bg_home.webp',
+  './assets/background/light_mobile_bg_home.webp',
+  './assets/background/spring_desktop_bg_app.webp',
+  './assets/background/spring_desktop_bg_home.webp',
+  './assets/background/spring_mobile_bg_home.webp'
 ];
+
+// Music (~3.5 MB per track) is not precached: each track is cached in full the first
+// time it plays, so a theme's music works offline after it has been heard once.
+const AUDIO_PATTERN = /\.mp3$/i;
 
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -76,12 +73,14 @@ function shouldRuntimeCache(request) {
 }
 
 async function cacheFirst(request) {
-  const cached = await caches.match(request);
+  const cached = await caches.match(request.url);
   if (cached) return cached;
-  const response = await fetch(request);
-  if (response && response.ok) {
+  // <audio> sends Range requests; a 206 cannot be stored, so fetch the whole file once.
+  const fetchRequest = AUDIO_PATTERN.test(new URL(request.url).pathname) ? request.url : request;
+  const response = await fetch(fetchRequest);
+  if (response && response.status === 200) {
     const cache = await caches.open(RUNTIME_CACHE);
-    cache.put(request, response.clone());
+    cache.put(request.url, response.clone());
   }
   return response;
 }

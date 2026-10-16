@@ -2,8 +2,12 @@
 
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
-const { createMultidevicePayload, createMultideviceRolePayload } = require('../src/src/script.js');
-const script = readFileSync('src/src/script.js', 'utf8');
+const {
+  createMultidevicePayload,
+  createMultideviceRolePayload,
+  validateMultideviceAssignment
+} = require('../src/script.js');
+const script = readFileSync('src/script.js', 'utf8');
 
 const payload = createMultidevicePayload({
   phase: 'story',
@@ -77,5 +81,35 @@ assert.match(script, /data-action="submit-multidevice-story"/);
 assert.match(script, /type: 'crazystory-impostor-guess'/);
 assert.match(script, /function submitRemoteImpostorGuess/);
 assert.match(script, /data-action="submit-multidevice-guess"/);
+
+{
+  const game = phase => ({ phase, players: ['Ana', 'Bia', 'Caio'], multidevice: { claims: { Ana: 'tok-ana' } } });
+  const anaConn = { open: true, playerIndex: 0, guestToken: 'tok-ana' };
+  const otherConn = { open: true };
+  const connections = [anaConn, otherConn];
+
+  // Setup: free choice, but not a slot held by another open device.
+  assert.equal(validateMultideviceAssignment(game('setup'), connections, otherConn, 1, 'tok-x'), null);
+  assert.equal(validateMultideviceAssignment(game('setup'), connections, otherConn, 0, 'tok-x'), 'taken');
+  assert.equal(validateMultideviceAssignment(game('setup'), connections, otherConn, 9, 'tok-x'), 'invalid');
+  assert.equal(validateMultideviceAssignment(game('setup'), connections, otherConn, 1, ''), 'invalid');
+  // Setup: switching own player is allowed.
+  assert.equal(validateMultideviceAssignment(game('setup'), connections, anaConn, 2, 'tok-ana'), null);
+
+  // Mid-game: no switching (impostor cannot read another player's secret or vote twice).
+  assert.equal(validateMultideviceAssignment(game('vote'), connections, anaConn, 1, 'tok-ana'), 'locked');
+  assert.equal(validateMultideviceAssignment(game('story'), connections, otherConn, 1, 'tok-x'), 'locked');
+  // Mid-game: cannot steal a claimed slot after its device dropped.
+  const dropped = [{ open: false, playerIndex: 0, guestToken: 'tok-ana' }, otherConn];
+  assert.equal(validateMultideviceAssignment(game('roles'), dropped, otherConn, 0, 'tok-x'), 'taken');
+  // Mid-game: same device token may reconnect to its own player.
+  const rejoin = { open: true };
+  assert.equal(validateMultideviceAssignment(game('roles'), dropped, rejoin, 0, 'tok-ana'), null);
+  // Final screen reopens assignment.
+  assert.equal(validateMultideviceAssignment(game('final'), connections, anaConn, 1, 'tok-ana'), null);
+}
+
+assert.match(script, /assignRemotePlayer\(conn, Number\(data\.playerIndex\), data\.token\)/);
+assert.doesNotMatch(script, /conn\.playerIndex = Number\(data\.playerIndex\)/);
 
 console.log('multidevice tests passed');

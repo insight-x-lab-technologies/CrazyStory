@@ -10,7 +10,7 @@ const {
   translate,
   formatMessage,
   SUPPORTED_LANGUAGES
-} = require('../src/src/script.js');
+} = require('../src/script.js');
 
 const baseCategories = [
   { id: 'aventura', icon: 'A', name: 'Aventura', prompts: ['base'] },
@@ -54,7 +54,7 @@ assert.ok(packMerged.find(category => category.id === 'aventura').prompts.includ
 const partyMerged = mergeCustomContent(baseCategories, {}, 'party');
 assert.ok(partyMerged.find(category => category.id === 'aventura').prompts.length > merged.find(category => category.id === 'aventura').prompts.length);
 
-const full = mergeCustomContent(require('../src/src/script.js').STORY_CATEGORIES || [], {});
+const full = mergeCustomContent(require('../src/script.js').STORY_CATEGORIES || [], {});
 assert.ok(full.reduce((total, category) => total + category.prompts.length, 0) >= 100);
 
 assert.deepEqual(SUPPORTED_LANGUAGES, ['pt', 'en', 'es']);

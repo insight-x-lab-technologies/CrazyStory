@@ -4,6 +4,7 @@ const QUICK_GAME_KEY = 'crazystory_quick_game_v1';
 const CUSTOM_CONTENT_KEY = 'crazystory_custom_content_v1';
 const EXTENSION_PACKS_KEY = 'crazystory_extension_packs_v1';
 const SEEN_RULES_KEY = 'crazystory_seen_rules_v1';
+const GUEST_TOKEN_KEY = 'crazystory_guest_token_v1';
 const AVAILABLE_THEMES = ['cosmic', 'liquid-glass', 'material3', 'light-mode', 'dark-mode', 'high-contrast'];
 const THEMES_WITH_MUSIC = ['cosmic', 'liquid-glass', 'material3'];
 const THEME_MUSIC_PREFIX = {
@@ -204,6 +205,9 @@ const I18N = {
     'guest.choosePlayer': 'Escolha seu jogador',
     'guest.connectionNotOpen': 'Conexão ainda não abriu.',
     'guest.waitingRole': 'Aguardando papel do host',
+    'guest.assignTaken': 'Esse jogador já está conectado em outro aparelho.',
+    'guest.assignLocked': 'A partida já começou: não dá para trocar ou escolher jogador agora.',
+    'guest.assignInvalid': 'Jogador inválido.',
     'guest.yourRole': 'Seu papel: {player}',
     'guest.waitingGame': 'Aguardando partida',
     'guest.openingAndHint': 'Abertura: {prompt}. Dica: {twist}',
@@ -647,6 +651,9 @@ Object.assign(I18N.en, {
   'guest.choosePlayer': 'Choose your player',
   'guest.connectionNotOpen': 'Connection is not open yet.',
   'guest.waitingRole': 'Waiting for role from host',
+  'guest.assignTaken': 'That player is already connected on another device.',
+  'guest.assignLocked': 'The game has started: you cannot pick or switch players now.',
+  'guest.assignInvalid': 'Invalid player.',
   'guest.yourRole': 'Your role: {player}',
   'guest.waitingGame': 'Waiting for game',
   'guest.openingAndHint': 'Opening: {prompt}. Hint: {twist}',
@@ -777,6 +784,9 @@ Object.assign(I18N.es, {
   'guest.choosePlayer': 'Elige tu jugador',
   'guest.connectionNotOpen': 'La conexión aún no abrió.',
   'guest.waitingRole': 'Esperando rol del host',
+  'guest.assignTaken': 'Ese jugador ya está conectado en otro dispositivo.',
+  'guest.assignLocked': 'La partida ya empezó: no se puede elegir ni cambiar de jugador ahora.',
+  'guest.assignInvalid': 'Jugador inválido.',
   'guest.yourRole': 'Tu rol: {player}',
   'guest.waitingGame': 'Esperando partida',
   'guest.openingAndHint': 'Apertura: {prompt}. Pista: {twist}',
@@ -1158,7 +1168,9 @@ const state = {
   multidevice: {
     peer: null,
     connections: [],
+    claims: {},
     guestConnection: null,
+    guestPlayers: [],
     guestRolePayload: null,
     guestVoteSubmitted: false,
     guestStorySubmittedFor: '',
@@ -1708,14 +1720,14 @@ function renderRulesScreen() {
       <div class="card">
         <h2 class="card-title card-title-sm">${translate('rules.availableThemes')}</h2>
         <div class="category-grid">
-          ${categories.map(category => `<div class="category-card selected"><div class="category-icon">${category.icon}</div><div class="category-name">${category.name}</div><div class="category-count">${formatMessage('rules.openingsCount', { count: category.prompts.length })}</div></div>`).join('')}
+          ${categories.map(category => `<div class="category-card selected"><div class="category-icon">${escapeHtml(category.icon)}</div><div class="category-name">${escapeHtml(category.name)}</div><div class="category-count">${formatMessage('rules.openingsCount', { count: category.prompts.length })}</div></div>`).join('')}
         </div>
       </div>
       <div class="card">
         <h2 class="card-title card-title-sm">${translate('rules.customContent')}</h2>
         <div class="flex-col">
           <select class="inp" id="custom-prompt-category">
-            ${categories.map(category => `<option value="${category.id}">${category.icon} ${category.name}</option>`).join('')}
+            ${categories.map(category => `<option value="${escapeHtml(category.id)}">${escapeHtml(category.icon)} ${escapeHtml(category.name)}</option>`).join('')}
           </select>
           <textarea class="inp custom-content-input" id="custom-prompt-text" maxlength="180" rows="3" placeholder="${translate('rules.promptPlaceholder')}"></textarea>
           <button class="btn btn-secondary btn-block" data-action="add-custom-prompt">${translate('rules.addPrompt')}</button>
@@ -1851,6 +1863,51 @@ function generateMultideviceCode() {
   return Math.random().toString(36).slice(2, 8).toUpperCase();
 }
 
+// Players can only be picked/switched while no round is in progress; mid-game, a guest may
+// only reclaim the player its token already owns (reconnect). Prevents an impostor from
+// switching to another player's slot to read the secret, or voting more than once.
+const MULTIDEVICE_ASSIGN_OPEN_PHASES = ['setup', 'final'];
+
+function validateMultideviceAssignment(gameState, connections, conn, playerIndex, token) {
+  const player = gameState.players[playerIndex];
+  if (!Number.isInteger(playerIndex) || !player || typeof token !== 'string' || !token) return 'invalid';
+  const heldByOther = connections.some(other => other !== conn && other.open
+    && other.playerIndex === playerIndex && other.guestToken !== token);
+  if (heldByOther) return 'taken';
+  const assignOpen = MULTIDEVICE_ASSIGN_OPEN_PHASES.includes(gameState.phase);
+  const claim = gameState.multidevice.claims[player];
+  if (assignOpen) return null;
+  if (Number.isInteger(conn.playerIndex) && conn.playerIndex !== playerIndex) return 'locked';
+  if (claim !== token) return claim ? 'taken' : 'locked';
+  return null;
+}
+
+function assignRemotePlayer(conn, playerIndex, token) {
+  const error = validateMultideviceAssignment(state, state.multidevice.connections, conn, playerIndex, token);
+  if (error) {
+    conn.send({ type: 'crazystory-assign-rejected', reason: error });
+    return;
+  }
+  const previous = state.players[conn.playerIndex];
+  if (previous && state.multidevice.claims[previous] === token) delete state.multidevice.claims[previous];
+  conn.playerIndex = playerIndex;
+  conn.guestToken = token;
+  state.multidevice.claims[state.players[playerIndex]] = token;
+  sendMultideviceRole(conn);
+}
+
+function getGuestToken() {
+  if (state.multidevice.guestToken) return state.multidevice.guestToken;
+  let token = '';
+  try { token = localStorage.getItem(GUEST_TOKEN_KEY) || ''; } catch { token = ''; }
+  if (!token) {
+    token = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 10)}`;
+    try { localStorage.setItem(GUEST_TOKEN_KEY, token); } catch { /* memory-only token */ }
+  }
+  state.multidevice.guestToken = token;
+  return token;
+}
+
 function getPublicCurrentPlayer(gameState = state) {
   if (gameState.phase === 'roles') return gameState.players[gameState.roleRevealIndex] || '';
   if (gameState.phase === 'vote') return gameState.players[gameState.voteRevealIndex] || '';
@@ -1951,6 +2008,7 @@ function createMultideviceHost() {
   state.multidevice.isGuest = false;
   state.multidevice.sessionCode = generateMultideviceCode();
   state.multidevice.connections = [];
+  state.multidevice.claims = {};
   renderMultiDeviceInfo();
   const peerId = `crazystory-${state.multidevice.sessionCode}`;
   state.multidevice.peer?.destroy?.();
@@ -1965,8 +2023,7 @@ function createMultideviceHost() {
     });
     conn.on('data', data => {
       if (data?.type === 'crazystory-assign-player') {
-        conn.playerIndex = Number(data.playerIndex);
-        sendMultideviceRole(conn);
+        assignRemotePlayer(conn, Number(data.playerIndex), data.token);
       }
       if (data?.type === 'crazystory-vote') {
         submitRemoteVote(conn, Number(data.voteIndex));
@@ -2012,6 +2069,7 @@ function joinMultideviceSession() {
     });
     conn.on('data', data => {
       if (data?.type === 'crazystory-role') return renderGuestRolePayload(data);
+      if (data?.type === 'crazystory-assign-rejected') return handleGuestAssignRejected(data);
       renderGuestPayload(data);
     });
     conn.on('close', () => {
@@ -2070,7 +2128,8 @@ function renderGuestPayload(payload) {
     word.textContent = payload.storyOrder?.length ? payload.storyOrder.join(' → ') : translate('guest.waitingStory');
     $('#guest-joke-card')?.classList.toggle('hidden', !payload.storyOrder?.length);
   }
-  renderGuestPlayerPicker(payload.players || []);
+  state.multidevice.guestPlayers = payload.players || [];
+  renderGuestPlayerPicker(state.multidevice.guestPlayers);
   renderGuestStoryPanel(payload);
   renderGuestVotePanel(payload);
   renderGuestImpostorGuessPanel(payload);
@@ -2094,10 +2153,17 @@ function renderGuestPlayerPicker(players = []) {
 function assignMultidevicePlayer(index) {
   const conn = state.multidevice.guestConnection;
   if (!conn?.open) return showNotif(translate('guest.connectionNotOpen'), 'var(--accent2)', 'var(--text)');
-  conn.send({ type: 'crazystory-assign-player', playerIndex: index });
+  conn.send({ type: 'crazystory-assign-player', playerIndex: index, token: getGuestToken() });
   state.multidevice.guestVoteSubmitted = false;
   $('#guest-player-picker')?.remove();
   text('#guest-current-player-label', translate('guest.waitingRole'));
+}
+
+function handleGuestAssignRejected(data = {}) {
+  const key = { taken: 'guest.assignTaken', locked: 'guest.assignLocked' }[data.reason] || 'guest.assignInvalid';
+  showNotif(translate(key), 'var(--accent2)', 'var(--text)');
+  text('#guest-current-player-label', translate('guest.choosePlayer'));
+  renderGuestPlayerPicker(state.multidevice.guestPlayers);
 }
 
 function renderGuestRolePayload(payload) {
@@ -2206,7 +2272,7 @@ function renderGuestImpostorGuessPanel(payload) {
     <h2 class="card-title card-title-sm">${translate('guest.lastChanceTitle')}</h2>
     <p class="text-sm mb">${translate('guest.guessThemeHelp')}</p>
     <div class="game-actions-grid">
-      ${(payload.guessOptions || []).map(category => `<button class="btn btn-secondary btn-lg vote-option" data-action="submit-multidevice-guess" data-category-guess="${category.id}">${escapeHtml(category.icon)} ${escapeHtml(category.name)}</button>`).join('')}
+      ${(payload.guessOptions || []).map(category => `<button class="btn btn-secondary btn-lg vote-option" data-action="submit-multidevice-guess" data-category-guess="${escapeHtml(category.id)}">${escapeHtml(category.icon)} ${escapeHtml(category.name)}</button>`).join('')}
     </div>
   `;
   shell.appendChild(panel);
@@ -2242,8 +2308,8 @@ function renderPlayers() {
     const row = document.createElement('div');
     row.className = 'player-row';
     row.innerHTML = `
-      <div class="player-avatar">${player.charAt(0).toUpperCase()}</div>
-      <div class="player-name">${player}</div>
+      <div class="player-avatar">${escapeHtml(player.charAt(0).toUpperCase())}</div>
+      <div class="player-name">${escapeHtml(player)}</div>
       <button class="btn btn-ghost btn-sm" data-action="remove-player" data-index="${index}">✕</button>
     `;
     list.appendChild(row);
@@ -2256,9 +2322,9 @@ function renderCategories() {
   if (!grid) return;
   const categories = getStoryCategories();
   grid.innerHTML = categories.map(category => `
-    <div class="category-card ${state.selectedCategories.includes(category.id) ? 'selected' : ''}" data-category="${category.id}">
-      <div class="category-icon">${category.icon}</div>
-      <div class="category-name">${category.name}</div>
+    <div class="category-card ${state.selectedCategories.includes(category.id) ? 'selected' : ''}" data-category="${escapeHtml(category.id)}">
+      <div class="category-icon">${escapeHtml(category.icon)}</div>
+      <div class="category-name">${escapeHtml(category.name)}</div>
       <div class="category-count">${formatMessage('rules.openingsCount', { count: category.prompts.length })}</div>
     </div>
   `).join('');
@@ -2426,7 +2492,7 @@ function renderRoleReveal() {
     card.innerHTML = `
       <div class="privacy-card">
         <div class="emoji-hero mb-sm">⏳</div>
-        <h2 class="section-title section-title-light mb-xs">${player}</h2>
+        <h2 class="section-title section-title-light mb-xs">${escapeHtml(player)}</h2>
         <p class="text-sm mb">${translate('game.preparingReveal')}</p>
         <div class="countdown-wrap">
           <svg class="countdown-svg" viewBox="0 0 80 80">
@@ -2444,7 +2510,7 @@ function renderRoleReveal() {
     card.innerHTML = `
       <div class="privacy-card">
         <div class="emoji-hero mb-sm">🙈</div>
-        <h2 class="section-title section-title-light mb-xs">${player}</h2>
+        <h2 class="section-title section-title-light mb-xs">${escapeHtml(player)}</h2>
         <p class="text-sm mb">${translate('game.revealInstruction')}</p>
         <div class="role-progress">${formatMessage('game.progressOf', { current: state.roleRevealIndex + 1, total: state.players.length })}</div>
         <button class="btn btn-primary btn-lg btn-block" data-action="show-role">${translate('game.showMyRole')}</button>
@@ -2454,12 +2520,12 @@ function renderRoleReveal() {
   }
   card.innerHTML = `
     <div class="secret-role-shell">
-      <div class="emoji-hero mb-sm">${isImpostor ? '🕶️' : state.category.icon}</div>
-      <h2 class="section-title section-title-light mb-xs">${player}</h2>
+      <div class="emoji-hero mb-sm">${isImpostor ? '🕶️' : escapeHtml(state.category.icon)}</div>
+      <h2 class="section-title section-title-light mb-xs">${escapeHtml(player)}</h2>
       <div class="word-card word-card-memorize my-lg secret-role-card">
-        <div class="word-text word-text-memorize role-title">${isImpostor ? translate('game.impostorRole') : state.category.name}</div>
-        <div class="challenge-text mt">${isImpostor ? pick(IMPOSTOR_HINTS) : `${translate('game.openingPrefix')} ${state.prompt}`}</div>
-        ${!isImpostor ? `<div class="challenge-text mt">${translate('game.secretHintPrefix')} ${state.twist}</div>` : ''}
+        <div class="word-text word-text-memorize role-title">${isImpostor ? translate('game.impostorRole') : escapeHtml(state.category.name)}</div>
+        <div class="challenge-text mt">${isImpostor ? pick(IMPOSTOR_HINTS) : `${translate('game.openingPrefix')} ${escapeHtml(state.prompt)}`}</div>
+        ${!isImpostor ? `<div class="challenge-text mt">${translate('game.secretHintPrefix')} ${escapeHtml(state.twist)}</div>` : ''}
       </div>
       <div class="role-progress">${formatMessage('game.progressOf', { current: state.roleRevealIndex + 1, total: state.players.length })}</div>
       <button class="btn btn-primary btn-lg btn-block" data-action="next-role">${state.roleRevealIndex + 1 >= state.players.length ? translate('game.beginStory') : translate('game.hideAndPass')}</button>
@@ -2520,9 +2586,9 @@ function renderStoryTurn() {
   $('#memorize-state')?.classList.add('hidden');
   $('#playing-state')?.classList.remove('hidden');
   html('#word-display', `
-    <span class="story-kicker">${formatMessage('game.storyKicker', { icon: state.category.icon })}</span>
+    <span class="story-kicker">${formatMessage('game.storyKicker', { icon: escapeHtml(state.category.icon) })}</span>
     <span class="story-prompt">${state.storyLog.length ? translate('game.continueSecret') : translate('game.firstSentence')}</span>
-    <span class="turn-strip">${state.storyLog.length ? formatMessage('game.alreadySpoke', { players: state.storyLog.join(', ') }) : translate('game.firstRoundSentence')}</span>
+    <span class="turn-strip">${state.storyLog.length ? formatMessage('game.alreadySpoke', { players: escapeHtml(state.storyLog.join(', ')) }) : translate('game.firstRoundSentence')}</span>
   `);
   const wordCard = $('#playing-state .word-card');
   let input = $('#story-beat-input');
@@ -2628,7 +2694,7 @@ function renderVote() {
   if (!state.voteVisible) {
     html('#word-display', `
       <span class="story-kicker">${translate('game.voteKicker')}</span>
-      <span class="story-prompt">${formatMessage('game.votePromptHidden', { player: voter })}</span>
+      <span class="story-prompt">${formatMessage('game.votePromptHidden', { player: escapeHtml(voter) })}</span>
       <span class="turn-strip">${formatMessage('game.votesOf', { current: state.voteRevealIndex + 1, total: state.players.length })}</span>
     `);
     if (actions) {
@@ -2638,13 +2704,13 @@ function renderVote() {
     return;
   }
   html('#word-display', `
-    <span class="story-kicker">${formatMessage('game.voteOf', { player: voter })}</span>
+    <span class="story-kicker">${formatMessage('game.voteOf', { player: escapeHtml(voter) })}</span>
     <span class="story-prompt">${translate('game.voteQuestion')}</span>
-    <span class="turn-strip">${formatMessage('game.roundOrder', { players: state.storyLog.join(' → ') })}</span>
+    <span class="turn-strip">${formatMessage('game.roundOrder', { players: escapeHtml(state.storyLog.join(' → ')) })}</span>
   `);
   if (actions) {
     actions.innerHTML = state.players.map((player, index) => `
-      <button class="btn btn-secondary btn-lg vote-option" data-action="vote" data-index="${index}">${player}</button>
+      <button class="btn btn-secondary btn-lg vote-option" data-action="vote" data-index="${index}">${escapeHtml(player)}</button>
     `).join('');
   }
   broadcastMultidevice();
@@ -2758,7 +2824,7 @@ function renderImpostorGuess() {
   html('#word-display', `
     <span class="story-kicker">${translate('game.impostorFoundKicker')}</span>
     <span class="story-prompt">${translate('game.stealPointsPrompt')}</span>
-    <span class="turn-strip">${formatMessage('game.mostVotedSuspect', { player: state.voteResult?.suspected || '--' })}</span>
+    <span class="turn-strip">${formatMessage('game.mostVotedSuspect', { player: escapeHtml(state.voteResult?.suspected || '--') })}</span>
   `);
   $('#game-challenge-display')?.classList.add('hidden');
   if (!state.guessOptions.length) {
@@ -2771,7 +2837,7 @@ function renderImpostorGuess() {
   const actions = $('.game-actions-grid');
   if (actions) {
     actions.innerHTML = state.guessOptions.map(category => `
-      <button class="btn btn-secondary btn-lg vote-option" data-action="impostor-guess" data-category-guess="${category.id}">${category.icon} ${category.name}</button>
+      <button class="btn btn-secondary btn-lg vote-option" data-action="impostor-guess" data-category-guess="${escapeHtml(category.id)}">${escapeHtml(category.icon)} ${escapeHtml(category.name)}</button>
     `).join('');
   }
   broadcastMultidevice();
@@ -2834,16 +2900,16 @@ function renderScoreExplanation() {
     subtitle.insertAdjacentElement('afterend', box);
   }
   const voters = state.votes.correctVoters?.length
-    ? state.votes.correctVoters.join(', ')
+    ? escapeHtml(state.votes.correctVoters.join(', '))
     : translate('score.noVoters');
   const reward = state.votes.groupFoundImpostor && !state.votes.guessedTheme
     ? formatMessage('score.correctReward', { points: state.pendingScore.correctPoints, voters })
     : formatMessage('score.impostorReward', {
       points: state.pendingScore.impostorPoints,
-      player: state.votes.guessedTheme && state.votes.caughtImpostor ? state.votes.caughtImpostor : state.votes.impostor
+      player: escapeHtml(state.votes.guessedTheme && state.votes.caughtImpostor ? state.votes.caughtImpostor : state.votes.impostor)
     });
   const counts = state.votes.counts
-    ?.map(entry => `${entry.player}: ${entry.votes}`)
+    ?.map(entry => `${escapeHtml(entry.player)}: ${entry.votes}`)
     .join(' · ');
   box.innerHTML = `
     <div><strong>${translate('score.ruleLabel')}</strong> ${translate('score.ruleText')}</div>
@@ -2962,7 +3028,7 @@ function renderScoreboard(selector) {
   if (!container) return;
   container.innerHTML = getRanking().map((entry, index) => `
     <div class="score-row ${index === 0 ? 'first' : ''}">
-      <span><strong>${index + 1}. ${entry.name}</strong></span>
+      <span><strong>${index + 1}. ${escapeHtml(entry.name)}</strong></span>
       <span>${entry.pts} pts</span>
     </div>
   `).join('');
@@ -2972,7 +3038,7 @@ function renderMiniScore() {
   const container = $('#score-mini');
   if (!container) return;
   container.innerHTML = getRanking().map(entry => `
-    <div class="score-mini-item"><span>${entry.name}</span><strong>${entry.pts || 0}</strong></div>
+    <div class="score-mini-item"><span>${escapeHtml(entry.name)}</span><strong>${entry.pts || 0}</strong></div>
   `).join('');
 }
 
@@ -3009,7 +3075,7 @@ function renderLeaderboard() {
       <div class="leaderboard-row ${index < 3 ? 'is-podium' : ''}">
         <div class="leaderboard-rank">#${index + 1}</div>
         <div class="leaderboard-identity">
-          <div class="leaderboard-player-name">${player.name}</div>
+          <div class="leaderboard-player-name">${escapeHtml(player.name)}</div>
           <div class="leaderboard-player-meta">${formatMessage('leaderboard.matches', { count: player.matches })}</div>
         </div>
         <div class="leaderboard-score"><span class="leaderboard-score-value">${player.points}</span><span class="leaderboard-score-label"> pts</span></div>
@@ -3316,6 +3382,7 @@ if (typeof module !== 'undefined' && module.exports) {
     normalizeVolume,
     createMultidevicePayload,
     createMultideviceRolePayload,
+    validateMultideviceAssignment,
     STORY_CATEGORIES
   };
 }

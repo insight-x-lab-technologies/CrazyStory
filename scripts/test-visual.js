@@ -6,7 +6,7 @@ const { resolve } = require('node:path');
 const { execFileSync } = require('node:child_process');
 
 const chrome = process.env.CHROME_BIN || 'google-chrome';
-const appUrl = `file://${resolve('src/src/index.html')}`;
+const appUrl = `file://${resolve('src/index.html')}`;
 const outDir = '/tmp/crazystory-visual';
 const viewports = [
   ['mobile-portrait', '390,844'],
@@ -41,6 +41,10 @@ for (const [name, size] of viewports) {
       appUrl
     ], { stdio: 'ignore', timeout: 20_000 });
   } catch (error) {
+    if (error.code === 'ENOENT') {
+      console.log(`visual tests skipped: ${chrome} not found (set CHROME_BIN)`);
+      process.exit(0);
+    }
     if (error.signal === 'SIGTRAP' || error.status === null) {
       console.log(`visual tests skipped: Chrome child process blocked at ${name}`);
       process.exit(0);

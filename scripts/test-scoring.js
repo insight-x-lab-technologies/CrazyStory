@@ -7,7 +7,7 @@ const {
   applyScoreCorrection,
   normalizeImpostorCount,
   pickImpostorIndexes
-} = require('../src/src/script.js');
+} = require('../src/script.js');
 
 const players = ['Ana', 'Bia', 'Caio', 'Duda'];
 const impostorIndex = 2;

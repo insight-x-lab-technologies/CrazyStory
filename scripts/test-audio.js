@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const assert = require('node:assert/strict');
-const { normalizeVolume } = require('../src/src/script.js');
+const { normalizeVolume } = require('../src/script.js');
 
 assert.equal(normalizeVolume(0), 0);
 assert.equal(normalizeVolume(32), 0.32);

@@ -3,6 +3,11 @@
 > Documento de análise técnica e de design + proposta de evolução.
 > Escopo: projeto hobby, web, offline-first, PWA, single-device (passa-e-revela).
 > Versão analisada: v0.1 (junho/2026).
+>
+> **Nota (out/2026):** as seções 1–4 são o diagnóstico histórico da v0.1 e foram mantidas
+> como registro de decisão. A maioria dos problemas listados ali já foi resolvida — o estado
+> atual de cada item está nos checkboxes da seção 5. Para a arquitetura vigente, ver
+> [ARCHITECTURE.md](./ARCHITECTURE.md).
 
 ---
 
@@ -33,7 +38,8 @@ Temas: 6 categorias com 5 aberturas cada (30 prompts) + 8 twists + 4 dicas de im
 - **Persistência:** localStorage (`crazystory_settings_v1`, `_leaderboard_v1`, `_quick_game_v1`, packs e conteúdo customizado).
 - **Temas:** 6 (cosmic, outono, primavera, claro, escuro, alto contraste); 3 com trilha sonora.
 - **Servidor local:** `scripts/run.sh` / `stop.sh` (python http.server na porta 8080).
-- Há um redirecionador em `src/index.html` apontando para `src/src/index.html`.
+- ~~Há um redirecionador em `src/index.html` apontando para `src/src/index.html`.~~
+  Resolvido: entrada única em `src/index.html`.
 
 ### Dívida estrutural: HTML ≠ JS
 
@@ -94,7 +100,8 @@ landscape/portrait e `max-height` para landscape baixo — base responsiva real 
 - `.score-mini-item` é referenciado pelo JS mas **não tem estilo** (`score-mini-item` = 0
   ocorrências no CSS) → mini-placar pode aparecer sem formatação.
 - Telas mortas ainda têm CSS pesado, inflando o bundle e o risco de regressões.
-- Sem fontes locais → se Google Fonts não carregar (offline), tipografia degrada.
+- ~~Sem fontes locais → se Google Fonts não carregar (offline), tipografia degrada.~~
+  Resolvido: pilha de fontes do sistema.
 - Não verifiquei renderização real em dispositivos; recomenda-se passada visual
   (mobile/tablet/desktop × portrait/landscape) após a limpeza do HTML.
 
@@ -161,6 +168,19 @@ Faseado para um hobby de uma pessoa: cada fase entrega valor e é independente.
 - [x] Permitir voto remoto por jogador conectado, com host apurando junto dos votos locais.
 - [x] Permitir envio remoto da frase da história pelo jogador conectado durante seu turno.
 - [x] Permitir defesa remota do impostor conectado, com palpite de tema enviado ao host.
+
+### Fase 5 — Qualidade de release — *out/2026*
+- [x] Testes voltaram a rodar (caminhos `src/src` corrigidos), runner único
+      `scripts/test-all.sh` e job de teste no CI bloqueando o deploy do Pages.
+- [x] Multi-device: escolha de jogador travada durante a partida (token por aparelho) —
+      impede o impostor de trocar de jogador para ler o segredo ou votar mais de uma vez.
+- [x] Assets: fundos PNG → WebP (31 MB → 2 MB), músicas reencodadas a 128 kbps
+      (31 MB → 21 MB), precache do SW sem músicas (~64 MB → ~3 MB na instalação),
+      ícone maskable com área segura, `icon-master.png` movido para `design/`.
+- [x] `escapeHtml` em toda interpolação de nome/conteúdo do usuário em `innerHTML`.
+- [ ] Strings fixas em PT no payload de papel do multi-device (`createMultideviceRolePayload`)
+      ainda não passam pelo i18n.
+- [ ] `test-visual.js` depende de Chrome local; no CI roda se `google-chrome` existir no runner.
 
 ---
 
