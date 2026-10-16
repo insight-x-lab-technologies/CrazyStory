@@ -6,6 +6,17 @@ const { resolve } = require('node:path');
 const { execFileSync } = require('node:child_process');
 
 const chrome = process.env.CHROME_BIN || 'google-chrome';
+// CI sets VISUAL_TESTS_REQUIRED=1 so a missing/blocked Chrome fails instead of silently skipping.
+const required = process.env.VISUAL_TESTS_REQUIRED === '1';
+
+function skip(reason) {
+  if (required) {
+    console.error(`visual tests failed: ${reason} (VISUAL_TESTS_REQUIRED=1)`);
+    process.exit(1);
+  }
+  console.log(`visual tests skipped: ${reason}`);
+  process.exit(0);
+}
 const appUrl = `file://${resolve('src/index.html')}`;
 const outDir = '/tmp/crazystory-visual';
 const viewports = [
@@ -27,28 +38,22 @@ for (const [name, size] of viewports) {
       '--disable-gpu',
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      '--no-zygote',
-      '--single-process',
       '--disable-dev-shm-usage',
       '--disable-crash-reporter',
       '--disable-breakpad',
       '--disable-features=Crashpad',
       '--log-level=3',
+      '--disable-background-networking',
+      '--no-first-run',
       `--user-data-dir=${profile}`,
       `--window-size=${size}`,
       '--virtual-time-budget=2500',
       `--screenshot=${output}`,
       appUrl
-    ], { stdio: 'ignore', timeout: 20_000 });
+    ], { stdio: 'ignore', timeout: 60_000 });
   } catch (error) {
-    if (error.code === 'ENOENT') {
-      console.log(`visual tests skipped: ${chrome} not found (set CHROME_BIN)`);
-      process.exit(0);
-    }
-    if (error.signal === 'SIGTRAP' || error.status === null) {
-      console.log(`visual tests skipped: Chrome child process blocked at ${name}`);
-      process.exit(0);
-    }
+    if (error.code === 'ENOENT') skip(`${chrome} not found (set CHROME_BIN)`);
+    if (error.signal === 'SIGTRAP' || error.status === null) skip(`Chrome child process blocked at ${name}`);
     throw error;
   }
   assert.equal(existsSync(output), true, `${name} screenshot missing`);

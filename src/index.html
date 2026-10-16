@@ -44,13 +44,12 @@
             </button>
             <button class="btn btn-ghost btn-lg btn-block btn-quick-game" data-nav="multidevice">
               <span data-i18n="home.multiDeviceGame">📡 Modo Multi-device</span>
-              <span class="btn-quick-game-summary" id="multi-device-summary">Off-line | 0 devices connected</span>
+              <span class="btn-quick-game-summary" id="multi-device-summary">Off-line | 0 dispositivos conectados</span>
             </button>
             <button class="btn btn-ghost btn-lg btn-block" data-nav="wordbank" data-i18n="home.wordBank">📖 Regras e Temas</button>
             <button class="btn btn-ghost btn-lg btn-block" data-nav="donate" data-i18n="home.donate">❤️ Doar</button>
             <button class="btn btn-ghost btn-lg btn-block" data-nav="leaderboard" data-i18n="home.leaderboard">🏅 Placar Histórico</button>
             <button class="btn btn-ghost btn-lg btn-block" data-nav="settings" data-i18n="home.settings">⚙️ Configurações</button>
-            <button class="btn btn-ghost btn-lg btn-block hidden" id="pwa-install-button" data-action="install-pwa" data-i18n="home.installOnDevice">📲 Instalar no dispositivo</button>
           </div>
         </div>
       </div>
@@ -94,48 +93,33 @@
         <button class="btn btn-ghost btn-sm" data-nav="home" data-i18n="common.back">← Voltar</button>
         <h1 class="page-title" data-i18n="multiDevice.title">Partida Multi Device</h1>
       </header>
-      <div class="card multidevice-choice-card" id="multidevice-choice-card">
+      <div class="card multidevice-choice-card">
         <h2 class="card-title" data-i18n="multiDevice.chooseTitle">O que você quer fazer?</h2>
-          <p class="text-sm mb" data-i18n="multiDevice.chooseDesc">Abra uma sessão para controlar a partida ou conecte outro celular ao jogador.</p>
+        <p class="text-sm mb" data-i18n="multiDevice.choiceSubtitle">Use outro celular como tela auxiliar com timer, jogador atual e progresso público. Papéis, abertura e dica secreta continuam protegidos no host.</p>
         <div class="multidevice-choice-actions">
-          <button class="btn btn-primary btn-lg btn-block" data-action="select-multidevice-host" data-i18n="multiDevice.chooseHost">📡 Abrir uma sessão</button>
-          <button class="btn btn-secondary btn-lg btn-block" data-action="select-multidevice-join" data-i18n="multiDevice.chooseJoin">🔗 Conectar em uma sessão</button>
+          <button class="btn btn-primary btn-lg btn-block" data-action="create-multidevice-host" data-i18n="multiDevice.chooseHost">📡 Abrir uma sessão</button>
+          <button class="btn btn-secondary btn-lg btn-block" data-action="show-multidevice-join" data-i18n="multiDevice.chooseJoin">🔗 Conectar em uma sessão</button>
         </div>
       </div>
       <div class="multidevice-grid">
-        <div class="card multidevice-card hidden" id="multidevice-host-card">
-          <button class="btn btn-ghost btn-sm btn-nowrap multidevice-change-btn" data-action="reset-multidevice-choice" data-i18n="multiDevice.changeChoice">Trocar opção</button>
-          <h2 class="card-title" data-i18n="multiDevice.hostTitle">📡 Abrir sessão</h2>
-          <p class="text-sm mb" data-i18n="multiDevice.hostDesc">Este dispositivo controla a partida. Celulares conectados recebem apenas o que cada jogador pode ver.</p>
-          <button class="btn btn-primary btn-lg btn-block" data-action="create-multidevice-host" data-i18n="multiDevice.openSession">Abrir sessão</button>
-        </div>
-        <div class="card multidevice-card multidevice-session hidden" id="multidevice-host-panel">
-          <div class="text-strong text-sm-title" id="multidevice-host-status" data-i18n="multiDevice.hostCreating">Criando sessão...</div>
+        <div class="card multidevice-card hidden" id="multidevice-host-panel">
+          <h2 class="card-title card-title-sm">📡 Host</h2>
+          <div class="text-strong text-sm-title" id="multidevice-host-status">Pronto para abrir sessão</div>
           <div class="qr-frame" id="multidevice-qr"></div>
           <div class="copy-row">
             <input class="inp mono-input" id="multidevice-link" readonly value="">
             <button class="btn btn-ghost btn-sm btn-nowrap" data-action="copy-multidevice-link" data-i18n="common.copy">Copiar</button>
           </div>
-          <div class="helper-box">
-            <span data-i18n="multiDevice.sessionCode">Código da sessão:</span>
-            <strong id="multidevice-session-code">---</strong>
-          </div>
-          <div class="text-meta" id="multidevice-guest-count">0 devices conectados</div>
-          <button class="btn btn-secondary btn-block" data-action="continue-multidevice-setup" data-i18n="multiDevice.continueSetup">Continuar configuração</button>
+          <div class="helper-box"><span data-i18n="multiDevice.sessionCode">Código da sessão:</span> <strong id="multidevice-session-code">---</strong></div>
+          <div class="text-meta" id="multidevice-guest-count"></div>
+          <button class="btn btn-secondary btn-block" data-nav="setup" data-i18n="multiDevice.continueSetup">Continuar configuração</button>
         </div>
-
         <div class="card multidevice-card hidden" id="multidevice-join-card">
-          <div class="multidevice-join-main">
-            <button class="btn btn-ghost btn-sm btn-nowrap multidevice-change-btn" data-action="reset-multidevice-choice" data-i18n="multiDevice.changeChoice">Trocar opção</button>
-            <h2 class="card-title" data-i18n="multiDevice.joinTitle">🔗 Conectar</h2>
-            <p class="text-sm mb" data-i18n="multiDevice.joinDesc">Conecte este celular para receber papel, turno e voto de um jogador.</p>
-          </div>
-          <div class="multidevice-join-form">
-            <label class="toggle-label" for="multidevice-join-code" data-i18n="multiDevice.joinCodeLabel">Código ou link da sessão</label>
-            <input class="inp mt-xs mb-sm" id="multidevice-join-code" placeholder="Cole o código ou link" data-i18n-placeholder="multiDevice.joinCodePlaceholder">
-            <button class="btn btn-primary btn-lg btn-block" data-action="join-multidevice-session" data-i18n="multiDevice.joinSession">Conectar na sessão</button>
-            <div class="helper-box mt" id="multidevice-join-status" data-i18n="multiDevice.joinHelp">Você também pode escanear o QR Code exibido no host.</div>
-          </div>
+          <h2 class="card-title card-title-sm" data-i18n="multiDevice.joinAsGuestTitle">🔗 Conectar como tela auxiliar</h2>
+          <label class="toggle-label" for="multidevice-join-code" data-i18n="multiDevice.joinCodeLabel">Código ou link da sessão</label>
+          <input class="inp mt-xs mb-sm" id="multidevice-join-code" placeholder="Cole o código ou link" data-i18n-placeholder="multiDevice.joinCodePlaceholder">
+          <button class="btn btn-primary btn-lg btn-block" data-action="join-multidevice-session" data-i18n="multiDevice.joinSession">Conectar na sessão</button>
+          <div class="helper-box mt" id="multidevice-join-status">Você também pode escanear o QR Code exibido no host.</div>
         </div>
       </div>
     </div>
@@ -146,12 +130,11 @@
     <div class="page-shell page-shell-game guest-shell">
       <div class="guest-header">
         <div>
-          <div class="eyebrow eyebrow-accent" data-i18n="multiDevice.guestLabel">Tela auxiliar</div>
+          <div class="eyebrow eyebrow-accent" data-i18n="multiDevice.guestLabel">Celular do jogador</div>
           <h1 class="page-title" id="guest-round-title" data-i18n="multiDevice.waitingTitle">Aguardando dados da partida</h1>
         </div>
         <div class="guest-header-actions">
           <div class="guest-connection-pill" id="guest-connection-status" data-i18n="multiDevice.connecting">Conectando...</div>
-          <button class="btn btn-secondary btn-sm btn-nowrap hidden" id="guest-reconnect-button" data-action="reconnect-multidevice-guest" data-i18n="multiDevice.reconnect">Reconectar</button>
           <button class="btn btn-ghost btn-sm btn-nowrap" data-action="disconnect-multidevice-guest" data-i18n="multiDevice.disconnect">Desconectar</button>
         </div>
       </div>
@@ -176,7 +159,7 @@
           <div class="word-card word-card-memorize">
             <div class="word-text word-text-memorize" id="guest-word-display">---</div>
             <div id="guest-challenge-display" class="challenge-text hidden">
-              <span data-i18n="game.challengePrefix">🎯 Desafio:</span> <span id="guest-challenge-text">---</span>
+              <span data-i18n="game.challengePrefix">🎯 Dica:</span> <span id="guest-challenge-text">---</span>
             </div>
           </div>
         </div>
@@ -191,7 +174,90 @@
         <button class="btn btn-ghost btn-sm" data-nav="home" data-i18n="common.back">← Voltar</button>
         <h1 class="page-title" data-i18n="setup.title">Nova Partida</h1>
       </header>
-      <div class="setup-grid"></div>
+      <div class="setup-grid">
+        <div class="setup-column setup-column-left">
+          <div class="card mb rules-nudge hidden" id="rules-nudge">
+            <h2 class="card-title card-title-sm" data-i18n="setup.beforeTitle">⚡ Antes de começar</h2>
+            <div class="how-to-list">
+              <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">🤫</div><div class="text-sm" data-i18n="setup.beforeSecret">Não leia sua carta em voz alta.</div></div>
+              <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">🕶️</div><div class="text-sm" data-i18n="setup.beforeImpostor">O impostor tenta parecer natural e pode se salvar adivinhando o tema.</div></div>
+              <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">📖</div><div class="text-sm" data-i18n="setup.beforeStory">Registrar a frase é opcional, mas deixa o final mais divertido.</div></div>
+            </div>
+            <button class="btn btn-secondary btn-sm mt" data-action="dismiss-rules-nudge" data-i18n="setup.dismissRules">Entendi</button>
+          </div>
+          <div class="card mb">
+            <h2 class="card-title" data-i18n="setup.howTitle">Como funciona</h2>
+            <div class="how-to-list">
+              <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">🙈</div><div class="text-sm" data-i18n="setup.howRole">Cada jogador vê seu papel em segredo.</div></div>
+              <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">📖</div><div class="text-sm" data-i18n="setup.howStory">Todos continuam a mesma história, uma frase por vez.</div></div>
+              <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">🗳️</div><div class="text-sm" data-i18n="setup.howVote">No final, o grupo vota em quem parece não saber o tema.</div></div>
+              <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">⚡</div><div class="text-sm" data-i18n="setup.howVariant">Relâmpago usa uma rodada rápida; 2 impostores funciona melhor com 7+ pessoas.</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="setup-column setup-column-right">
+          <div class="card mb">
+            <h2 class="card-title" data-i18n="setup.playersTitle">1️⃣ Jogadores</h2>
+            <div id="ffa-players" class="flex-col mb"></div>
+            <div class="flex-row setup-player-form">
+              <input class="inp" id="inp-ffa" placeholder="Nome do jogador..." data-i18n-placeholder="setup.playerPlaceholder" data-enter-submit="ffa">
+              <button class="btn btn-secondary btn-sm btn-nowrap" data-action="add-player" data-i18n="common.add">+ Adicionar</button>
+            </div>
+            <div class="helper-box mt" id="player-count-helper" data-i18n="setup.playerHelper">💡 3 a 10 jogadores. Todos usam o mesmo dispositivo para ver o papel em segredo.</div>
+          </div>
+          <div class="card mb">
+            <h2 class="card-title" data-i18n="setup.roundsTitle">2️⃣ Rodadas</h2>
+            <div class="mode-grid mb">
+              <div class="mode-card selected" data-variant="classic">
+                <div class="mode-icon">🎭</div>
+                <div class="mode-name" data-i18n="setup.classicName">Clássico</div>
+                <div class="mode-desc" data-i18n="setup.classicDesc">Rodadas configuráveis</div>
+              </div>
+              <div class="mode-card" data-variant="lightning">
+                <div class="mode-icon">⚡</div>
+                <div class="mode-name" data-i18n="setup.lightningName">Relâmpago</div>
+                <div class="mode-desc" data-i18n="setup.lightningDesc">1 rodada, timer curto</div>
+              </div>
+            </div>
+            <div class="toggle-wrap toggle-wrap-last">
+              <div>
+                <div class="toggle-label" data-i18n="setup.roundsLabel">Número de rodadas</div>
+                <div class="toggle-sub" id="rounds-sub">Cada rodada tem impostor(es), uma história e uma votação.</div>
+              </div>
+              <div class="range-wrap range-wrap-fixed">
+                <input type="range" class="range-inp" id="rounds-slider" min="1" max="7" value="3">
+                <div class="range-val" id="rounds-val">3</div>
+              </div>
+            </div>
+            <div class="toggle-wrap toggle-wrap-last">
+              <div>
+                <div class="toggle-label" data-i18n="setup.impostorsLabel">Impostores</div>
+                <div class="toggle-sub" data-i18n="setup.impostorsSub">Use 2 impostores em grupos com 7+ jogadores.</div>
+              </div>
+              <select class="inp points-input" id="impostor-count-select">
+                <option value="1" data-i18n="setup.oneImpostor">1 impostor</option>
+                <option value="2" data-i18n="setup.twoImpostors">2 impostores</option>
+              </select>
+            </div>
+            <div class="toggle-wrap toggle-wrap-last">
+              <div>
+                <div class="toggle-label" data-i18n="setup.contentModeLabel">Modo do conteúdo</div>
+                <div class="toggle-sub" data-i18n="setup.contentModeSub">Família é seguro para todas as idades; Noite de amigos usa situações adultas leves.</div>
+              </div>
+              <select class="inp points-input" id="content-mode-select">
+                <option value="family" data-i18n="setup.familyMode">Família</option>
+                <option value="party" data-i18n="setup.partyMode">Festa adulta</option>
+              </select>
+            </div>
+          </div>
+          <div class="card mb">
+            <h2 class="card-title" data-i18n="setup.themesTitle">3️⃣ Temas</h2>
+            <div class="category-grid" id="category-selection"></div>
+            <div id="diff-word-count" class="text-meta center mt"></div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block mb-lg setup-cta" data-action="start-game" data-i18n="setup.startStory">🎭 Começar História</button>
+      </div>
     </div>
   </div>
 
@@ -211,7 +277,7 @@
           <div class="cp-name" id="current-player-name">--</div>
         </div>
         <div class="drawing-timer-dock" aria-hidden="true">
-          <div class="timer-wrap timer-wrap-compact">
+          <div class="timer-wrap">
             <svg class="timer-svg" viewBox="0 0 160 160">
               <circle class="timer-track" cx="80" cy="80" r="68" />
               <circle class="timer-prog" data-timer-circle cx="80" cy="80" r="68" stroke="#ffd93d" stroke-dasharray="427.3"
@@ -225,36 +291,12 @@
 
       <!-- PREPARING -->
       <div id="preparing-state" class="card center">
-        <div class="emoji-hero mb-sm" id="game-ready-emoji">🎭</div>
-        <h2 class="section-title section-title-light mb-xs" id="game-ready-title" data-i18n="game.readyTitle">Prontos para ver o papel?</h2>
-        <div class="text-sm mb-lg" id="game-ready-sub" data-i18n="game.readySub">Só o jogador da vez deve olhar. Depois passe o dispositivo.</div>
+        <div class="emoji-hero mb-sm">🎭</div>
+        <h2 class="section-title section-title-light mb-xs" data-i18n="game.readyTitle">Prontos para ver o papel?</h2>
+        <div class="text-sm mb-lg" data-i18n="game.readySub">Só o jogador da vez deve olhar. Depois passe o dispositivo.</div>
         <button class="btn btn-primary btn-lg btn-block" data-action="show-role" data-i18n="game.revealWord">🎭 Revelar papel</button>
       </div>
 
-      <!-- MEMORIZE -->
-      <div id="memorize-state" class="hidden">
-        <div class="center mb-sm">
-          <div class="eyebrow eyebrow-accent mb-xs" data-i18n="game.memorizeTitle">
-            ⚡ Prepare-se!
-          </div>
-          <div class="text-meta" data-i18n="game.startsIn">O papel aparece em...</div>
-        </div>
-        <div class="action-row action-row-center mb">
-          <div class="countdown-wrap">
-            <svg class="countdown-svg" viewBox="0 0 80 80">
-              <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="6" />
-              <circle id="memCircle" cx="40" cy="40" r="34" fill="none" stroke="#c77dff" stroke-width="6"
-                stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="0" class="countdown-progress" />
-            </svg>
-            <div id="mem-num" class="countdown-number">3</div>
-          </div>
-        </div>
-        <div class="text-sm center text-muted" data-i18n="game.readySub">
-          Só quem vai ler deve olhar! Os outros fechem os olhos! 👀
-        </div>
-      </div>
-
-      <!-- PLAYING -->
       <div id="playing-state" class="hidden">
         <div class="game-play-layout">
           <div class="game-play-side">
@@ -321,7 +363,53 @@
 
   <!-- ========== WORD BANK ========== -->
   <div class="screen" id="screen-wordbank">
-    <div class="page-shell"></div>
+    <div class="page-shell">
+      <header class="page-header page-header-tight">
+        <button class="btn btn-ghost btn-sm" data-nav="home" data-i18n="common.back">← Voltar</button>
+        <h1 class="page-title" data-i18n="rules.title">Regras e Temas</h1>
+      </header>
+      <div class="wordbank-layout">
+        <div class="card">
+          <h2 class="card-title">🎭 CrazyStory</h2>
+          <div class="how-to-list">
+            <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">1️⃣</div><div class="text-sm" data-i18n="rules.step1">O app sorteia um tema, uma abertura e um impostor.</div></div>
+            <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">2️⃣</div><div class="text-sm" data-i18n="rules.step2">Jogadores veem o papel em segredo e passam o dispositivo.</div></div>
+            <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">3️⃣</div><div class="text-sm" data-i18n="rules.step3">Cada pessoa adiciona uma frase à história.</div></div>
+            <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">4️⃣</div><div class="text-sm" data-i18n="rules.step4">Todos votam. O grupo pontua se achar o impostor; o impostor pontua se escapar.</div></div>
+          </div>
+          <div class="score-explanation mt">
+            <div><strong data-i18n="rules.scoreRule">Pontuação:</strong> <span data-i18n="rules.scoreRuleText">cada voto correto ganha pontos se o impostor não acertar o tema.</span></div>
+            <div><strong data-i18n="rules.impostorRule">Impostor:</strong> <span data-i18n="rules.impostorRuleText">pontua quando escapa, empata a votação ou acerta o tema na defesa.</span></div>
+            <div><strong data-i18n="rules.multideviceRule">Multi-device:</strong> <span data-i18n="rules.multideviceRuleText">a regra usa votos por jogador e pode ser migrada para celulares individuais sem mudar a jornada.</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2 class="card-title card-title-sm" data-i18n="rules.availableThemes">🧩 Temas disponíveis</h2>
+          <div class="category-grid" id="rules-category-grid"></div>
+        </div>
+        <div class="card">
+          <h2 class="card-title card-title-sm" data-i18n="rules.customContent">✍️ Conteúdo customizado</h2>
+          <div class="flex-col">
+            <select class="inp" id="custom-prompt-category"></select>
+            <textarea class="inp custom-content-input" id="custom-prompt-text" maxlength="180" rows="3" placeholder="Nova abertura de história" data-i18n-placeholder="rules.promptPlaceholder"></textarea>
+            <button class="btn btn-secondary btn-block" data-action="add-custom-prompt" data-i18n="rules.addPrompt">Adicionar abertura</button>
+            <textarea class="inp custom-content-input" id="custom-twist-text" maxlength="160" rows="2" placeholder="Nova dica secreta / twist" data-i18n-placeholder="rules.twistPlaceholder"></textarea>
+            <button class="btn btn-secondary btn-block" data-action="add-custom-twist" data-i18n="rules.addTwist">Adicionar twist</button>
+            <div class="helper-box" id="custom-content-summary"></div>
+            <button class="btn btn-ghost btn-block" data-action="reset-custom-content" data-i18n="rules.clearCustom">Limpar conteúdo customizado</button>
+          </div>
+        </div>
+        <div class="card">
+          <h2 class="card-title card-title-sm" data-i18n="rules.packTitle">📦 Packs de extensão</h2>
+          <div class="flex-col">
+            <div class="helper-box" id="extension-pack-summary"></div>
+            <input type="file" id="extension-pack-input" accept="application/json,.json" hidden>
+            <button class="btn btn-secondary btn-block" data-action="select-extension-pack" data-i18n="rules.importPack">Importar pack JSON</button>
+            <div class="extension-pack-list" id="extension-pack-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ========== SETTINGS ========== -->
@@ -381,7 +469,7 @@
           <div class="flex-col mb">
             <div>
               <label class="toggle-label" for="language-select" data-i18n="settings.languageLabel">Idioma</label>
-              <div class="toggle-sub mt-xs" data-i18n="settings.languageSub">Altera a interface e o conteúdo disponível no jogo</div>
+              <div class="toggle-sub mt-xs" data-i18n="settings.languageSub">Altera textos fixos da interface neste dispositivo</div>
             </div>
             <select class="inp" id="language-select">
               <option value="pt" data-i18n="language.pt">Português</option>
@@ -497,7 +585,7 @@
               <span class="donate-option-badge">☕</span>
               <span class="donate-option-copy">
                 <span class="donate-option-title" data-i18n="donate.buyMeCoffee">Buy Me a Coffee</span>
-                <span class="donate-option-sub" data-i18n="donate.buyMeCoffeeSub">Fast one-time support through Buy Me a Coffee.</span>
+                <span class="donate-option-sub" data-i18n="donate.buyMeCoffeeSub">Apoio rápido e pontual pelo Buy Me a Coffee.</span>
               </span>
               <span class="donate-option-arrow">↗</span>
             </button>
@@ -571,6 +659,7 @@
 
   <script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="i18n.js"></script>
   <script src="script.js"></script>
   <script>
     if ('serviceWorker' in navigator) {

@@ -112,11 +112,13 @@ landscape/portrait e `max-height` para landscape baixo — base responsiva real 
 Faseado para um hobby de uma pessoa: cada fase entrega valor e é independente.
 
 ### Fase 0 — Higiene (fundação) — *prioridade máxima, baixo esforço*
-- [ ] Reescrever `index.html` para refletir SÓ o jogo atual; remover telas mortas
+- [x] Reescrever `index.html` para refletir SÓ o jogo atual; remover telas mortas
       (guest, score-manager, banco de piadas, overlay, filtros do placar, user_id, packs).
-      Progresso: banco legado de piadas e `user_id` removidos; packs e ajuste de pontos foram
-      reimplementados no modelo CrazyStory; filtros legados do placar e setup antigo de times
-      foram removidos; `guest` deixou de ser morto e sustenta o multi-device.
+      Banco legado de piadas e `user_id` removidos; packs e ajuste de pontos reimplementados
+      no modelo CrazyStory; `guest` sustenta o multi-device. Out/2026: removidos
+      `#memorize-state`, botões mortos (reconectar convidado, instalar PWA) e o markup antigo
+      do multi-device que o JS sobrescrevia; setup, regras e multi-device agora são HTML
+      estático com `data-i18n` (o JS só sincroniza estado).
 - [x] Remover JS de "remendo" de texto (`resetHomeCopy`/`configureStaticScreens`) movendo
       os textos corretos para o HTML.
 - [x] Remover PeerJS/QRCode/BMC-embed enquanto não usados; ou cacheá-los/baixá-los local.
@@ -124,9 +126,8 @@ Faseado para um hobby de uma pessoa: cada fase entrega valor e é independente.
 - [x] Remover dependência de Google Fonts e usar pilhas locais do sistema para offline real.
 - [x] Esconder o seletor de idiomas até existir i18n, OU implementar i18n mínimo (ver Fase 3).
 - [x] Consolidar entrada `src/index.html` vs `src/src/`.
-- [ ] Limpar CSS órfão.
-      Progresso: removidos seletores de banco de palavras legado, filtros antigos do placar,
-      times e embed de doação.
+- [x] Limpar CSS órfão. Out/2026: ~80 regras sem uso removidas do `style.css` (abas e
+      pódio antigos do placar, overlay de resultado, banco de palavras, utilitários).
 
 ### Fase 1 — Coerência de gameplay — *alto impacto, médio esforço*
 - [x] Definir e documentar o modelo de segredo. Sugestão (estilo "Chameleon"):
@@ -149,11 +150,12 @@ Faseado para um hobby de uma pessoa: cada fase entrega valor e é independente.
 - [x] Tela de regras inline (primeiro acesso) e dicas contextuais.
 
 ### Fase 3 — Polimento e alcance — *contínuo*
-- [ ] i18n de verdade (dicionário + `data-i18n`) — já há a marcação pronta no HTML.
-      Progresso: interface PT/EN/ES aplicada nas telas estáticas, setup, regras/packs,
+- [x] i18n de verdade (dicionário + `data-i18n`) — já há a marcação pronta no HTML.
+      Interface PT/EN/ES aplicada nas telas estáticas, setup, regras/packs,
       multi-device, convidado remoto, fluxo de papel/história/voto, defesa, placar, final
-      e notificações administrativas. Conteúdo narrativo/packs permanece dependente do idioma
-      do material instalado.
+      e notificações administrativas; cobertura garantida por `test-i18n.js`. Conteúdo
+      narrativo/packs permanece dependente do idioma do material instalado (fora de escopo,
+      ver PRODUCT_VISION §6).
 - [x] Acessibilidade: foco visível, navegação por teclado, `aria-live` nas transições,
       respeitar `prefers-reduced-motion` (estrelas/animações).
 - [x] Áudio: desbloqueio confiável (gesto do usuário), fade entre faixas, controle de volume.
@@ -178,9 +180,16 @@ Faseado para um hobby de uma pessoa: cada fase entrega valor e é independente.
       (31 MB → 21 MB), precache do SW sem músicas (~64 MB → ~3 MB na instalação),
       ícone maskable com área segura, `icon-master.png` movido para `design/`.
 - [x] `escapeHtml` em toda interpolação de nome/conteúdo do usuário em `innerHTML`.
-- [ ] Strings fixas em PT no payload de papel do multi-device (`createMultideviceRolePayload`)
-      ainda não passam pelo i18n.
-- [ ] `test-visual.js` depende de Chrome local; no CI roda se `google-chrome` existir no runner.
+- [x] Payload de papel do multi-device manda chaves i18n (`roleTitleKey`, `hintKey`,
+      `messageKey`), traduzidas no idioma do convidado; dicas do impostor traduzidas em PT/EN/ES.
+- [x] `test-visual.js` obrigatório no CI (`setup-chrome` + `VISUAL_TESTS_REQUIRED=1`);
+      flags `--single-process`/`--no-zygote` que derrubavam o Chrome removidas.
+- [x] `test-i18n.js`: barra chave EN/ES caindo no PT, chaves órfãs e placeholders
+      divergentes. Corrigidas ~20 traduções faltando e 2 chaves inexistentes que deixavam
+      o rótulo do código da sessão e o botão "Continuar configuração" vazios.
+- [x] Dicionário `I18N` extraído para `src/i18n.js` (`script.js` ~3400 → ~2400 linhas).
+- [x] Nudge "Antes de começar" volta a poder ser dispensado (botão tinha se perdido;
+      `SEEN_RULES_KEY` era gravado mas nunca lido).
 
 ---
 

@@ -16,9 +16,10 @@ leia primeiro os documentos abaixo em `docs/` para entender o escopo do projeto:
 
 - **Stack**: HTML + CSS + JS vanilla, sem build, sem framework, sem npm. Não introduzir
   bundler/framework sem alinhar antes.
-- **Single-file JS**: toda a lógica vive em `src/script.js` (~3400 linhas, estado global
-  `state`, render imperativo). Mudanças de fluxo de jogo tendem a tocar várias funções
-  desse arquivo — ver ARCHITECTURE.md §3 antes de mexer.
+- **Single-file JS**: toda a lógica vive em `src/script.js` (~2400 linhas, estado global
+  `state`, render imperativo); o dicionário de UI fica em `src/i18n.js` (só dados).
+  Mudanças de fluxo de jogo tendem a tocar várias funções desse arquivo — ver
+  ARCHITECTURE.md §3 antes de mexer.
 - **Nunca vazar o segredo do impostor** em payload público ou tela compartilhada durante
   os turnos — contrato central do jogo (ARCHITECTURE.md §9, PRODUCT_VISION.md §8).
 - **Offline-first**: qualquer asset/dependência nova precisa funcionar com o service
@@ -27,8 +28,9 @@ leia primeiro os documentos abaixo em `docs/` para entender o escopo do projeto:
 - **Sem servidor próprio**: multiplayer é P2P efêmero via PeerJS; toda persistência é
   localStorage no dispositivo.
 - **Testes**: `./scripts/test-all.sh` roda todos (o CI também roda antes do deploy);
-  `node scripts/test-<nome>.js` roda um só (scoring, hygiene, story-recap, content, audio,
-  multidevice, visual) — sem framework.
+  `node scripts/test-<nome>.js` roda um só (scoring, hygiene, i18n, story-recap, content,
+  audio, multidevice, visual) — sem framework. Texto novo de interface entra como chave em
+  `src/i18n.js` nos 3 idiomas (o `test-i18n` falha se faltar).
 - **Rodar localmente**: `./scripts/run.sh` (serve `src/` na porta 8080).
 - Projeto **hobby, uma pessoa** — preferir incrementos pequenos e independentes, seguindo
   as fases descritas em `docs/ROADMAP.md`, em vez de reescritas grandes.

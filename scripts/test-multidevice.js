@@ -5,7 +5,9 @@ const { readFileSync } = require('node:fs');
 const {
   createMultidevicePayload,
   createMultideviceRolePayload,
-  validateMultideviceAssignment
+  validateMultideviceAssignment,
+  translate,
+  SUPPORTED_LANGUAGES
 } = require('../src/script.js');
 const script = readFileSync('src/script.js', 'utf8');
 
@@ -72,6 +74,15 @@ assert.equal(impostorRole.isImpostor, true);
 assert.equal(impostorRole.prompt, '');
 assert.equal(impostorRole.twist, '');
 assert.equal(JSON.stringify(impostorRole).includes('A nave pousou'), false);
+// Role payload carries i18n keys, not host-language text: the guest translates in its own language.
+assert.equal(impostorRole.roleTitleKey, 'game.impostorRole');
+assert.match(impostorRole.hintKey, /^game\.impostorHint\d$/);
+for (const lang of SUPPORTED_LANGUAGES) {
+  assert.ok(translate(impostorRole.hintKey, lang), `missing ${impostorRole.hintKey} in ${lang}`);
+}
+assert.equal(innocentRole.hintKey, '');
+assert.equal(createMultideviceRolePayload({ players: ['Ana'], category: null }, 0).messageKey, 'guest.waitingGame');
+assert.doesNotMatch(script, /Aguardando início da partida|Use sua abertura e dica sem ler/);
 assert.match(script, /type: 'crazystory-vote'/);
 assert.match(script, /function submitRemoteVote/);
 assert.match(script, /data-action="submit-multidevice-vote"/);

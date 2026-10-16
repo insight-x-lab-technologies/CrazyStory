@@ -5,6 +5,7 @@ const { existsSync, readFileSync } = require('node:fs');
 
 const html = readFileSync('src/index.html', 'utf8');
 const script = readFileSync('src/script.js', 'utf8');
+const i18n = readFileSync('src/i18n.js', 'utf8');
 const style = readFileSync('src/style.css', 'utf8');
 const themes = readFileSync('src/themes.css', 'utf8');
 const serviceWorker = readFileSync('src/service-worker.js', 'utf8');
@@ -21,7 +22,9 @@ assert.doesNotMatch(html, /window\.location\.replace/);
 assert.match(html, /Conte uma história, esconda o impostor e vote no final/);
 assert.match(html, /<select class="inp" id="language-select">/);
 assert.doesNotMatch(script, /function resetHomeCopy|function configureStaticScreens/);
-assert.match(script, /const I18N =/);
+assert.match(i18n, /^var I18N = \{/m);
+assert.match(html, /<script src="i18n\.js"><\/script>\s*<script src="script\.js"><\/script>/);
+assert.match(serviceWorker, /'\.\/i18n\.js'/);
 assert.match(script, /new window\.Peer/);
 assert.match(script, /new window\.QRCode/);
 assert.match(style, /\.game-actions-grid:has\(\.vote-option\)/);

@@ -19,896 +19,9 @@ const DONATION_LINKS = {
   koFi: 'https://ko-fi.com/insightxlabgamestudio'
 };
 const SUPPORTED_LANGUAGES = ['pt', 'en', 'es'];
-const I18N = {
-  pt: {
-    'common.back': '← Voltar',
-    'common.continue': '▶️ Continuar',
-    'common.restart': '🔄 Reiniciar',
-    'common.home': '🏠 Início',
-    'common.copy': 'Copiar',
-    'common.add': '+ Adicionar',
-    'home.title': 'CrazyStory',
-    'home.subtitle': 'Conte uma história, esconda o impostor e vote no final',
-    'home.newGame': '🎮 Nova Partida',
-    'home.quickGame': '⚡ Jogo Rápido',
-    'home.multiDeviceGame': '📡 Modo Multi-device',
-    'home.wordBank': '📖 Regras e Temas',
-    'home.donate': '❤️ Doar',
-    'home.leaderboard': '🏅 Placar Histórico',
-    'home.settings': '⚙️ Configurações',
-    'home.installOnDevice': '📲 Instalar no dispositivo',
-    'home.multiDeviceOnline': 'On-line',
-    'home.multiDeviceOffline': 'Off-line',
-    'home.multiDeviceSummary': '{status} | {count} devices connected',
-    'leaderboard.title': 'Placar Histórico',
-    'leaderboard.subtitle': 'Quem mais enganou o grupo ou encontrou impostores.',
-    'leaderboard.summaryLabel': 'Resultados salvos',
-    'leaderboard.resetButton': 'Apagar resultados',
-    'multiDevice.title': 'Partida Multi Device',
-    'multiDevice.chooseTitle': 'O que você quer fazer?',
-    'multiDevice.chooseDesc': 'Abra uma sessão para controlar a partida ou conecte outro celular ao jogador.',
-    'multiDevice.chooseHost': '📡 Abrir uma sessão',
-    'multiDevice.chooseJoin': '🔗 Conectar em uma sessão',
-    'multiDevice.hostTitle': '📡 Abrir sessão',
-    'multiDevice.hostDesc': 'Este dispositivo controla a partida. Celulares conectados recebem apenas o que cada jogador pode ver.',
-    'multiDevice.openSession': 'Abrir sessão',
-    'multiDevice.joinTitle': '🔗 Conectar',
-    'multiDevice.joinDesc': 'Conecte este celular para receber papel, turno e voto de um jogador.',
-    'multiDevice.joinCodeLabel': 'Código ou link da sessão',
-    'multiDevice.joinCodePlaceholder': 'Cole o código ou link',
-    'multiDevice.joinSession': 'Conectar na sessão',
-    'multiDevice.joinHelp': 'Você também pode escanear o QR Code exibido no host.',
-    'multiDevice.guestLabel': 'Celular do jogador',
-    'multiDevice.waitingTitle': 'Aguardando dados da partida',
-    'multiDevice.connecting': 'Conectando...',
-    'multiDevice.reconnect': 'Reconectar',
-    'multiDevice.disconnect': 'Desconectar',
-    'multiDevice.guestWaiting': 'Aguardando o host iniciar a partida.',
-    'multiDevice.liveDrawing': '📜 História no celular',
-    'game.secondsLabel': 'SEGUNDOS',
-    'game.currentPlayerLabel': 'Turno de história:',
-    'game.readyTitle': 'Prontos para ver o papel?',
-    'game.readySub': 'Só o jogador da vez deve olhar. Depois passe o dispositivo.',
-    'game.revealWord': '🎭 Revelar papel',
-    'game.memorizeTitle': '⚡ Prepare-se!',
-    'game.startsIn': 'O papel aparece em...',
-    'game.challengePrefix': '🎯 Dica:',
-    'game.correct': 'Salvar frase',
-    'game.wrong': 'Pular registro',
-    'score.title': '🏆 Placar',
-    'score.nextRoundTitle': '🎊 Próxima Rodada',
-    'final.winnerLabel': 'VENCEDOR!',
-    'final.resultTitle': '📊 Resultado Final',
-    'final.playAgain': '🎮 Jogar de Novo',
-    'settings.title': 'Configurações',
-    'settings.languageLabel': 'Idioma',
-    'settings.languageSub': 'Altera textos fixos da interface neste dispositivo',
-    'settings.timerTitle': '⏱️ Timer',
-    'settings.roundTimeLabel': 'Tempo por turno',
-    'settings.roundTimeSub': 'Segundos para cada jogador continuar a história',
-    'settings.prepareTimeLabel': 'Tempo de revelação',
-    'settings.prepareTimeSub': 'Segundos antes de mostrar cada papel secreto',
-    'settings.correctPointsLabel': 'Pontos por voto correto',
-    'settings.correctPointsSub': 'Pontos para cada jogador que votar no impostor, se ele não adivinhar o tema',
-    'settings.wrongPenaltyPointsLabel': 'Bônus do impostor',
-    'settings.wrongPenaltyPointsSub': 'Pontos quando o impostor escapa, empata a votação ou acerta o tema',
-    'settings.roundFlowLabel': 'Fluxo da rodada',
-    'settings.roundFlowSub': 'Papel secreto, história coletiva, voto individual e defesa do impostor',
-    'settings.generalTitle': '⚙️ Configurações Gerais',
-    'settings.alertSoundLabel': 'Som de Alerta',
-    'settings.alertSoundSub': 'Beep nos últimos 10 segundos',
-    'settings.navigationSoundLabel': 'Som de Navegação',
-    'settings.navigationSoundSub': 'Som ao clicar nos botões da interface',
-    'settings.gameroomMusicLabel': 'Música dos menus',
-    'settings.gameroomMusicSub': 'Toca na página inicial, setup e configurações',
-    'settings.gameplayMusicLabel': 'Música do gameplay',
-    'settings.gameplayMusicSub': 'Toca durante preparação, timer e placares',
-    'settings.wordsTitle': '🎲 Conteúdo',
-    'settings.shuffleWordsLabel': 'Embaralhar jogadores',
-    'settings.shuffleWordsSub': 'Altera a ordem de fala em cada rodada',
-    'settings.appearanceTitle': '🎨 Aparência',
-    'settings.themeLabel': 'Tema visual',
-    'settings.themeSub': 'Troque cores, transparências e tipografia da interface',
-    'settings.resetAllTitle': '🧹 Restaurar aplicação',
-    'settings.resetAllSub': 'Remove configurações, jogadores salvos e packs instalados neste dispositivo.',
-    'settings.resetAllButton': 'Restaurar tudo',
-    'donate.title': 'Apoie CrazyStory',
-    'donate.chooseTitle': '❤️ Escolha como apoiar',
-    'donate.subtitle': 'Ajude a financiar novos temas, idiomas e modos de jogo.',
-    'donate.buyMeCoffee': 'Buy Me a Coffee',
-    'donate.buyMeCoffeeSub': 'Apoio rápido e pontual pelo Buy Me a Coffee.',
-    'donate.koFi': 'Ko-fi',
-    'donate.koFiSub': 'Doe com Ko-fi e mantenha o projeto evoluindo.',
-    'donate.whyTitle': '✨ Por que doar?',
-    'donate.whyLanguages': 'Seu apoio ajuda a criar novos baralhos de histórias e traduções.',
-    'donate.whyUpdates': 'Também ajuda a manter CrazyStory polido, offline e divertido em grupo.',
-    'footer.copyPrefix': '© 2026 CrazyStory v0.1 · Insight X Lab Technologies',
-    'language.pt': 'Português',
-    'language.en': 'English',
-    'language.es': 'Español',
-    'theme.cosmic': 'Cósmico',
-    'theme.liquid-glass': 'Outono',
-    'theme.material3': 'Primavera',
-    'theme.light-mode': 'Modo Claro',
-    'theme.dark-mode': 'Modo Escuro',
-    'theme.high-contrast': 'Alto Contraste',
-    'share.footerAriaLabel': 'Compartilhar CrazyStory',
-    'setup.title': 'Nova Partida',
-    'setup.beforeTitle': '⚡ Antes de começar',
-    'setup.beforeSecret': 'Não leia sua carta em voz alta.',
-    'setup.beforeImpostor': 'O impostor tenta parecer natural e pode se salvar adivinhando o tema.',
-    'setup.beforeStory': 'Registrar a frase é opcional, mas deixa o final mais divertido.',
-    'setup.dismissRules': 'Entendi',
-    'setup.playersTitle': '1️⃣ Jogadores',
-    'setup.playerPlaceholder': 'Nome do jogador...',
-    'setup.playerHelper': '💡 3 a 10 jogadores. Todos usam o mesmo dispositivo para ver o papel em segredo.',
-    'setup.roundsTitle': '2️⃣ Rodadas',
-    'setup.classicName': 'Clássico',
-    'setup.classicDesc': 'Rodadas configuráveis',
-    'setup.lightningName': 'Relâmpago',
-    'setup.lightningDesc': '1 rodada, timer curto',
-    'setup.roundsLabel': 'Número de rodadas',
-    'setup.roundsClassicSub': 'Cada rodada tem impostor(es), uma história e uma votação.',
-    'setup.roundsLightningSub': 'Relâmpago sempre usa 1 rodada.',
-    'setup.impostorsLabel': 'Impostores',
-    'setup.impostorsSub': 'Use 2 impostores em grupos com 7+ jogadores.',
-    'setup.oneImpostor': '1 impostor',
-    'setup.twoImpostors': '2 impostores',
-    'setup.contentModeLabel': 'Modo do conteúdo',
-    'setup.contentModeSub': 'Família é seguro para todas as idades; Noite de amigos usa situações adultas leves.',
-    'setup.familyMode': 'Família',
-    'setup.partyMode': 'Festa adulta',
-    'setup.themesTitle': '3️⃣ Temas',
-    'setup.howTitle': 'Como funciona',
-    'setup.howRole': 'Cada jogador vê seu papel em segredo.',
-    'setup.howStory': 'Todos continuam a mesma história, uma frase por vez.',
-    'setup.howVote': 'No final, o grupo vota em quem parece não saber o tema.',
-    'setup.howVariant': 'Relâmpago usa uma rodada rápida; 2 impostores funciona melhor com 7+ pessoas.',
-    'setup.startStory': '🎭 Começar História',
-    'setup.startNeedsPlayers': 'Adicione 3 jogadores',
-    'setup.selectedThemes': '{count} tema(s) selecionado(s)',
-    'rules.title': 'Regras e Temas',
-    'rules.availableThemes': '🧩 Temas disponíveis',
-    'rules.customContent': '✍️ Conteúdo customizado',
-    'rules.packTitle': '📦 Packs de extensão',
-    'rules.step1': 'O app sorteia um tema, uma abertura e um impostor.',
-    'rules.step2': 'Jogadores veem o papel em segredo e passam o dispositivo.',
-    'rules.step3': 'Cada pessoa adiciona uma frase à história.',
-    'rules.step4': 'Todos votam. O grupo pontua se achar o impostor; o impostor pontua se escapar.',
-    'rules.scoreRule': 'Pontuação:',
-    'rules.scoreRuleText': 'cada voto correto ganha pontos se o impostor não acertar o tema.',
-    'rules.impostorRule': 'Impostor:',
-    'rules.impostorRuleText': 'pontua quando escapa, empata a votação ou acerta o tema na defesa.',
-    'rules.multideviceRule': 'Multi-device:',
-    'rules.multideviceRuleText': 'a regra usa votos por jogador e pode ser migrada para celulares individuais sem mudar a jornada.',
-    'rules.promptPlaceholder': 'Nova abertura de história',
-    'rules.addPrompt': 'Adicionar abertura',
-    'rules.twistPlaceholder': 'Nova dica secreta / twist',
-    'rules.addTwist': 'Adicionar twist',
-    'rules.customSummary': 'Conteúdo salvo neste dispositivo: {prompts} abertura(s), {twists} twist(s). Em multi-device, estes dados ficam no host.',
-    'rules.clearCustom': 'Limpar conteúdo customizado',
-    'rules.packSummary': 'Instalados neste dispositivo: {packs} pack(s), {prompts} abertura(s), {twists} twist(s). Formato JSON com name, description, prompts por categoria e twists.',
-    'rules.importPack': 'Importar pack JSON',
-    'rules.removePack': 'Remover',
-    'rules.noPacks': 'Nenhum pack instalado.',
-    'rules.localPack': 'Pack local',
-    'rules.openingsCount': '{count} aberturas',
-    'multiDevice.connectedCount': '{count} device(s) conectado(s)',
-    'multiDevice.sessionOpen': 'Sessão aberta',
-    'multiDevice.readyToOpen': 'Pronto para abrir sessão',
-    'multiDevice.choiceSubtitle': 'Use outro celular como tela auxiliar com timer, jogador atual e progresso público. Papéis, abertura e dica secreta continuam protegidos no host.',
-    'multiDevice.joinAsGuestTitle': '🔗 Conectar como tela auxiliar',
-    'guest.connected': 'Conectado',
-    'guest.disconnected': 'Desconectado',
-    'guest.roundOf': 'Rodada {round} de {rounds}',
-    'guest.waitingStory': 'Aguardando história',
-    'guest.choosePlayer': 'Escolha seu jogador',
-    'guest.connectionNotOpen': 'Conexão ainda não abriu.',
-    'guest.waitingRole': 'Aguardando papel do host',
-    'guest.assignTaken': 'Esse jogador já está conectado em outro aparelho.',
-    'guest.assignLocked': 'A partida já começou: não dá para trocar ou escolher jogador agora.',
-    'guest.assignInvalid': 'Jogador inválido.',
-    'guest.yourRole': 'Seu papel: {player}',
-    'guest.waitingGame': 'Aguardando partida',
-    'guest.openingAndHint': 'Abertura: {prompt}. Dica: {twist}',
-    'guest.storySentTitle': 'Frase enviada',
-    'guest.waitNextTurn': 'Aguarde o próximo turno.',
-    'guest.yourStoryTurn': 'Sua vez na história',
-    'guest.storyHelp': 'Conte uma frase curta. O texto é opcional, mas aparece no resumo final.',
-    'guest.storyPlaceholder': 'Frase contada',
-    'guest.sendStory': 'Enviar frase',
-    'guest.waitHostAdvance': 'Aguarde o host avançar.',
-    'guest.voteSentTitle': 'Voto enviado',
-    'guest.waitVotes': 'Aguarde os outros jogadores terminarem.',
-    'guest.secretVoteTitle': 'Vote em segredo',
-    'guest.secretVoteHelp': 'Quem parecia não conhecer a abertura secreta?',
-    'guest.waitTally': 'Aguarde a apuração no host.',
-    'guest.lastChanceTitle': 'Última chance',
-    'guest.guessThemeHelp': 'Adivinhe o tema para roubar os pontos.',
-    'guest.guessSentTitle': 'Palpite enviado',
-    'guest.waitScore': 'Aguarde o placar no host.',
-    'guest.joinConnected': 'Conectado. Aguardando dados da partida...',
-    'guest.sessionCodeRequired': 'Informe o código da sessão.',
-    'guest.phase.roles': 'Revelação secreta no host',
-    'guest.phase.story': 'História em andamento',
-    'guest.phase.vote': 'Votação secreta no host',
-    'guest.phase.impostor-guess': 'Defesa do impostor no host',
-    'guest.phase.score': 'Placar da rodada',
-    'guest.phase.waiting': 'Aguardando partida',
-    'game.roundOf': 'Rodada {round} de {rounds}',
-    'game.roleOwner': 'Papel secreto de:',
-    'game.passDevice': 'Passe o dispositivo para:',
-    'game.preparingReveal': 'Preparando revelação secreta...',
-    'game.revealInstruction': 'Quando estiver sozinho olhando para a tela, toque para revelar seu papel.',
-    'game.progressOf': '{current} de {total}',
-    'game.showMyRole': 'Mostrar meu papel',
-    'game.impostorRole': 'IMPOSTOR',
-    'game.openingPrefix': 'Abertura:',
-    'game.secretHintPrefix': '🎯 Dica secreta:',
-    'game.beginStory': 'Começar história',
-    'game.hideAndPass': 'Ocultar e passar',
-    'game.storyTurnOf': 'Turno {current} de {total}:',
-    'game.storyKicker': '{icon} História em andamento',
-    'game.continueSecret': 'Continue a história sem entregar demais o segredo.',
-    'game.firstSentence': 'Primeira frase: comece usando sua abertura secreta.',
-    'game.alreadySpoke': 'Já falaram: {players}',
-    'game.firstRoundSentence': 'Primeira frase da rodada',
-    'game.storyInputPlaceholder': 'Opcional: escreva a frase contada para reler no final',
-    'game.storyInstruction': 'Continue com uma frase curta. Depois passe para o próximo jogador.',
-    'game.sentenceTold': '✓ Frase contada',
-    'game.skipWithoutText': 'Pular sem texto',
-    'game.voteRound': 'Votação da rodada {round}',
-    'game.voteFallback': 'Votação',
-    'game.secretVoteOf': 'Voto secreto de:',
-    'game.voteKicker': '🗳️ Votação secreta',
-    'game.votePromptHidden': '{player}, toque para votar sem mostrar aos outros.',
-    'game.votesOf': '{current} de {total} votos',
-    'game.openBallot': 'Abrir cédula',
-    'game.voteOf': '🗳️ Voto de {player}',
-    'game.voteQuestion': 'Quem parecia não conhecer a abertura secreta?',
-    'game.roundOrder': 'Ordem da rodada: {players}',
-    'game.impostorDefense': 'Defesa do impostor',
-    'game.lastChanceLabel': 'Última chance:',
-    'game.impostorFoundKicker': '🕶️ Impostor descoberto',
-    'game.stealPointsPrompt': 'Se adivinhar o tema, ainda rouba pontos.',
-    'game.mostVotedSuspect': 'Suspeito mais votado: {player}',
-    'score.impostorStole': '🕶️ Impostor roubou pontos!',
-    'score.impostorCaught': '🎯 Impostor descoberto!',
-    'score.impostorEscaped': '🕶️ O impostor escapou!',
-    'score.mostVoted': 'Mais votado: {player}.',
-    'score.voteTied': 'A votação empatou.',
-    'score.themeGuess': 'Tema: {theme}. {result}',
-    'score.guessRight': 'O impostor acertou.',
-    'score.guessWrong': 'O impostor errou.',
-    'score.subtitle': 'Impostor: {impostor}. {detail}{guess}',
-    'score.finalRoundTitle': '🏁 Fim da partida',
-    'score.nextRoundTitleDynamic': '🎊 Próxima rodada',
-    'score.finalInfo': 'Veja o resultado final.',
-    'score.nextRoundInfo': 'Preparem a rodada {round}.',
-    'score.viewFinal': 'Ver resultado final',
-    'score.continue': 'Continuar',
-    'score.noVoters': 'ninguém',
-    'score.correctReward': '+{points} para voto correto: {voters}.',
-    'score.impostorReward': '+{points} para {player}.',
-    'score.ruleLabel': 'Regra:',
-    'score.ruleText': 'voto correto pontua só se o impostor não acertar o tema; empate favorece o impostor.',
-    'score.roundLabel': 'Rodada:',
-    'score.votesLabel': 'Votos:',
-    'score.noVotes': 'sem votos',
-    'score.quickCorrection': 'Correção rápida:',
-    'score.quickCorrectionHelp': 'ajuste pontos se alguém tocou na opção errada.',
-    'final.winner': 'VENCEU!',
-    'final.ended': 'PARTIDA ENCERRADA',
-    'final.storyTitle': '📖 História da partida',
-    'final.emptyStory': 'Nenhuma frase foi registrada nesta partida.',
-    'final.unregisteredBeat': 'Frase contada sem registro.',
-    'leaderboard.summary': '{players} jogadores · {matches} partidas',
-    'leaderboard.footer': 'Mostrando {shown} de {total}',
-    'leaderboard.empty': 'Nenhuma partida registrada ainda.',
-    'leaderboard.matches': '{count} partida(s)',
-    'admin.playerDuplicate': 'Jogador já adicionado.',
-    'admin.playerLimit': 'Limite de 10 jogadores.',
-    'admin.keepOneTheme': 'Mantenha pelo menos um tema.',
-    'admin.needPlayers': 'Adicione pelo menos 3 jogadores.',
-    'admin.leaderboardConfirm': 'Apagar todo o placar histórico?',
-    'admin.leaderboardCleared': 'Placar apagado.',
-    'admin.promptRequired': 'Escreva uma abertura.',
-    'admin.promptAdded': 'Abertura adicionada.',
-    'admin.twistRequired': 'Escreva um twist.',
-    'admin.twistAdded': 'Twist adicionado.',
-    'admin.clearCustomConfirm': 'Limpar aberturas e twists customizados deste dispositivo?',
-    'admin.customCleared': 'Conteúdo customizado limpo.',
-    'admin.packInvalid': 'Pack sem conteúdo válido.',
-    'admin.packInstalled': 'Pack instalado.',
-    'admin.packImportFailed': 'Não foi possível importar o JSON.',
-    'admin.packRemoved': 'Pack removido.',
-    'admin.restartConfirm': 'Reiniciar a partida atual?',
-    'admin.resetConfirm': 'Restaurar configurações e placar local?',
-    'admin.linkCopied': 'Link copiado.',
-    'admin.installPwa': 'Use a opção instalar do navegador.',
-    'admin.peerUnavailable': 'PeerJS indisponível offline.',
-    'admin.peerOpenFailed': 'Falha ao abrir sessão P2P.',
-    'admin.connectionFailed': 'Falha na conexão.'
-  },
-  en: {},
-  es: {}
-};
-Object.assign(I18N.en, {
-  ...I18N.pt,
-  'common.back': '← Back',
-  'common.continue': '▶️ Continue',
-  'common.restart': '🔄 Restart',
-  'common.home': '🏠 Home',
-  'common.copy': 'Copy',
-  'common.add': '+ Add',
-  'home.subtitle': 'Tell a story, hide the impostor, then vote',
-  'home.newGame': '🎮 New Game',
-  'home.quickGame': '⚡ Quick Game',
-  'home.multiDeviceGame': '📡 Multi-device Mode',
-  'home.wordBank': '📖 Rules and Themes',
-  'home.donate': '❤️ Donate',
-  'home.leaderboard': '🏅 Hall of Fame',
-  'home.settings': '⚙️ Settings',
-  'leaderboard.title': 'Hall of Fame',
-  'leaderboard.subtitle': 'Who fooled the group or found impostors the most.',
-  'leaderboard.summaryLabel': 'Saved results',
-  'leaderboard.resetButton': 'Delete results',
-  'multiDevice.title': 'Multi-device Game',
-  'multiDevice.chooseTitle': 'What do you want to do?',
-  'multiDevice.chooseDesc': 'Open a session to run the game or connect another phone to a player.',
-  'multiDevice.hostDesc': 'This device runs the game. Connected phones receive only what each player may see.',
-  'multiDevice.joinDesc': 'Connect this phone to receive a player role, turn and vote.',
-  'multiDevice.joinCodeLabel': 'Session code or link',
-  'multiDevice.joinCodePlaceholder': 'Paste code or link',
-  'multiDevice.joinSession': 'Join session',
-  'multiDevice.joinHelp': 'You can also scan the QR Code shown by the host.',
-  'multiDevice.guestLabel': 'Player phone',
-  'multiDevice.waitingTitle': 'Waiting for game data',
-  'multiDevice.connecting': 'Connecting...',
-  'multiDevice.guestWaiting': 'Waiting for the host to start.',
-  'multiDevice.liveDrawing': '📜 Story on phone',
-  'game.currentPlayerLabel': 'Story turn:',
-  'game.readyTitle': 'Ready to see the role?',
-  'game.readySub': 'Only the current player should look. Then pass the device.',
-  'game.revealWord': '🎭 Reveal role',
-  'game.startsIn': 'Role appears in...',
-  'game.challengePrefix': '🎯 Hint:',
-  'game.correct': 'Save sentence',
-  'game.wrong': 'Skip note',
-  'score.nextRoundTitle': '🎊 Next Round',
-  'final.winnerLabel': 'WINNER!',
-  'final.resultTitle': '📊 Final Result',
-  'final.playAgain': '🎮 Play Again',
-  'settings.title': 'Settings',
-  'settings.languageLabel': 'Language',
-  'settings.languageSub': 'Changes fixed interface text on this device',
-  'settings.timerTitle': '⏱️ Timer',
-  'settings.roundTimeLabel': 'Turn time',
-  'settings.roundTimeSub': 'Seconds for each player to continue the story',
-  'settings.prepareTimeLabel': 'Reveal time',
-  'settings.prepareTimeSub': 'Seconds before showing each secret role',
-  'settings.correctPointsLabel': 'Points per correct vote',
-  'settings.correctPointsSub': 'Points for each player voting for the impostor if they miss the theme',
-  'settings.wrongPenaltyPointsLabel': 'Impostor bonus',
-  'settings.wrongPenaltyPointsSub': 'Points when the impostor escapes, ties the vote or guesses the theme',
-  'settings.roundFlowLabel': 'Round flow',
-  'settings.roundFlowSub': 'Secret role, shared story, individual vote and impostor defense',
-  'settings.generalTitle': '⚙️ General Settings',
-  'settings.alertSoundLabel': 'Alert sound',
-  'settings.alertSoundSub': 'Beep in the last 10 seconds',
-  'settings.navigationSoundLabel': 'Navigation sound',
-  'settings.navigationSoundSub': 'Sound when tapping interface buttons',
-  'settings.gameroomMusicLabel': 'Menu music',
-  'settings.gameroomMusicSub': 'Plays on home, setup and settings',
-  'settings.gameplayMusicLabel': 'Gameplay music',
-  'settings.gameplayMusicSub': 'Plays during prep, timer and scores',
-  'settings.wordsTitle': '🎲 Content',
-  'settings.shuffleWordsLabel': 'Shuffle players',
-  'settings.shuffleWordsSub': 'Changes speaking order each round',
-  'settings.appearanceTitle': '🎨 Appearance',
-  'settings.themeLabel': 'Visual theme',
-  'settings.themeSub': 'Change colors, transparency and typography',
-  'settings.resetAllTitle': '🧹 Reset app',
-  'settings.resetAllSub': 'Removes settings, saved players and packs on this device.',
-  'settings.resetAllButton': 'Reset everything',
-  'donate.title': 'Support CrazyStory',
-  'donate.chooseTitle': '❤️ Choose how to support',
-  'donate.subtitle': 'Help fund new themes, languages and game modes.',
-  'donate.buyMeCoffeeSub': 'Quick one-time support through Buy Me a Coffee.',
-  'donate.koFiSub': 'Donate with Ko-fi and keep the project evolving.',
-  'donate.whyTitle': '✨ Why donate?',
-  'donate.whyLanguages': 'Your support helps create new story packs and translations.',
-  'donate.whyUpdates': 'It also keeps CrazyStory polished, offline and fun for groups.',
-  'share.footerAriaLabel': 'Share CrazyStory'
-});
-Object.assign(I18N.es, {
-  ...I18N.pt,
-  'common.back': '← Volver',
-  'common.continue': '▶️ Continuar',
-  'common.restart': '🔄 Reiniciar',
-  'common.home': '🏠 Inicio',
-  'common.copy': 'Copiar',
-  'common.add': '+ Agregar',
-  'home.subtitle': 'Cuenta una historia, oculta al impostor y vota al final',
-  'home.newGame': '🎮 Nueva partida',
-  'home.quickGame': '⚡ Partida rápida',
-  'home.multiDeviceGame': '📡 Modo multidispositivo',
-  'home.wordBank': '📖 Reglas y temas',
-  'home.donate': '❤️ Donar',
-  'home.leaderboard': '🏅 Marcador histórico',
-  'home.settings': '⚙️ Configuración',
-  'leaderboard.title': 'Marcador histórico',
-  'leaderboard.subtitle': 'Quien más engañó al grupo o encontró impostores.',
-  'leaderboard.summaryLabel': 'Resultados guardados',
-  'leaderboard.resetButton': 'Borrar resultados',
-  'multiDevice.title': 'Partida multidispositivo',
-  'multiDevice.chooseTitle': '¿Qué quieres hacer?',
-  'multiDevice.chooseDesc': 'Abre una sesión para controlar la partida o conecta otro celular a un jugador.',
-  'multiDevice.hostDesc': 'Este dispositivo controla la partida. Los celulares conectados reciben solo lo que cada jugador puede ver.',
-  'multiDevice.joinDesc': 'Conecta este celular para recibir rol, turno y voto de un jugador.',
-  'multiDevice.joinCodeLabel': 'Código o enlace de sesión',
-  'multiDevice.joinCodePlaceholder': 'Pega el código o enlace',
-  'multiDevice.joinSession': 'Conectar a la sesión',
-  'multiDevice.joinHelp': 'También puedes escanear el código QR mostrado por el host.',
-  'multiDevice.guestLabel': 'Celular del jugador',
-  'multiDevice.waitingTitle': 'Esperando datos de la partida',
-  'multiDevice.connecting': 'Conectando...',
-  'multiDevice.guestWaiting': 'Esperando que el host inicie.',
-  'multiDevice.liveDrawing': '📜 Historia en el celular',
-  'game.currentPlayerLabel': 'Turno de historia:',
-  'game.readyTitle': '¿Listos para ver el rol?',
-  'game.readySub': 'Solo el jugador actual debe mirar. Luego pasa el dispositivo.',
-  'game.revealWord': '🎭 Revelar rol',
-  'game.startsIn': 'El rol aparece en...',
-  'game.challengePrefix': '🎯 Pista:',
-  'game.correct': 'Guardar frase',
-  'game.wrong': 'Saltar registro',
-  'score.nextRoundTitle': '🎊 Próxima ronda',
-  'final.winnerLabel': '¡GANADOR!',
-  'final.resultTitle': '📊 Resultado final',
-  'final.playAgain': '🎮 Jugar otra vez',
-  'settings.title': 'Configuración',
-  'settings.languageLabel': 'Idioma',
-  'settings.languageSub': 'Cambia textos fijos de la interfaz en este dispositivo',
-  'settings.timerTitle': '⏱️ Temporizador',
-  'settings.roundTimeLabel': 'Tiempo por turno',
-  'settings.roundTimeSub': 'Segundos para que cada jugador continúe la historia',
-  'settings.prepareTimeLabel': 'Tiempo de revelación',
-  'settings.prepareTimeSub': 'Segundos antes de mostrar cada rol secreto',
-  'settings.correctPointsLabel': 'Puntos por voto correcto',
-  'settings.correctPointsSub': 'Puntos para cada jugador que vote al impostor si no adivina el tema',
-  'settings.wrongPenaltyPointsLabel': 'Bono del impostor',
-  'settings.wrongPenaltyPointsSub': 'Puntos cuando el impostor escapa, empata o adivina el tema',
-  'settings.roundFlowLabel': 'Flujo de ronda',
-  'settings.roundFlowSub': 'Rol secreto, historia compartida, voto individual y defensa del impostor',
-  'settings.generalTitle': '⚙️ Configuración general',
-  'settings.alertSoundLabel': 'Sonido de alerta',
-  'settings.alertSoundSub': 'Beep en los últimos 10 segundos',
-  'settings.navigationSoundLabel': 'Sonido de navegación',
-  'settings.navigationSoundSub': 'Sonido al tocar botones de la interfaz',
-  'settings.gameroomMusicLabel': 'Música de menús',
-  'settings.gameroomMusicSub': 'Suena en inicio, setup y configuración',
-  'settings.gameplayMusicLabel': 'Música de juego',
-  'settings.gameplayMusicSub': 'Suena durante preparación, timer y placares',
-  'settings.wordsTitle': '🎲 Contenido',
-  'settings.shuffleWordsLabel': 'Mezclar jugadores',
-  'settings.shuffleWordsSub': 'Cambia el orden de habla en cada ronda',
-  'settings.appearanceTitle': '🎨 Apariencia',
-  'settings.themeLabel': 'Tema visual',
-  'settings.themeSub': 'Cambia colores, transparencias y tipografía',
-  'settings.resetAllTitle': '🧹 Restaurar app',
-  'settings.resetAllSub': 'Elimina configuración, jugadores guardados y packs en este dispositivo.',
-  'settings.resetAllButton': 'Restaurar todo',
-  'donate.title': 'Apoya CrazyStory',
-  'donate.chooseTitle': '❤️ Elige cómo apoyar',
-  'donate.subtitle': 'Ayuda a financiar nuevos temas, idiomas y modos de juego.',
-  'donate.buyMeCoffeeSub': 'Apoyo rápido y puntual por Buy Me a Coffee.',
-  'donate.koFiSub': 'Dona con Ko-fi y mantén el proyecto evolucionando.',
-  'donate.whyTitle': '✨ ¿Por qué donar?',
-  'donate.whyLanguages': 'Tu apoyo ayuda a crear nuevos packs de historias y traducciones.',
-  'donate.whyUpdates': 'También mantiene CrazyStory pulido, offline y divertido en grupo.',
-  'share.footerAriaLabel': 'Compartir CrazyStory'
-});
-Object.assign(I18N.en, {
-  'setup.title': 'New Game',
-  'setup.beforeTitle': '⚡ Before you start',
-  'setup.beforeSecret': 'Do not read your card out loud.',
-  'setup.beforeImpostor': 'The impostor tries to sound natural and can save themselves by guessing the theme.',
-  'setup.beforeStory': 'Writing the sentence is optional, but makes the finale better.',
-  'setup.dismissRules': 'Got it',
-  'setup.playersTitle': '1️⃣ Players',
-  'setup.playerPlaceholder': 'Player name...',
-  'setup.playerHelper': '💡 3 to 10 players. Everyone uses this device to see roles in secret.',
-  'setup.roundsTitle': '2️⃣ Rounds',
-  'setup.classicName': 'Classic',
-  'setup.classicDesc': 'Configurable rounds',
-  'setup.lightningName': 'Lightning',
-  'setup.lightningDesc': '1 round, short timer',
-  'setup.roundsLabel': 'Number of rounds',
-  'setup.roundsClassicSub': 'Each round has impostor(s), a story and a vote.',
-  'setup.roundsLightningSub': 'Lightning always uses 1 round.',
-  'setup.impostorsLabel': 'Impostors',
-  'setup.impostorsSub': 'Use 2 impostors with 7+ players.',
-  'setup.oneImpostor': '1 impostor',
-  'setup.twoImpostors': '2 impostors',
-  'setup.contentModeLabel': 'Content mode',
-  'setup.contentModeSub': 'Family is safe for all ages; Party night uses light adult situations.',
-  'setup.familyMode': 'Family',
-  'setup.partyMode': 'Party night',
-  'setup.themesTitle': '3️⃣ Themes',
-  'setup.howTitle': 'How it works',
-  'setup.howRole': 'Each player sees their role in secret.',
-  'setup.howStory': 'Everyone continues the same story, one sentence at a time.',
-  'setup.howVote': 'At the end, the group votes for whoever seems not to know the theme.',
-  'setup.howVariant': 'Lightning uses a fast round; 2 impostors works best with 7+ people.',
-  'setup.startStory': '🎭 Start Story',
-  'setup.startNeedsPlayers': 'Add 3 players',
-  'setup.selectedThemes': '{count} theme(s) selected',
-  'rules.title': 'Rules and Themes',
-  'rules.availableThemes': '🧩 Available themes',
-  'rules.customContent': '✍️ Custom content',
-  'rules.packTitle': '📦 Extension packs',
-  'rules.step1': 'The app draws a theme, an opening and an impostor.',
-  'rules.step2': 'Players see their role in secret and pass the device.',
-  'rules.step3': 'Each person adds one sentence to the story.',
-  'rules.step4': 'Everyone votes. The group scores by finding the impostor; the impostor scores by escaping.',
-  'rules.scoreRule': 'Scoring:',
-  'rules.scoreRuleText': 'each correct vote scores if the impostor misses the theme.',
-  'rules.impostorRule': 'Impostor:',
-  'rules.impostorRuleText': 'scores by escaping, tying the vote or guessing the theme in defense.',
-  'rules.multideviceRule': 'Multi-device:',
-  'rules.multideviceRuleText': 'the rule uses votes per player and supports individual phones without changing the journey.',
-  'rules.promptPlaceholder': 'New story opening',
-  'rules.addPrompt': 'Add opening',
-  'rules.twistPlaceholder': 'New secret hint / twist',
-  'rules.addTwist': 'Add twist',
-  'rules.customSummary': 'Content saved on this device: {prompts} opening(s), {twists} twist(s). In multi-device, these stay on the host.',
-  'rules.clearCustom': 'Clear custom content',
-  'rules.packSummary': 'Installed on this device: {packs} pack(s), {prompts} opening(s), {twists} twist(s). JSON format with name, description, prompts by category and twists.',
-  'rules.importPack': 'Import JSON pack',
-  'rules.removePack': 'Remove',
-  'rules.noPacks': 'No packs installed.',
-  'rules.localPack': 'Local pack',
-  'rules.openingsCount': '{count} openings',
-  'multiDevice.connectedCount': '{count} connected device(s)',
-  'multiDevice.sessionOpen': 'Session open',
-  'multiDevice.readyToOpen': 'Ready to open session',
-  'multiDevice.choiceSubtitle': 'Use another phone as an auxiliary screen with timer, current player and public progress. Roles, opening and secret hint stay protected on the host.',
-  'multiDevice.joinAsGuestTitle': '🔗 Connect as auxiliary screen'
-});
-Object.assign(I18N.es, {
-  'setup.title': 'Nueva partida',
-  'setup.beforeTitle': '⚡ Antes de empezar',
-  'setup.beforeSecret': 'No leas tu carta en voz alta.',
-  'setup.beforeImpostor': 'El impostor intenta sonar natural y puede salvarse adivinando el tema.',
-  'setup.beforeStory': 'Registrar la frase es opcional, pero hace mejor el final.',
-  'setup.dismissRules': 'Entendido',
-  'setup.playersTitle': '1️⃣ Jugadores',
-  'setup.playerPlaceholder': 'Nombre del jugador...',
-  'setup.playerHelper': '💡 3 a 10 jugadores. Todos usan este dispositivo para ver el rol en secreto.',
-  'setup.roundsTitle': '2️⃣ Rondas',
-  'setup.classicName': 'Clásico',
-  'setup.classicDesc': 'Rondas configurables',
-  'setup.lightningName': 'Relámpago',
-  'setup.lightningDesc': '1 ronda, timer corto',
-  'setup.roundsLabel': 'Número de rondas',
-  'setup.roundsClassicSub': 'Cada ronda tiene impostor(es), una historia y una votación.',
-  'setup.roundsLightningSub': 'Relámpago siempre usa 1 ronda.',
-  'setup.impostorsLabel': 'Impostores',
-  'setup.impostorsSub': 'Usa 2 impostores con 7+ jugadores.',
-  'setup.oneImpostor': '1 impostor',
-  'setup.twoImpostors': '2 impostores',
-  'setup.contentModeLabel': 'Modo de contenido',
-  'setup.contentModeSub': 'Familia es seguro para todas las edades; Noche de fiesta usa situaciones adultas leves.',
-  'setup.familyMode': 'Familia',
-  'setup.partyMode': 'Noche de fiesta',
-  'setup.themesTitle': '3️⃣ Temas',
-  'setup.howTitle': 'Cómo funciona',
-  'setup.howRole': 'Cada jugador ve su rol en secreto.',
-  'setup.howStory': 'Todos continúan la misma historia, una frase por vez.',
-  'setup.howVote': 'Al final, el grupo vota por quien parece no saber el tema.',
-  'setup.howVariant': 'Relámpago usa una ronda rápida; 2 impostores funciona mejor con 7+ personas.',
-  'setup.startStory': '🎭 Empezar historia',
-  'setup.startNeedsPlayers': 'Agrega 3 jugadores',
-  'setup.selectedThemes': '{count} tema(s) seleccionado(s)',
-  'rules.title': 'Reglas y temas',
-  'rules.availableThemes': '🧩 Temas disponibles',
-  'rules.customContent': '✍️ Contenido personalizado',
-  'rules.packTitle': '📦 Packs de extensión',
-  'rules.step1': 'La app sortea un tema, una apertura y un impostor.',
-  'rules.step2': 'Los jugadores ven su rol en secreto y pasan el dispositivo.',
-  'rules.step3': 'Cada persona agrega una frase a la historia.',
-  'rules.step4': 'Todos votan. El grupo puntúa si encuentra al impostor; el impostor puntúa si escapa.',
-  'rules.scoreRule': 'Puntuación:',
-  'rules.scoreRuleText': 'cada voto correcto puntúa si el impostor no acierta el tema.',
-  'rules.impostorRule': 'Impostor:',
-  'rules.impostorRuleText': 'puntúa cuando escapa, empata la votación o acierta el tema en la defensa.',
-  'rules.multideviceRule': 'Multidispositivo:',
-  'rules.multideviceRuleText': 'la regla usa votos por jugador y soporta celulares individuales sin cambiar la jornada.',
-  'rules.promptPlaceholder': 'Nueva apertura de historia',
-  'rules.addPrompt': 'Agregar apertura',
-  'rules.twistPlaceholder': 'Nueva pista secreta / twist',
-  'rules.addTwist': 'Agregar twist',
-  'rules.customSummary': 'Contenido guardado en este dispositivo: {prompts} apertura(s), {twists} twist(s). En multi-device, estos datos quedan en el host.',
-  'rules.clearCustom': 'Limpiar contenido personalizado',
-  'rules.packSummary': 'Instalados en este dispositivo: {packs} pack(s), {prompts} apertura(s), {twists} twist(s). Formato JSON con name, description, prompts por categoría y twists.',
-  'rules.importPack': 'Importar pack JSON',
-  'rules.removePack': 'Remover',
-  'rules.noPacks': 'Ningún pack instalado.',
-  'rules.localPack': 'Pack local',
-  'rules.openingsCount': '{count} aperturas',
-  'multiDevice.connectedCount': '{count} dispositivo(s) conectado(s)',
-  'multiDevice.sessionOpen': 'Sesión abierta',
-  'multiDevice.readyToOpen': 'Listo para abrir sesión',
-  'multiDevice.choiceSubtitle': 'Usa otro celular como pantalla auxiliar con timer, jugador actual y progreso público. Roles, apertura y pista secreta siguen protegidos en el host.',
-  'multiDevice.joinAsGuestTitle': '🔗 Conectar como pantalla auxiliar'
-});
-Object.assign(I18N.en, {
-  'guest.connected': 'Connected',
-  'guest.disconnected': 'Disconnected',
-  'guest.roundOf': 'Round {round} of {rounds}',
-  'guest.waitingStory': 'Waiting for story',
-  'guest.choosePlayer': 'Choose your player',
-  'guest.connectionNotOpen': 'Connection is not open yet.',
-  'guest.waitingRole': 'Waiting for role from host',
-  'guest.assignTaken': 'That player is already connected on another device.',
-  'guest.assignLocked': 'The game has started: you cannot pick or switch players now.',
-  'guest.assignInvalid': 'Invalid player.',
-  'guest.yourRole': 'Your role: {player}',
-  'guest.waitingGame': 'Waiting for game',
-  'guest.openingAndHint': 'Opening: {prompt}. Hint: {twist}',
-  'guest.storySentTitle': 'Sentence sent',
-  'guest.waitNextTurn': 'Wait for the next turn.',
-  'guest.yourStoryTurn': 'Your story turn',
-  'guest.storyHelp': 'Tell a short sentence. Text is optional, but appears in the final recap.',
-  'guest.storyPlaceholder': 'Sentence told',
-  'guest.sendStory': 'Send sentence',
-  'guest.waitHostAdvance': 'Wait for the host to advance.',
-  'guest.voteSentTitle': 'Vote sent',
-  'guest.waitVotes': 'Wait for the other players to finish.',
-  'guest.secretVoteTitle': 'Vote in secret',
-  'guest.secretVoteHelp': 'Who seemed not to know the secret opening?',
-  'guest.waitTally': 'Wait for the host to tally.',
-  'guest.lastChanceTitle': 'Last chance',
-  'guest.guessThemeHelp': 'Guess the theme to steal the points.',
-  'guest.guessSentTitle': 'Guess sent',
-  'guest.waitScore': 'Wait for the score on the host.',
-  'guest.joinConnected': 'Connected. Waiting for game data...',
-  'guest.sessionCodeRequired': 'Enter the session code.',
-  'guest.phase.roles': 'Secret reveal on host',
-  'guest.phase.story': 'Story in progress',
-  'guest.phase.vote': 'Secret vote on host',
-  'guest.phase.impostor-guess': 'Impostor defense on host',
-  'guest.phase.score': 'Round score',
-  'guest.phase.waiting': 'Waiting for game',
-  'game.roundOf': 'Round {round} of {rounds}',
-  'game.roleOwner': 'Secret role for:',
-  'game.passDevice': 'Pass the device to:',
-  'game.preparingReveal': 'Preparing secret reveal...',
-  'game.revealInstruction': 'When you are the only one looking at the screen, tap to reveal your role.',
-  'game.progressOf': '{current} of {total}',
-  'game.showMyRole': 'Show my role',
-  'game.impostorRole': 'IMPOSTOR',
-  'game.openingPrefix': 'Opening:',
-  'game.secretHintPrefix': '🎯 Secret hint:',
-  'game.beginStory': 'Start story',
-  'game.hideAndPass': 'Hide and pass',
-  'game.storyTurnOf': 'Turn {current} of {total}:',
-  'game.storyKicker': '{icon} Story in progress',
-  'game.continueSecret': 'Continue the story without giving away too much.',
-  'game.firstSentence': 'First sentence: start from your secret opening.',
-  'game.alreadySpoke': 'Already spoke: {players}',
-  'game.firstRoundSentence': 'First sentence of the round',
-  'game.storyInputPlaceholder': 'Optional: write the sentence to reread at the end',
-  'game.storyInstruction': 'Continue with a short sentence. Then pass to the next player.',
-  'game.sentenceTold': '✓ Sentence told',
-  'game.skipWithoutText': 'Skip without text',
-  'game.voteRound': 'Round {round} vote',
-  'game.voteFallback': 'Vote',
-  'game.secretVoteOf': 'Secret vote for:',
-  'game.voteKicker': '🗳️ Secret vote',
-  'game.votePromptHidden': '{player}, tap to vote without showing others.',
-  'game.votesOf': '{current} of {total} votes',
-  'game.openBallot': 'Open ballot',
-  'game.voteOf': '🗳️ Vote by {player}',
-  'game.voteQuestion': 'Who seemed not to know the secret opening?',
-  'game.roundOrder': 'Round order: {players}',
-  'game.impostorDefense': 'Impostor defense',
-  'game.lastChanceLabel': 'Last chance:',
-  'game.impostorFoundKicker': '🕶️ Impostor found',
-  'game.stealPointsPrompt': 'Guess the theme to still steal points.',
-  'game.mostVotedSuspect': 'Most voted suspect: {player}',
-  'score.impostorStole': '🕶️ Impostor stole points!',
-  'score.impostorCaught': '🎯 Impostor found!',
-  'score.impostorEscaped': '🕶️ The impostor escaped!',
-  'score.mostVoted': 'Most voted: {player}.',
-  'score.voteTied': 'The vote tied.',
-  'score.themeGuess': 'Theme: {theme}. {result}',
-  'score.guessRight': 'The impostor guessed it.',
-  'score.guessWrong': 'The impostor missed.',
-  'score.subtitle': 'Impostor: {impostor}. {detail}{guess}',
-  'score.finalRoundTitle': '🏁 End of match',
-  'score.nextRoundTitleDynamic': '🎊 Next round',
-  'score.finalInfo': 'See the final result.',
-  'score.nextRoundInfo': 'Prepare round {round}.',
-  'score.viewFinal': 'See final result',
-  'score.continue': 'Continue',
-  'score.noVoters': 'nobody',
-  'score.correctReward': '+{points} for correct vote: {voters}.',
-  'score.impostorReward': '+{points} for {player}.',
-  'score.ruleLabel': 'Rule:',
-  'score.ruleText': 'correct votes score only if the impostor misses the theme; ties favor the impostor.',
-  'score.roundLabel': 'Round:',
-  'score.votesLabel': 'Votes:',
-  'score.noVotes': 'no votes',
-  'score.quickCorrection': 'Quick correction:',
-  'score.quickCorrectionHelp': 'adjust points if someone tapped the wrong option.',
-  'final.winner': 'WON!',
-  'final.ended': 'MATCH ENDED',
-  'final.storyTitle': '📖 Match story',
-  'final.emptyStory': 'No sentence was recorded in this match.',
-  'final.unregisteredBeat': 'Sentence told without record.',
-  'leaderboard.summary': '{players} players · {matches} matches',
-  'leaderboard.footer': 'Showing {shown} of {total}',
-  'leaderboard.empty': 'No matches recorded yet.',
-  'leaderboard.matches': '{count} match(es)',
-  'admin.playerDuplicate': 'Player already added.',
-  'admin.playerLimit': 'Limit of 10 players.',
-  'admin.keepOneTheme': 'Keep at least one theme.',
-  'admin.needPlayers': 'Add at least 3 players.',
-  'admin.leaderboardConfirm': 'Delete the whole historical score?',
-  'admin.leaderboardCleared': 'Score cleared.',
-  'admin.promptRequired': 'Write an opening.',
-  'admin.promptAdded': 'Opening added.',
-  'admin.twistRequired': 'Write a twist.',
-  'admin.twistAdded': 'Twist added.',
-  'admin.clearCustomConfirm': 'Clear custom openings and twists from this device?',
-  'admin.customCleared': 'Custom content cleared.',
-  'admin.packInvalid': 'Pack has no valid content.',
-  'admin.packInstalled': 'Pack installed.',
-  'admin.packImportFailed': 'Could not import the JSON.',
-  'admin.packRemoved': 'Pack removed.',
-  'admin.restartConfirm': 'Restart the current match?',
-  'admin.resetConfirm': 'Restore local settings and score?',
-  'admin.linkCopied': 'Link copied.',
-  'admin.installPwa': 'Use the browser install option.',
-  'admin.peerUnavailable': 'PeerJS unavailable offline.',
-  'admin.peerOpenFailed': 'Failed to open P2P session.',
-  'admin.connectionFailed': 'Connection failed.'
-});
-Object.assign(I18N.es, {
-  'guest.connected': 'Conectado',
-  'guest.disconnected': 'Desconectado',
-  'guest.roundOf': 'Ronda {round} de {rounds}',
-  'guest.waitingStory': 'Esperando historia',
-  'guest.choosePlayer': 'Elige tu jugador',
-  'guest.connectionNotOpen': 'La conexión aún no abrió.',
-  'guest.waitingRole': 'Esperando rol del host',
-  'guest.assignTaken': 'Ese jugador ya está conectado en otro dispositivo.',
-  'guest.assignLocked': 'La partida ya empezó: no se puede elegir ni cambiar de jugador ahora.',
-  'guest.assignInvalid': 'Jugador inválido.',
-  'guest.yourRole': 'Tu rol: {player}',
-  'guest.waitingGame': 'Esperando partida',
-  'guest.openingAndHint': 'Apertura: {prompt}. Pista: {twist}',
-  'guest.storySentTitle': 'Frase enviada',
-  'guest.waitNextTurn': 'Espera el próximo turno.',
-  'guest.yourStoryTurn': 'Tu turno en la historia',
-  'guest.storyHelp': 'Cuenta una frase corta. El texto es opcional, pero aparece en el resumen final.',
-  'guest.storyPlaceholder': 'Frase contada',
-  'guest.sendStory': 'Enviar frase',
-  'guest.waitHostAdvance': 'Espera que el host avance.',
-  'guest.voteSentTitle': 'Voto enviado',
-  'guest.waitVotes': 'Espera que los otros jugadores terminen.',
-  'guest.secretVoteTitle': 'Vota en secreto',
-  'guest.secretVoteHelp': '¿Quién parecía no conocer la apertura secreta?',
-  'guest.waitTally': 'Espera el conteo del host.',
-  'guest.lastChanceTitle': 'Última oportunidad',
-  'guest.guessThemeHelp': 'Adivina el tema para robar los puntos.',
-  'guest.guessSentTitle': 'Palpite enviado',
-  'guest.waitScore': 'Espera el marcador en el host.',
-  'guest.joinConnected': 'Conectado. Esperando datos de la partida...',
-  'guest.sessionCodeRequired': 'Ingresa el código de la sesión.',
-  'guest.phase.roles': 'Revelación secreta en el host',
-  'guest.phase.story': 'Historia en curso',
-  'guest.phase.vote': 'Votación secreta en el host',
-  'guest.phase.impostor-guess': 'Defensa del impostor en el host',
-  'guest.phase.score': 'Marcador de la ronda',
-  'guest.phase.waiting': 'Esperando partida',
-  'game.roundOf': 'Ronda {round} de {rounds}',
-  'game.roleOwner': 'Rol secreto de:',
-  'game.passDevice': 'Pasa el dispositivo a:',
-  'game.preparingReveal': 'Preparando revelación secreta...',
-  'game.revealInstruction': 'Cuando solo tú estés mirando la pantalla, toca para revelar tu rol.',
-  'game.progressOf': '{current} de {total}',
-  'game.showMyRole': 'Mostrar mi rol',
-  'game.impostorRole': 'IMPOSTOR',
-  'game.openingPrefix': 'Apertura:',
-  'game.secretHintPrefix': '🎯 Pista secreta:',
-  'game.beginStory': 'Empezar historia',
-  'game.hideAndPass': 'Ocultar y pasar',
-  'game.storyTurnOf': 'Turno {current} de {total}:',
-  'game.storyKicker': '{icon} Historia en curso',
-  'game.continueSecret': 'Continúa la historia sin revelar demasiado.',
-  'game.firstSentence': 'Primera frase: empieza usando tu apertura secreta.',
-  'game.alreadySpoke': 'Ya hablaron: {players}',
-  'game.firstRoundSentence': 'Primera frase de la ronda',
-  'game.storyInputPlaceholder': 'Opcional: escribe la frase para releer al final',
-  'game.storyInstruction': 'Continúa con una frase corta. Luego pasa al siguiente jugador.',
-  'game.sentenceTold': '✓ Frase contada',
-  'game.skipWithoutText': 'Saltar sin texto',
-  'game.voteRound': 'Votación de la ronda {round}',
-  'game.voteFallback': 'Votación',
-  'game.secretVoteOf': 'Voto secreto de:',
-  'game.voteKicker': '🗳️ Votación secreta',
-  'game.votePromptHidden': '{player}, toca para votar sin mostrar a los demás.',
-  'game.votesOf': '{current} de {total} votos',
-  'game.openBallot': 'Abrir cédula',
-  'game.voteOf': '🗳️ Voto de {player}',
-  'game.voteQuestion': '¿Quién parecía no conocer la apertura secreta?',
-  'game.roundOrder': 'Orden de la ronda: {players}',
-  'game.impostorDefense': 'Defensa del impostor',
-  'game.lastChanceLabel': 'Última oportunidad:',
-  'game.impostorFoundKicker': '🕶️ Impostor descubierto',
-  'game.stealPointsPrompt': 'Si adivina el tema, todavía roba puntos.',
-  'game.mostVotedSuspect': 'Sospechoso más votado: {player}',
-  'score.impostorStole': '🕶️ ¡El impostor robó puntos!',
-  'score.impostorCaught': '🎯 ¡Impostor descubierto!',
-  'score.impostorEscaped': '🕶️ ¡El impostor escapó!',
-  'score.mostVoted': 'Más votado: {player}.',
-  'score.voteTied': 'La votación empató.',
-  'score.themeGuess': 'Tema: {theme}. {result}',
-  'score.guessRight': 'El impostor acertó.',
-  'score.guessWrong': 'El impostor falló.',
-  'score.subtitle': 'Impostor: {impostor}. {detail}{guess}',
-  'score.finalRoundTitle': '🏁 Fin de la partida',
-  'score.nextRoundTitleDynamic': '🎊 Próxima ronda',
-  'score.finalInfo': 'Mira el resultado final.',
-  'score.nextRoundInfo': 'Preparen la ronda {round}.',
-  'score.viewFinal': 'Ver resultado final',
-  'score.continue': 'Continuar',
-  'score.noVoters': 'nadie',
-  'score.correctReward': '+{points} por voto correcto: {voters}.',
-  'score.impostorReward': '+{points} para {player}.',
-  'score.ruleLabel': 'Regla:',
-  'score.ruleText': 'el voto correcto puntúa solo si el impostor no acierta el tema; el empate favorece al impostor.',
-  'score.roundLabel': 'Ronda:',
-  'score.votesLabel': 'Votos:',
-  'score.noVotes': 'sin votos',
-  'score.quickCorrection': 'Corrección rápida:',
-  'score.quickCorrectionHelp': 'ajusta puntos si alguien tocó la opción equivocada.',
-  'final.winner': '¡GANÓ!',
-  'final.ended': 'PARTIDA FINALIZADA',
-  'final.storyTitle': '📖 Historia de la partida',
-  'final.emptyStory': 'No se registró ninguna frase en esta partida.',
-  'final.unregisteredBeat': 'Frase contada sin registro.',
-  'leaderboard.summary': '{players} jugadores · {matches} partidas',
-  'leaderboard.footer': 'Mostrando {shown} de {total}',
-  'leaderboard.empty': 'Ninguna partida registrada todavía.',
-  'leaderboard.matches': '{count} partida(s)',
-  'admin.playerDuplicate': 'Jugador ya agregado.',
-  'admin.playerLimit': 'Límite de 10 jugadores.',
-  'admin.keepOneTheme': 'Mantén al menos un tema.',
-  'admin.needPlayers': 'Agrega al menos 3 jugadores.',
-  'admin.leaderboardConfirm': '¿Borrar todo el marcador histórico?',
-  'admin.leaderboardCleared': 'Marcador borrado.',
-  'admin.promptRequired': 'Escribe una apertura.',
-  'admin.promptAdded': 'Apertura agregada.',
-  'admin.twistRequired': 'Escribe un twist.',
-  'admin.twistAdded': 'Twist agregado.',
-  'admin.clearCustomConfirm': '¿Limpiar aperturas y twists personalizados de este dispositivo?',
-  'admin.customCleared': 'Contenido personalizado limpiado.',
-  'admin.packInvalid': 'Pack sin contenido válido.',
-  'admin.packInstalled': 'Pack instalado.',
-  'admin.packImportFailed': 'No se pudo importar el JSON.',
-  'admin.packRemoved': 'Pack removido.',
-  'admin.restartConfirm': '¿Reiniciar la partida actual?',
-  'admin.resetConfirm': '¿Restaurar configuración y marcador local?',
-  'admin.linkCopied': 'Enlace copiado.',
-  'admin.installPwa': 'Usa la opción instalar del navegador.',
-  'admin.peerUnavailable': 'PeerJS no disponible offline.',
-  'admin.peerOpenFailed': 'Error al abrir sesión P2P.',
-  'admin.connectionFailed': 'Error de conexión.'
-});
+if (typeof module !== 'undefined' && module.exports) {
+  globalThis.I18N = require('./i18n.js');
+}
 
 const STORY_CATEGORIES = [
   {
@@ -1125,12 +238,7 @@ const EXTRA_TWISTS = [
   'Termine com uma descoberta que muda o sentido da cena.'
 ];
 
-const IMPOSTOR_HINTS = [
-  'Você é o impostor. Não sabe o tema real. Finja entender e tente parecer natural.',
-  'Você é o impostor. Alguém vai tentar te pegar. Conte algo plausível e observe pistas.',
-  'Você é o impostor. Use detalhes genéricos sem parecer vago demais.',
-  'Você é o impostor. Tente acompanhar o clima da história sem repetir demais.'
-];
+const IMPOSTOR_HINT_KEYS = ['game.impostorHint1', 'game.impostorHint2', 'game.impostorHint3', 'game.impostorHint4'];
 
 const state = {
   players: [],
@@ -1598,211 +706,67 @@ function goTo(screen) {
 }
 
 function renderSetupScreen() {
-  text('#screen-setup .page-title', translate('setup.title'));
-  const setup = $('#screen-setup .setup-grid');
-  if (!setup) return;
-  setup.innerHTML = `
-    <div class="setup-column setup-column-left">
-      <div class="card mb rules-nudge">
-        <h2 class="card-title card-title-sm">${translate('setup.beforeTitle')}</h2>
-        <div class="how-to-list">
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">🤫</div><div class="text-sm">${translate('setup.beforeSecret')}</div></div>
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">🕶️</div><div class="text-sm">${translate('setup.beforeImpostor')}</div></div>
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">📖</div><div class="text-sm">${translate('setup.beforeStory')}</div></div>
-        </div>
-      </div>
-      <div class="card mb">
-        <h2 class="card-title">${translate('setup.howTitle')}</h2>
-        <div class="how-to-list">
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">🙈</div><div class="text-sm">${translate('setup.howRole')}</div></div>
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">📖</div><div class="text-sm">${translate('setup.howStory')}</div></div>
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">🗳️</div><div class="text-sm">${translate('setup.howVote')}</div></div>
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">⚡</div><div class="text-sm">${translate('setup.howVariant')}</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="setup-column setup-column-right">
-      <div class="card mb">
-        <h2 class="card-title">${translate('setup.playersTitle')}</h2>
-        <div id="ffa-players" class="flex-col mb"></div>
-        <div class="flex-row setup-player-form">
-          <input class="inp" id="inp-ffa" placeholder="${translate('setup.playerPlaceholder')}" data-enter-submit="ffa">
-          <button class="btn btn-secondary btn-sm btn-nowrap" data-action="add-player">${translate('common.add')}</button>
-        </div>
-        <div class="helper-box mt" id="player-count-helper">${translate('setup.playerHelper')}</div>
-      </div>
-      <div class="card mb">
-        <h2 class="card-title">${translate('setup.roundsTitle')}</h2>
-        <div class="mode-grid mb">
-          <div class="mode-card ${state.gameVariant === 'classic' ? 'selected' : ''}" data-variant="classic">
-            <div class="mode-icon">🎭</div>
-            <div class="mode-name">${translate('setup.classicName')}</div>
-            <div class="mode-desc">${translate('setup.classicDesc')}</div>
-          </div>
-          <div class="mode-card ${state.gameVariant === 'lightning' ? 'selected' : ''}" data-variant="lightning">
-            <div class="mode-icon">⚡</div>
-            <div class="mode-name">${translate('setup.lightningName')}</div>
-            <div class="mode-desc">${translate('setup.lightningDesc')}</div>
-          </div>
-        </div>
-        <div class="toggle-wrap toggle-wrap-last">
-          <div>
-            <div class="toggle-label">${translate('setup.roundsLabel')}</div>
-            <div class="toggle-sub">${state.gameVariant === 'lightning' ? translate('setup.roundsLightningSub') : translate('setup.roundsClassicSub')}</div>
-          </div>
-          <div class="range-wrap range-wrap-fixed">
-            <input type="range" class="range-inp" id="rounds-slider" min="1" max="7" value="${state.gameVariant === 'lightning' ? 1 : state.rounds}" ${state.gameVariant === 'lightning' ? 'disabled' : ''}>
-            <div class="range-val" id="rounds-val">${state.gameVariant === 'lightning' ? 1 : state.rounds}</div>
-          </div>
-        </div>
-        <div class="toggle-wrap toggle-wrap-last">
-          <div>
-            <div class="toggle-label">${translate('setup.impostorsLabel')}</div>
-            <div class="toggle-sub">${translate('setup.impostorsSub')}</div>
-          </div>
-          <select class="inp points-input" id="impostor-count-select">
-            <option value="1" ${state.impostorCount === 1 ? 'selected' : ''}>${translate('setup.oneImpostor')}</option>
-            <option value="2" ${state.impostorCount === 2 ? 'selected' : ''}>${translate('setup.twoImpostors')}</option>
-          </select>
-        </div>
-        <div class="toggle-wrap toggle-wrap-last">
-          <div>
-            <div class="toggle-label">${translate('setup.contentModeLabel')}</div>
-            <div class="toggle-sub">${translate('setup.contentModeSub')}</div>
-          </div>
-          <select class="inp points-input" id="content-mode-select">
-            <option value="family" ${state.contentMode === 'family' ? 'selected' : ''}>${translate('setup.familyMode')}</option>
-            <option value="party" ${state.contentMode === 'party' ? 'selected' : ''}>${translate('setup.partyMode')}</option>
-          </select>
-        </div>
-      </div>
-      <div class="card mb">
-        <h2 class="card-title">${translate('setup.themesTitle')}</h2>
-        <div class="category-grid" id="category-selection"></div>
-        <div id="diff-word-count" class="text-meta center mt"></div>
-      </div>
-    </div>
-    <button class="btn btn-primary btn-lg btn-block mb-lg setup-cta" data-action="start-game">${translate('setup.startStory')}</button>
-  `;
+  const lightning = state.gameVariant === 'lightning';
+  $('#rules-nudge')?.classList.toggle('hidden', hasSeenRules());
+  $$('#screen-setup [data-variant]').forEach(card => card.classList.toggle('selected', card.dataset.variant === state.gameVariant));
+  text('#rounds-sub', translate(lightning ? 'setup.roundsLightningSub' : 'setup.roundsClassicSub'));
+  const roundsSlider = $('#rounds-slider');
+  if (roundsSlider) {
+    roundsSlider.value = lightning ? 1 : state.rounds;
+    roundsSlider.disabled = lightning;
+  }
+  text('#rounds-val', lightning ? 1 : state.rounds);
+  const impostorSelect = $('#impostor-count-select');
+  if (impostorSelect) impostorSelect.value = String(state.impostorCount);
+  const contentSelect = $('#content-mode-select');
+  if (contentSelect) contentSelect.value = state.contentMode;
   renderPlayers();
   renderCategories();
   updateSetupReadiness();
 }
 
 function renderRulesScreen() {
-  const screen = $('#screen-wordbank .page-shell');
-  if (!screen) return;
   const categories = getStoryCategories();
   const customContent = normalizeCustomContent(state.customContent);
   const packs = normalizeExtensionPacks(state.extensionPacks);
   const packContent = getPackContent(packs);
   const packPromptCount = Object.values(packContent.prompts).flat().length;
-  screen.innerHTML = `
-    <header class="page-header page-header-tight">
-      <button class="btn btn-ghost btn-sm" data-nav="home">${translate('common.back')}</button>
-      <h1 class="page-title">${translate('rules.title')}</h1>
-    </header>
-    <div class="wordbank-layout">
-      <div class="card">
-        <h2 class="card-title">🎭 CrazyStory</h2>
-        <div class="how-to-list">
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">1️⃣</div><div class="text-sm">${translate('rules.step1')}</div></div>
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">2️⃣</div><div class="text-sm">${translate('rules.step2')}</div></div>
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">3️⃣</div><div class="text-sm">${translate('rules.step3')}</div></div>
-          <div class="media-row media-row-start"><div class="emoji-lg emoji-fixed">4️⃣</div><div class="text-sm">${translate('rules.step4')}</div></div>
-        </div>
-        <div class="score-explanation mt">
-          <div><strong>${translate('rules.scoreRule')}</strong> ${translate('rules.scoreRuleText')}</div>
-          <div><strong>${translate('rules.impostorRule')}</strong> ${translate('rules.impostorRuleText')}</div>
-          <div><strong>${translate('rules.multideviceRule')}</strong> ${translate('rules.multideviceRuleText')}</div>
-        </div>
-      </div>
-      <div class="card">
-        <h2 class="card-title card-title-sm">${translate('rules.availableThemes')}</h2>
-        <div class="category-grid">
-          ${categories.map(category => `<div class="category-card selected"><div class="category-icon">${escapeHtml(category.icon)}</div><div class="category-name">${escapeHtml(category.name)}</div><div class="category-count">${formatMessage('rules.openingsCount', { count: category.prompts.length })}</div></div>`).join('')}
-        </div>
-      </div>
-      <div class="card">
-        <h2 class="card-title card-title-sm">${translate('rules.customContent')}</h2>
-        <div class="flex-col">
-          <select class="inp" id="custom-prompt-category">
-            ${categories.map(category => `<option value="${escapeHtml(category.id)}">${escapeHtml(category.icon)} ${escapeHtml(category.name)}</option>`).join('')}
-          </select>
-          <textarea class="inp custom-content-input" id="custom-prompt-text" maxlength="180" rows="3" placeholder="${translate('rules.promptPlaceholder')}"></textarea>
-          <button class="btn btn-secondary btn-block" data-action="add-custom-prompt">${translate('rules.addPrompt')}</button>
-          <textarea class="inp custom-content-input" id="custom-twist-text" maxlength="160" rows="2" placeholder="${translate('rules.twistPlaceholder')}"></textarea>
-          <button class="btn btn-secondary btn-block" data-action="add-custom-twist">${translate('rules.addTwist')}</button>
-          <div class="helper-box">${formatMessage('rules.customSummary', { prompts: Object.values(customContent.prompts).flat().length, twists: customContent.twists.length })}</div>
-          <button class="btn btn-ghost btn-block" data-action="reset-custom-content">${translate('rules.clearCustom')}</button>
-        </div>
-      </div>
-      <div class="card">
-        <h2 class="card-title card-title-sm">${translate('rules.packTitle')}</h2>
-        <div class="flex-col">
-          <div class="helper-box">${formatMessage('rules.packSummary', { packs: packs.length, prompts: packPromptCount, twists: packContent.twists.length })}</div>
-          <input type="file" id="extension-pack-input" accept="application/json,.json" hidden>
-          <button class="btn btn-secondary btn-block" data-action="select-extension-pack">${translate('rules.importPack')}</button>
-          <div class="extension-pack-list">
-            ${packs.length
-              ? packs.map(pack => `
-                <div class="extension-pack-row">
-                  <div>
-                    <strong>${escapeHtml(pack.name)}</strong>
-                    <span>${escapeHtml(pack.description || translate('rules.localPack'))}</span>
-                  </div>
-                  <button class="btn btn-ghost btn-sm" data-action="remove-extension-pack" data-pack-id="${escapeHtml(pack.id)}">${translate('rules.removePack')}</button>
-                </div>
-              `).join('')
-              : `<div class="text-sm text-muted">${translate('rules.noPacks')}</div>`}
+  const grid = $('#rules-category-grid');
+  if (grid) {
+    grid.innerHTML = categories.map(category => `<div class="category-card selected"><div class="category-icon">${escapeHtml(category.icon)}</div><div class="category-name">${escapeHtml(category.name)}</div><div class="category-count">${formatMessage('rules.openingsCount', { count: category.prompts.length })}</div></div>`).join('');
+  }
+  const categorySelect = $('#custom-prompt-category');
+  if (categorySelect) {
+    const current = categorySelect.value;
+    categorySelect.innerHTML = categories.map(category => `<option value="${escapeHtml(category.id)}">${escapeHtml(category.icon)} ${escapeHtml(category.name)}</option>`).join('');
+    if (categories.some(category => category.id === current)) categorySelect.value = current;
+  }
+  text('#custom-content-summary', formatMessage('rules.customSummary', { prompts: Object.values(customContent.prompts).flat().length, twists: customContent.twists.length }));
+  text('#extension-pack-summary', formatMessage('rules.packSummary', { packs: packs.length, prompts: packPromptCount, twists: packContent.twists.length }));
+  const packList = $('#extension-pack-list');
+  if (packList) {
+    packList.innerHTML = packs.length
+      ? packs.map(pack => `
+        <div class="extension-pack-row">
+          <div>
+            <strong>${escapeHtml(pack.name)}</strong>
+            <span>${escapeHtml(pack.description || translate('rules.localPack'))}</span>
           </div>
+          <button class="btn btn-ghost btn-sm" data-action="remove-extension-pack" data-pack-id="${escapeHtml(pack.id)}">${translate('rules.removePack')}</button>
         </div>
-      </div>
-    </div>
-  `;
+      `).join('')
+      : `<div class="text-sm text-muted">${translate('rules.noPacks')}</div>`;
+  }
 }
 
 function renderMultiDeviceInfo() {
-  const screen = $('#screen-multidevice .page-shell');
-  if (!screen) return;
   if (getCodeFromLocation() && !state.multidevice.isHost) state.multidevice.isGuest = true;
-  const connected = state.multidevice.connections.filter(conn => conn.open).length;
-  screen.innerHTML = `
-    <header class="page-header">
-      <button class="btn btn-ghost btn-sm" data-nav="home">${translate('common.back')}</button>
-      <h1 class="page-title">${translate('multiDevice.title')}</h1>
-    </header>
-    <div class="card multidevice-choice-card">
-      <h2 class="card-title">${translate('multiDevice.chooseTitle')}</h2>
-      <p class="text-sm mb">${translate('multiDevice.choiceSubtitle')}</p>
-      <div class="multidevice-choice-actions">
-        <button class="btn btn-primary btn-lg btn-block" data-action="create-multidevice-host">${translate('multiDevice.chooseHost')}</button>
-        <button class="btn btn-secondary btn-lg btn-block" data-action="show-multidevice-join">${translate('multiDevice.chooseJoin')}</button>
-      </div>
-    </div>
-    <div class="multidevice-grid">
-      <div class="card multidevice-card ${state.multidevice.isHost ? '' : 'hidden'}" id="multidevice-host-panel">
-        <h2 class="card-title card-title-sm">📡 Host</h2>
-        <div class="text-strong text-sm-title" id="multidevice-host-status">${state.multidevice.sessionCode ? translate('multiDevice.sessionOpen') : translate('multiDevice.readyToOpen')}</div>
-        <div class="qr-frame" id="multidevice-qr"></div>
-        <div class="copy-row">
-          <input class="inp mono-input" id="multidevice-link" readonly value="${getMultideviceLink(state.multidevice.sessionCode)}">
-          <button class="btn btn-ghost btn-sm btn-nowrap" data-action="copy-multidevice-link">${translate('common.copy')}</button>
-        </div>
-        <div class="helper-box">${translate('multiDevice.sessionCode')} <strong id="multidevice-session-code">${state.multidevice.sessionCode || '---'}</strong></div>
-        <div class="text-meta" id="multidevice-guest-count">${formatMessage('multiDevice.connectedCount', { count: connected })}</div>
-        <button class="btn btn-secondary btn-block" data-nav="setup">${translate('multiDevice.continueSetup')}</button>
-      </div>
-      <div class="card multidevice-card ${state.multidevice.isGuest ? '' : 'hidden'}" id="multidevice-join-card">
-        <h2 class="card-title card-title-sm">${translate('multiDevice.joinAsGuestTitle')}</h2>
-        <label class="toggle-label" for="multidevice-join-code">${translate('multiDevice.joinCodeLabel')}</label>
-        <input class="inp mt-xs mb-sm" id="multidevice-join-code" placeholder="${translate('multiDevice.joinCodePlaceholder')}" value="${getCodeFromLocation()}">
-        <button class="btn btn-primary btn-lg btn-block" data-action="join-multidevice-session">${translate('multiDevice.joinSession')}</button>
-        <div class="helper-box mt" id="multidevice-join-status">${translate('multiDevice.joinHelp')}</div>
-      </div>
-    </div>
-  `;
-  renderMultideviceQr();
+  $('#multidevice-host-panel')?.classList.toggle('hidden', !state.multidevice.isHost);
+  $('#multidevice-join-card')?.classList.toggle('hidden', !state.multidevice.isGuest);
+  const joinCode = $('#multidevice-join-code');
+  if (joinCode && !joinCode.value) joinCode.value = getCodeFromLocation();
+  if (!isMultideviceGuestOnline()) text('#multidevice-join-status', translate('multiDevice.joinHelp'));
+  updateMultideviceHostPanel();
 }
 
 function getCodeFromLocation() {
@@ -1947,7 +911,7 @@ function createMultideviceRolePayload(gameState = state, playerIndex = -1) {
       playerIndex: index,
       player: player || '',
       ready: false,
-      message: 'Aguardando início da partida'
+      messageKey: 'guest.waitingGame'
     };
   }
   const isImpostor = gameState.impostorIndexes.includes(index);
@@ -1958,21 +922,18 @@ function createMultideviceRolePayload(gameState = state, playerIndex = -1) {
     player,
     ready: true,
     isImpostor,
-    roleTitle: isImpostor ? 'IMPOSTOR' : gameState.category.name,
+    roleTitle: isImpostor ? '' : gameState.category.name,
+    roleTitleKey: isImpostor ? 'game.impostorRole' : '',
     roleIcon: isImpostor ? '🕶️' : gameState.category.icon,
     prompt: isImpostor ? '' : gameState.prompt,
     twist: isImpostor ? '' : gameState.twist,
-    hint: isImpostor ? IMPOSTOR_HINTS[0] : 'Use sua abertura e dica sem ler em voz alta.'
+    hintKey: isImpostor ? IMPOSTOR_HINT_KEYS[index % IMPOSTOR_HINT_KEYS.length] : ''
   };
 }
 
 function getMultideviceSafeMessage(gameState = state) {
-  if (gameState.phase === 'roles') return 'Revelação secreta no host';
-  if (gameState.phase === 'story') return 'História em andamento';
-  if (gameState.phase === 'vote') return 'Votação secreta no host';
-  if (gameState.phase === 'impostor-guess') return 'Defesa do impostor no host';
-  if (gameState.phase === 'score') return 'Placar da rodada';
-  return 'Aguardando partida';
+  const known = ['roles', 'story', 'vote', 'impostor-guess', 'score'];
+  return translate(`guest.phase.${known.includes(gameState.phase) ? gameState.phase : 'waiting'}`);
 }
 
 function renderMultideviceQr() {
@@ -2175,13 +1136,14 @@ function renderGuestRolePayload(payload) {
   const title = card.querySelector('.card-title');
   if (title) title.textContent = payload.ready ? formatMessage('guest.yourRole', { player: payload.player }) : translate('guest.waitingGame');
   const word = $('#guest-word-display');
-  if (word) word.textContent = payload.ready ? `${payload.roleIcon} ${payload.roleTitle}` : translate('guest.waitingGame');
+  const roleTitle = payload.roleTitleKey ? translate(payload.roleTitleKey) : payload.roleTitle;
+  if (word) word.textContent = payload.ready ? `${payload.roleIcon} ${roleTitle}` : translate('guest.waitingGame');
   const challenge = $('#guest-challenge-display');
   const challengeText = $('#guest-challenge-text');
   challenge?.classList.toggle('hidden', !payload.ready);
   if (challengeText) {
     challengeText.textContent = payload.isImpostor
-      ? payload.hint
+      ? translate(payload.hintKey) || translate(IMPOSTOR_HINT_KEYS[0])
       : formatMessage('guest.openingAndHint', { prompt: payload.prompt, twist: payload.twist });
   }
 }
@@ -2483,7 +1445,6 @@ function renderRoleReveal() {
   renderMiniScore();
   text('#current-player-name', player || '--');
   text('#screen-game .cp-label', state.roleVisible ? translate('game.roleOwner') : translate('game.passDevice'));
-  $('#memorize-state')?.classList.add('hidden');
   $('#playing-state')?.classList.add('hidden');
   const card = $('#preparing-state');
   card?.classList.remove('hidden');
@@ -2524,7 +1485,7 @@ function renderRoleReveal() {
       <h2 class="section-title section-title-light mb-xs">${escapeHtml(player)}</h2>
       <div class="word-card word-card-memorize my-lg secret-role-card">
         <div class="word-text word-text-memorize role-title">${isImpostor ? translate('game.impostorRole') : escapeHtml(state.category.name)}</div>
-        <div class="challenge-text mt">${isImpostor ? pick(IMPOSTOR_HINTS) : `${translate('game.openingPrefix')} ${escapeHtml(state.prompt)}`}</div>
+        <div class="challenge-text mt">${isImpostor ? translate(pick(IMPOSTOR_HINT_KEYS)) : `${translate('game.openingPrefix')} ${escapeHtml(state.prompt)}`}</div>
         ${!isImpostor ? `<div class="challenge-text mt">${translate('game.secretHintPrefix')} ${escapeHtml(state.twist)}</div>` : ''}
       </div>
       <div class="role-progress">${formatMessage('game.progressOf', { current: state.roleRevealIndex + 1, total: state.players.length })}</div>
@@ -2583,7 +1544,6 @@ function renderStoryTurn() {
   text('#current-player-name', player || '--');
   text('#screen-game .cp-label', formatMessage('game.storyTurnOf', { current: state.currentPlayerIndex + 1, total: state.players.length }));
   $('#preparing-state')?.classList.add('hidden');
-  $('#memorize-state')?.classList.add('hidden');
   $('#playing-state')?.classList.remove('hidden');
   html('#word-display', `
     <span class="story-kicker">${formatMessage('game.storyKicker', { icon: escapeHtml(state.category.icon) })}</span>
@@ -2687,7 +1647,6 @@ function renderVote() {
   text('#current-player-name', voter || translate('game.voteFallback'));
   text('#screen-game .cp-label', state.voteVisible ? translate('game.secretVoteOf') : translate('game.passDevice'));
   $('#preparing-state')?.classList.add('hidden');
-  $('#memorize-state')?.classList.add('hidden');
   $('#playing-state')?.classList.remove('hidden');
   $('#game-challenge-display')?.classList.add('hidden');
   const actions = $('.game-actions-grid');
@@ -2819,7 +1778,6 @@ function renderImpostorGuess() {
   text('#current-player-name', state.voteResult?.caughtImpostor || state.voteResult?.impostor || '--');
   text('#screen-game .cp-label', translate('game.lastChanceLabel'));
   $('#preparing-state')?.classList.add('hidden');
-  $('#memorize-state')?.classList.add('hidden');
   $('#playing-state')?.classList.remove('hidden');
   html('#word-display', `
     <span class="story-kicker">${translate('game.impostorFoundKicker')}</span>
@@ -3100,6 +2058,7 @@ function addCustomPrompt() {
   customContent.prompts[categoryId] = [...(customContent.prompts[categoryId] || []), prompt].slice(-50);
   state.customContent = customContent;
   saveCustomContent();
+  $('#custom-prompt-text').value = '';
   renderRulesScreen();
   renderCategories();
   showNotif(translate('admin.promptAdded'));
@@ -3112,6 +2071,7 @@ function addCustomTwist() {
   customContent.twists = [...customContent.twists, twist].slice(-50);
   state.customContent = customContent;
   saveCustomContent();
+  $('#custom-twist-text').value = '';
   renderRulesScreen();
   showNotif(translate('admin.twistAdded'));
 }
@@ -3153,6 +2113,14 @@ function removeExtensionPack(packId) {
   renderRulesScreen();
   renderCategories();
   showNotif(translate('admin.packRemoved'));
+}
+
+function hasSeenRules() {
+  try {
+    return localStorage.getItem(SEEN_RULES_KEY) === '1';
+  } catch {
+    return false;
+  }
 }
 
 function dismissRulesNudge() {
@@ -3259,7 +2227,6 @@ function handleAction(button) {
   if (action === 'donate-bmc') return openDonation('buyMeCoffee');
   if (action === 'donate-kofi') return openDonation('koFi');
   if (action === 'share-platform') return share(platform);
-  if (action === 'install-pwa') return showNotif(translate('admin.installPwa'));
   if (action === 'toggle-fullscreen') return document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.();
 }
 
@@ -3325,9 +2292,10 @@ function registerEvents() {
 
   ['toggle-sound', 'toggle-navigation-sound', 'toggle-gameroom-music', 'toggle-gameplay-music', 'toggle-shuffle', 'language-select', 'theme-select'].forEach(id => {
     $(`#${id}`)?.addEventListener('change', event => {
+      // Save first: renderers inside applyLanguage read the language from saved settings.
+      saveSettings();
       if (id === 'theme-select') applyTheme(event.target.value);
       if (id === 'language-select') applyLanguage(event.target.value);
-      saveSettings();
       updateBackgroundMusic();
     });
   });
@@ -3375,6 +2343,7 @@ if (typeof module !== 'undefined' && module.exports) {
     normalizeExtensionPacks,
     getPackContent,
     translate,
+    I18N,
     formatMessage,
     SUPPORTED_LANGUAGES,
     normalizeImpostorCount,

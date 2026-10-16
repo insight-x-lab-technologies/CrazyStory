@@ -36,8 +36,14 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
+      - name: Setup Chrome
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v2
       - name: Run tests
         run: ./scripts/test-all.sh
+        env:
+          CHROME_BIN: ${{ steps.setup-chrome.outputs.chrome-path }}
+          VISUAL_TESTS_REQUIRED: '1'
 
   deploy:
     needs: test

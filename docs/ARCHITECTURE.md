@@ -22,7 +22,8 @@
 ```
 src/
   index.html          # shell único — todas as telas do jogo (setup, papéis, história, voto, placar...)
-  script.js           # ~3400 linhas — toda a lógica: estado, i18n, render, áudio, P2P, scoring
+  i18n.js             # dicionário I18N (pt/en/es) — só dados, carregado antes do script.js
+  script.js           # ~2400 linhas — toda a lógica: estado, render, áudio, P2P, scoring
   style.css           # layout base, responsivo (breakpoints 768px/1180px, landscape)
   themes.css          # 6 temas visuais (cosmic, liquid-glass, material3, light, dark, high-contrast)
   service-worker.js   # cache-first para assets locais, network-first para navegação
@@ -33,7 +34,7 @@ design/
 scripts/
   run.sh / stop.sh     # sobe/derruba o http.server local
   test-all.sh          # roda todos os test-*.js (usado pelo CI)
-  test-*.js            # scoring, hygiene, story-recap, content, audio, multidevice, visual
+  test-*.js            # scoring, hygiene, i18n, story-recap, content, audio, multidevice, visual
 docs/
   ARCHITECTURE.md      # este arquivo
   PRODUCT_VISION.md
@@ -44,9 +45,15 @@ Não há `src/src/` — entrada única em `src/index.html` (consolidação já f
 
 ## 3. Modelo de execução
 
-Aplicação **single-page, single-file JS**, sem módulos ES nem roteador: uma única
-`script.js` carregada no `index.html`, que manipula o DOM diretamente por `id`/seletor
-(`$`, `$$` helpers, `goTo(screen)` alterna visibilidade de telas via classe).
+Aplicação **single-page**, sem módulos ES nem roteador: toda a lógica fica em
+`script.js`, carregada no `index.html` depois de `i18n.js` (scripts clássicos; `I18N` é
+global no navegador e vem por `require` no Node). O JS manipula o DOM diretamente por
+`id`/seletor (`$`, `$$` helpers, `goTo(screen)` alterna visibilidade de telas via classe).
+
+O markup de todas as telas fixas (incluindo setup, regras e multi-device) está no
+`index.html` com `data-i18n`; as funções `render*` só sincronizam estado (classes,
+valores, visibilidade) e preenchem listas dinâmicas. Templates `innerHTML` ficam restritos
+a conteúdo que depende de dados (papel secreto, listas de jogadores/temas/packs, voto).
 
 Não há componente/estado reativo (nenhum virtual DOM). Cada mudança de estado chama
 explicitamente a função `render*` correspondente (`renderSetupScreen`, `renderGameScreen`,
@@ -54,7 +61,7 @@ explicitamente a função `render*` correspondente (`renderSetupScreen`, `render
 
 ### 3.1 Estado global (`state`)
 
-Objeto único em memória (`script.js:1125`) com os campos principais:
+Objeto único em memória (`script.js`, `const state`) com os campos principais:
 
 - **Config de partida**: `players`, `selectedCategories`, `rounds`, `gameVariant`
   (`classic`/`lightning`), `contentMode` (`family`/`party`), `impostorCount`/`impostorIndexes`.
@@ -97,7 +104,7 @@ voto (individual, maioria) → [defesa/palpite do impostor] → placar da rodada
 
 ## 5. Conteúdo do jogo
 
-- `STORY_CATEGORIES` (`script.js:903`): 6 categorias fixas (aventura, mistério, família,
+- `STORY_CATEGORIES` (`script.js`): 6 categorias fixas (aventura, mistério, família,
   absurdo, escola & trabalho, fantasia), 5 prompts cada.
 - `EXTRA_STORY_PROMPTS` / `PARTY_STORY_PROMPTS`: prompts extras e prompts modo "party"
   (conteúdo adulto/festa, separado do modo família).
@@ -108,7 +115,7 @@ voto (individual, maioria) → [defesa/palpite do impostor] → placar da rodada
 
 ## 6. Scoring
 
-Regras em `applyRoundScore` (`script.js:2687`) + `calculateVoteResult` (`script.js:2658`):
+Regras em `applyRoundScore` + `calculateVoteResult` (`script.js`):
 
 - Voto é **individual** (cada jogador aponta um suspeito); maioria decide, com tratamento
   de empate (`tied`).
@@ -122,8 +129,11 @@ Regras em `applyRoundScore` (`script.js:2687`) + `calculateVoteResult` (`script.
 
 ## 7. i18n
 
-- `I18N` (`script.js:21`): dicionário chave→texto para `pt`, `en`, `es`
-  (`SUPPORTED_LANGUAGES`).
+- `I18N` (`src/i18n.js`): dicionário chave→texto para `pt`, `en`, `es`
+  (`SUPPORTED_LANGUAGES`). EN/ES partem de uma cópia do PT (`...I18N.pt`), então chave
+  sem tradução mostra português em silêncio — `test-i18n.js` barra isso (com allowlist de
+  nomes próprios/cognatos), além de chaves órfãs e placeholders `{x}` divergentes.
+- O texto PT dentro dos elementos `data-i18n` do HTML é só fallback; a fonte é o `I18N`.
 - `translate(key, language)` / `formatMessage` para interpolação; `applyLanguage()`
   varre elementos com `data-i18n` no HTML e aplica a tradução ativa.
 - Cobre toda a interface estática, telas de jogo, multi-device e notificações.
@@ -169,7 +179,8 @@ jogador. Pedido recusado volta como `crazystory-assign-rejected`.
 **Cuidado de segurança de design**: o payload público (`createMultidevicePayload`)
 é deliberadamente filtrado para nunca incluir a palavra-chave secreta nem o papel de
 outro jogador — só o payload de papel individual (enviado por conexão privada) carrega
-o segredo.
+o segredo. Textos de interface nesse payload vão como **chaves** (`roleTitleKey`,
+`hintKey`, `messageKey`) e são traduzidos no idioma do convidado, não do host.
 
 ## 10. PWA / offline
 
@@ -193,23 +204,26 @@ uma área:
 
 - `test-scoring.js` — regras de pontuação e apuração de voto.
 - `test-hygiene.js` — checagens de higiene de código/HTML (telas mortas, referências órfãs).
+- `test-i18n.js` — cobertura de tradução EN/ES, chaves órfãs e placeholders.
 - `test-story-recap.js` — captura e formatação da história final.
 - `test-content.js` — integridade de categorias/prompts/twists/packs.
 - `test-audio.js` — configuração de áudio/temas musicais.
 - `test-multidevice.js` — payloads e fluxo P2P (mockado).
-- `test-visual.js` — checagens de CSS/layout.
+- `test-visual.js` — screenshots headless (Chrome) em 4 viewports.
 
 Rodar todos com `./scripts/test-all.sh` (ou um só com `node scripts/test-<nome>.js`, a
 partir da raiz do repo). O workflow `.github/workflows/static.yml` roda `test-all.sh` em
 push e PR; o deploy do GitHub Pages só acontece em push para `main` com testes verdes.
-`test-visual.js` pula se não houver Chrome (`CHROME_BIN`).
+`test-visual.js` pula localmente se não houver Chrome (`CHROME_BIN`); no CI o Chrome é
+instalado (`browser-actions/setup-chrome`) e `VISUAL_TESTS_REQUIRED=1` faz o pulo virar falha.
 
 ## 12. Débito técnico conhecido
 
 Ver [ROADMAP.md](./ROADMAP.md) seção 2 e Fase 0 para o detalhe — resumo:
 
-- Ainda há telas/CSS herdados de um jogo anterior sendo removidos incrementalmente.
-- Parte do texto/setup ainda é montado em runtime pelo JS em vez de já estar no HTML
-  estático (aumenta acoplamento entre `index.html` e `script.js`).
-- `script.js` é um arquivo único de ~3400 linhas sem módulos — qualquer alteração de
-  fluxo de jogo tende a tocar várias funções nesse arquivo.
+- `script.js` segue como arquivo único de ~2400 linhas sem módulos (o dicionário i18n já
+  saiu para `i18n.js`) — qualquer alteração de fluxo de jogo tende a tocar várias funções
+  nesse arquivo. Próximo passo de baixo risco, se fizer falta: tirar o conteúdo narrativo
+  (`STORY_CATEGORIES`, twists) para um `content.js` no mesmo padrão do `i18n.js`.
+- A tela de papel/voto (`renderRoleReveal`, `renderVote`) ainda é montada por template,
+  porque depende do jogador da vez e do segredo.
